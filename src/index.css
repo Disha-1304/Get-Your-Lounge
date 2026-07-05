@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* User Specified Color Palette */
+  /* 60% Dominant (Light): Pale Oatmeal (#F4F1EA) */
+  --bg-primary: #F4F1EA;
+  --bg-secondary: #EAE5DB;
+  
+  /* 30% Secondary (Dark): Espresso Roast (#2B221E) */
+  --text-main: #2B221E;
+  --text-muted: #5C4B43;
+  --espresso: #2B221E;
+  
+  /* 10% Accent (Light): Desert Rose (#F7E1D7) */
+  --accent-rose: #F7E1D7;
+  --accent-rose-hover: #EED1C3;
+
+  --card-shadow: 0 20px 45px -10px rgba(43, 34, 30, 0.12);
+  --glass-bg: rgba(244, 241, 234, 0.92);
+  --glass-border: rgba(43, 34, 30, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+/* Gradients */
+.gradient-text {
+  background: linear-gradient(135deg, #2B221E 0%, #5C4B43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #2B221E 0%, #5C4B43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 3D Interactive Card Utilities */
+.card-3d-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-3d-container:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: 0 35px 70px -15px rgba(43, 34, 30, 0.25);
+}
+
+/* Buttons adhering to exact Palette */
+.btn-primary {
+  background: #2B221E;
+  color: #F7E1D7;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  border: 1px solid #2B221E;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(43, 34, 30, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(43, 34, 30, 0.45);
+  background: #3F322D;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: #F7E1D7;
+  color: #2B221E;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  border: 1.5px solid #2B221E;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #EED1C3;
+  color: #2B221E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(43, 34, 30, 0.15);
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.08); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(43, 34, 30, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-content {
+  display: flex;
+  width: 200%;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .mobile-toggle {
+    display: flex !important;
+  }
+}
+
+/* Bouncy sequential pop-up for partners */
+@keyframes popBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-12px) scale(1.08);
+  }
+  60% {
+    transform: translateY(-4px) scale(1.03);
+  }
+}
+
+/* --- ULTRA LUXURY DESIGN SYSTEM UPGRADES --- */
+
+/* 1. Editorial Luxury Typography */
+.luxury-serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.25;
+}
+
+.luxury-cinzel {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* 2. Champagne Gold & Frosted Glassmorphism */
+.champagne-border {
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(247, 225, 215, 0.5) 100%);
+  box-shadow: 0 20px 45px rgba(43, 34, 30, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.2);
+}
+
+.luxury-glass {
+  background: rgba(244, 241, 234, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(247, 225, 215, 0.7);
+  box-shadow: 0 16px 36px rgba(43, 34, 30, 0.1);
+}
+
+.champagne-text {
+  background: linear-gradient(135deg, #A8893D 0%, #D4AF37 50%, #8A6D28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* 3. Shimmering Micro-Animations & Fluid Hover Physics */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  100% { transform: translateX(250%) skewX(-25deg); }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: translateX(-150%) skewX(-25deg);
+  animation: shimmerSweep 4.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.btn-shimmer:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(43, 34, 30, 0.25), 0 0 0 2px #F7E1D7;
+}
+
+.luxury-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(43, 34, 30, 0.18), 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+}
+
+/* 4. Ambient Lighting Backdrops */
+.ambient-glow-rose {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(247, 225, 215, 0.6) 0%, transparent 70%);
+  filter: blur(50px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-glow-gold {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Pure Gold & Rose Glow for Logos without White Frames */
+.logo-glow-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+.logo-glow-hover img {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: contrast(105%);
+}
+.logo-glow-hover:hover img {
+  transform: scale(1.12);
+  filter: contrast(115%) brightness(1.15) drop-shadow(0 0 16px rgba(212, 175, 55, 0.85)) drop-shadow(0 0 28px rgba(247, 225, 215, 0.7));
+}
+
