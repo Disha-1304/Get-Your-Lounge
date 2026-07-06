@@ -45,10 +45,10 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
           background: '#f8fafc'
         }}>
           <div>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#E61E38', textTransform: 'uppercase', letterSpacing: '1px' }}>
               360° VIRTUAL PREVIEW
             </span>
-            <h3 style={{ fontSize: '20px', color: '#0f172a' }}>{lounge.city} ({lounge.airportCode})</h3>
+            <h3 style={{ fontSize: '20px', color: '#0A192F' }}>{lounge.city} ({lounge.airportCode})</h3>
           </div>
 
           <button
@@ -65,12 +65,12 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
               justifyContent: 'center'
             }}
           >
-            <X size={20} color="#0f172a" />
+            <X size={20} color="#0A192F" />
           </button>
         </div>
 
         {/* Panoramic Viewer Area */}
-        <div style={{ position: 'relative', height: '400px', background: '#0f172a' }}>
+        <div style={{ position: 'relative', height: '400px', background: '#0A192F' }}>
           <img 
             src={slides[currentSlide].url} 
             alt={slides[currentSlide].title}
@@ -96,7 +96,7 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
               justifyContent: 'center'
             }}
           >
-            <ChevronLeft size={24} color="#0f172a" />
+            <ChevronLeft size={24} color="#0A192F" />
           </button>
 
           <button
@@ -117,7 +117,7 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
               justifyContent: 'center'
             }}
           >
-            <ChevronRight size={24} color="#0f172a" />
+            <ChevronRight size={24} color="#0A192F" />
           </button>
 
           {/* Slide Caption Banner */}
@@ -127,7 +127,7 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
             left: 0,
             width: '100%',
             padding: '16px 24px',
-            background: 'linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.9) 100%)',
+            background: 'linear-gradient(180deg, transparent 0%, rgba(10, 25, 47, 0.9) 100%)',
             color: '#ffffff',
             display: 'flex',
             justifyContent: 'space-between',
@@ -146,7 +146,7 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
                     width: i === currentSlide ? '20px' : '8px',
                     height: '8px',
                     borderRadius: '4px',
-                    background: i === currentSlide ? '#3b82f6' : 'rgba(255,255,255,0.4)',
+                    background: i === currentSlide ? '#E61E38' : 'rgba(255,255,255,0.4)',
                     transition: 'all 0.3s'
                   }}
                 />
@@ -158,7 +158,7 @@ export default function VirtualTourModal({ lounge, onClose, onSelectLounge }) {
         {/* Bottom Bar */}
         <div style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>Included Amenities:</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: '#0A192F' }}>Included Amenities:</div>
             <div style={{ fontSize: '13px', color: '#64748b' }}>{lounge.amenities.join(', ')}</div>
           </div>
 

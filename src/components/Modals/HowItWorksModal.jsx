@@ -4,7 +4,7 @@ import { X, Search, CreditCard, QrCode, Armchair } from 'lucide-react';
 export default function HowItWorksModal({ onClose, onStartExploring }) {
   const steps = [
     {
-      icon: <Search size={28} color="#2563eb" />,
+      icon: <Search size={28} color="#E61E38" />,
       title: '1. Search Your Airport',
       desc: 'Enter your departure airport, layover city, or specific terminal into our global search engine.'
     },
@@ -56,14 +56,14 @@ export default function HowItWorksModal({ onClose, onStartExploring }) {
             justifyContent: 'center'
           }}
         >
-          <X size={20} color="#0f172a" />
+          <X size={20} color="#0A192F" />
         </button>
 
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <span style={{ fontSize: '12px', fontWeight: 700, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: '#E61E38', textTransform: 'uppercase', letterSpacing: '1px' }}>
             STEP-BY-STEP GUIDE
           </span>
-          <h3 style={{ fontSize: '28px', color: '#0f172a', marginTop: '4px' }}>How LoungePair Works</h3>
+          <h3 style={{ fontSize: '28px', color: '#0A192F', marginTop: '4px' }}>How LoungePair Works</h3>
           <p style={{ fontSize: '15px', color: '#64748b' }}>Buy airport lounge access in under 30 seconds.</p>
         </div>
 
@@ -91,8 +91,8 @@ export default function HowItWorksModal({ onClose, onStartExploring }) {
                 {step.icon}
               </div>
               <div>
-                <h4 style={{ fontSize: '17px', color: '#0f172a', marginBottom: '4px' }}>{step.title}</h4>
-                <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.5 }}>{step.desc}</p>
+                <h4 style={{ fontSize: '17px', color: '#0A192F', marginBottom: '4px' }}>{step.title}</h4>
+                <p style={{ fontSize: '14px', color: '#334155', lineHeight: 1.5 }}>{step.desc}</p>
               </div>
             </div>
           ))}

@@ -3,13 +3,13 @@ import { FEATURED_PARTNERS } from '../data/loungesData';
 
 export default function PartnerScroller() {
   return (
-    <section style={{ padding: '60px 0 40px', background: '#F4F1EA', overflow: 'hidden' }}>
+    <section style={{ padding: '60px 0 40px', background: '#FFFFFF', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
         
         {/* Featured Partners Heading */}
         <h3 className="luxury-cinzel" style={{
           fontSize: '14px',
-          color: '#5C4B43',
+          color: '#334155',
           marginBottom: '36px'
         }}>
           Featured Partners

@@ -41,7 +41,7 @@ export default function BookingModal({ lounge, onClose }) {
       >
         {/* Header */}
         <div style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+          background: 'linear-gradient(135deg, #0A192F 0%, #162C46 100%)',
           color: '#ffffff',
           padding: '24px 28px',
           position: 'relative'
@@ -67,7 +67,7 @@ export default function BookingModal({ lounge, onClose }) {
             <X size={18} />
           </button>
 
-          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', color: '#93c5fd' }}>
+          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', color: '#FDECEF' }}>
             INSTANT PASS ISSUANCE
           </span>
           <h3 style={{ fontSize: '24px', fontWeight: 800 }}>{lounge.city} Lounge</h3>
@@ -85,12 +85,12 @@ export default function BookingModal({ lounge, onClose }) {
                   Entry Date
                 </label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', border: '1.5px solid #cbd5e1', padding: '10px 14px', borderRadius: '12px' }}>
-                  <Calendar size={18} color="#2563eb" />
+                  <Calendar size={18} color="#E61E38" />
                   <input 
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    style={{ border: 'none', outline: 'none', fontWeight: 600, color: '#0f172a', width: '100%' }}
+                    style={{ border: 'none', outline: 'none', fontWeight: 600, color: '#0A192F', width: '100%' }}
                     required
                   />
                 </div>
@@ -110,7 +110,7 @@ export default function BookingModal({ lounge, onClose }) {
                     borderRadius: '10px',
                     border: '1px solid #cbd5e1',
                     fontSize: '14px',
-                    color: '#0f172a'
+                    color: '#0A192F'
                   }}
                 >
                   {[1, 2, 3, 4, 5, 6].map(num => (
@@ -131,7 +131,7 @@ export default function BookingModal({ lounge, onClose }) {
               marginBottom: '24px'
             }}>
               <div>
-                <span style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>Instant Guaranteed VIP Pass</span>
+                <span style={{ fontSize: '14px', fontWeight: 800, color: '#0A192F' }}>Instant Guaranteed VIP Pass</span>
                 <span style={{ fontSize: '12px', color: '#64748b', display: 'block' }}>Instant digital QR entry</span>
               </div>
               <div style={{ fontSize: '12px', color: '#10b981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -164,21 +164,21 @@ export default function BookingModal({ lounge, onClose }) {
               <CheckCircle2 size={36} />
             </div>
 
-            <h3 style={{ fontSize: '24px', color: '#0f172a', marginBottom: '8px' }}>Pass Issued Successfully!</h3>
+            <h3 style={{ fontSize: '24px', color: '#0A192F', marginBottom: '8px' }}>Pass Issued Successfully!</h3>
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '24px' }}>
               Your digital boarding token has been generated for <strong>{lounge.city}</strong>. Present the code below at the lounge entrance desk.
             </p>
 
             <div style={{
               background: '#f8fafc',
-              border: '2px dashed #2563eb',
+              border: '2px dashed #E61E38',
               padding: '24px',
               borderRadius: '20px',
               display: 'inline-block',
               marginBottom: '24px'
             }}>
-              <QrCode size={120} color="#0f172a" />
-              <div style={{ fontWeight: 800, fontSize: '14px', color: '#2563eb', marginTop: '8px', letterSpacing: '2px' }}>
+              <QrCode size={120} color="#0A192F" />
+              <div style={{ fontWeight: 800, fontSize: '14px', color: '#E61E38', marginTop: '8px', letterSpacing: '2px' }}>
                 LP-2026-VIP-994
               </div>
             </div>

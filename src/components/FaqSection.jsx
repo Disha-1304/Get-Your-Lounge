@@ -20,10 +20,10 @@ export default function FaqSection() {
       
       {/* Section Header matching Image 4 & 5 */}
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', color: '#0f172a', marginBottom: '12px' }}>
-          Buying lounge access with <span style={{ color: '#2563eb' }}>LoungePair</span>
+        <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', color: '#0A192F', marginBottom: '12px' }}>
+          Buying lounge access with <span style={{ color: '#E61E38' }}>LoungePair</span>
         </h2>
-        <p style={{ fontSize: '16px', color: '#475569', marginBottom: '24px' }}>
+        <p style={{ fontSize: '16px', color: '#334155', marginBottom: '24px' }}>
           Everything you need to know about our instant international airport lounge pass system.
         </p>
 
@@ -69,8 +69,8 @@ export default function FaqSection() {
                 style={{
                   background: '#ffffff',
                   borderRadius: '16px',
-                  border: isOpen ? '1.5px solid #3b82f6' : '1px solid #e2e8f0',
-                  boxShadow: isOpen ? '0 10px 25px -5px rgba(37, 99, 235, 0.1)' : '0 2px 8px rgba(15, 23, 42, 0.03)',
+                  border: isOpen ? '1.5px solid #E61E38' : '1px solid #e2e8f0',
+                  boxShadow: isOpen ? '0 10px 25px -5px rgba(230, 30, 56, 0.1)' : '0 2px 8px rgba(15, 23, 42, 0.03)',
                   transition: 'all 0.3s ease',
                   overflow: 'hidden'
                 }}
@@ -91,20 +91,20 @@ export default function FaqSection() {
                     gap: '16px'
                   }}
                 >
-                  <span style={{ fontSize: '17px', fontWeight: 700, color: isOpen ? '#2563eb' : '#0f172a' }}>
+                  <span style={{ fontSize: '17px', fontWeight: 700, color: isOpen ? '#E61E38' : '#0A192F' }}>
                     {faq.q}
                   </span>
                   <div style={{
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: isOpen ? '#eff6ff' : '#f8fafc',
+                    background: isOpen ? '#FDECEF' : '#f8fafc',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0
                   }}>
-                    {isOpen ? <ChevronUp size={18} color="#2563eb" /> : <ChevronDown size={18} color="#64748b" />}
+                    {isOpen ? <ChevronUp size={18} color="#E61E38" /> : <ChevronDown size={18} color="#64748b" />}
                   </div>
                 </button>
 

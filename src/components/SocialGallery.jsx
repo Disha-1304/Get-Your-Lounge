@@ -9,11 +9,11 @@ export default function SocialGallery() {
     <section style={{ padding: '60px 20px 80px', maxWidth: '1350px', margin: '0 auto', textAlign: 'center' }}>
       
       <div style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#0f172a', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#0A192F', marginBottom: '12px' }}>
           Share your lounge experience
         </h2>
         <p style={{ fontSize: '16px', color: '#475569' }}>
-          Show your love by using <strong style={{ color: '#2563eb' }}>#Ilovemylounge</strong> and tagging us <strong style={{ color: '#0f172a' }}>@LoungePair</strong> to be featured!
+          Show your love by using <strong style={{ color: '#E61E38' }}>#Ilovemylounge</strong> and tagging us <strong style={{ color: '#0A192F' }}>@LoungePair</strong> to be featured!
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export default function SocialGallery() {
               left: 0,
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(180deg, transparent 50%, rgba(15, 23, 42, 0.85) 100%)'
+              background: 'linear-gradient(180deg, transparent 50%, rgba(10, 25, 47, 0.85) 100%)'
             }} />
 
             {/* Bottom Tag "@loungepair" matching Image 6 & 7 */}
@@ -114,7 +114,7 @@ export default function SocialGallery() {
                 zIndex: 10
               }}
             >
-              <X size={20} color="#0f172a" />
+              <X size={20} color="#0A192F" />
             </button>
 
             <img 
@@ -125,7 +125,7 @@ export default function SocialGallery() {
 
             <div style={{ padding: '24px', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <span style={{ fontWeight: 800, fontSize: '16px', color: '#0f172a' }}>{selectedPost.user}</span>
+                <span style={{ fontWeight: 800, fontSize: '16px', color: '#0A192F' }}>{selectedPost.user}</span>
                 <span style={{ fontSize: '13px', color: '#64748b' }}>📍 {selectedPost.location}</span>
               </div>
               <p style={{ fontSize: '15px', color: '#334155', lineHeight: 1.6, marginBottom: '20px' }}>

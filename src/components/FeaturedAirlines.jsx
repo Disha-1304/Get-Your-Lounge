@@ -3,13 +3,13 @@ import { FEATURED_AIRLINES } from '../data/loungesData';
 
 export default function FeaturedAirlines() {
   return (
-    <section style={{ padding: '50px 0 70px', background: '#F4F1EA', overflow: 'hidden' }}>
+    <section style={{ padding: '50px 0 70px', background: '#FFFFFF', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
         
         {/* Luxury Cinzel Heading */}
         <h3 className="luxury-cinzel" style={{
           fontSize: '15px',
-          color: '#5C4B43',
+          color: '#334155',
           marginBottom: '40px',
           letterSpacing: '2px'
         }}>

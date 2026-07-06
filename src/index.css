@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* User Specified Color Palette */
-  /* 60% Dominant (Light): Pale Oatmeal (#F4F1EA) */
-  --bg-primary: #F4F1EA;
-  --bg-secondary: #EAE5DB;
+  /* User Specified Color Palette: White, Red, and nominal Dark Navy Blue */
+  /* Dominant (Light): Pure White (#FFFFFF) & Snow White (#F8F9FB) */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FB;
   
-  /* 30% Secondary (Dark): Espresso Roast (#2B221E) */
-  --text-main: #2B221E;
-  --text-muted: #5C4B43;
-  --espresso: #2B221E;
+  /* Nominal Dark Navy Blue (#0A192F) for text & deep accents */
+  --text-main: #0A192F;
+  --text-muted: #334155;
+  --espresso: #0A192F;
   
-  /* 10% Accent (Light): Desert Rose (#F7E1D7) */
-  --accent-rose: #F7E1D7;
-  --accent-rose-hover: #EED1C3;
+  /* Dominant Red (#E61E38) for accents, badges, highlights */
+  --accent-rose: #E61E38;
+  --accent-rose-hover: #C8102E;
 
-  --card-shadow: 0 20px 45px -10px rgba(43, 34, 30, 0.12);
-  --glass-bg: rgba(244, 241, 234, 0.92);
-  --glass-border: rgba(43, 34, 30, 0.15);
+  --card-shadow: 0 20px 45px -10px rgba(10, 25, 47, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-border: rgba(230, 30, 56, 0.15);
 }
 
 * {
@@ -43,13 +43,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Gradients */
 .gradient-text {
-  background: linear-gradient(135deg, #2B221E 0%, #5C4B43 100%);
+  background: linear-gradient(135deg, #E61E38 0%, #0A192F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-gold {
-  background: linear-gradient(135deg, #2B221E 0%, #5C4B43 100%);
+  background: linear-gradient(135deg, #E61E38 0%, #C8102E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -68,34 +68,34 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Buttons adhering to exact Palette */
 .btn-primary {
-  background: #2B221E;
-  color: #F7E1D7;
+  background: #E61E38;
+  color: #FFFFFF;
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  border: 1px solid #2B221E;
+  border: 1px solid #E61E38;
   border-radius: 999px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 10px 25px rgba(43, 34, 30, 0.3);
+  box-shadow: 0 10px 25px rgba(230, 30, 56, 0.25);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 16px 32px rgba(43, 34, 30, 0.45);
-  background: #3F322D;
+  box-shadow: 0 16px 32px rgba(230, 30, 56, 0.4);
+  background: #C8102E;
   color: #ffffff;
 }
 
 .btn-secondary {
-  background: #F7E1D7;
-  color: #2B221E;
+  background: #FFFFFF;
+  color: #E61E38;
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  border: 1.5px solid #2B221E;
+  border: 1.5px solid #E61E38;
   border-radius: 999px;
   cursor: pointer;
   display: inline-flex;
@@ -106,10 +106,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary:hover {
-  background: #EED1C3;
-  color: #2B221E;
+  background: #FDECEF;
+  color: #C8102E;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(43, 34, 30, 0.15);
+  box-shadow: 0 8px 20px rgba(230, 30, 56, 0.15);
 }
 
 /* Animations */
@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(43, 34, 30, 0.75);
+  background: rgba(10, 25, 47, 0.75);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -209,20 +209,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 2. Champagne Gold & Frosted Glassmorphism */
 .champagne-border {
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(247, 225, 215, 0.5) 100%);
-  box-shadow: 0 20px 45px rgba(43, 34, 30, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(230, 30, 56, 0.3);
+  background: linear-gradient(135deg, #FFFFFF 0%, rgba(248, 249, 251, 0.9) 100%);
+  box-shadow: 0 20px 45px rgba(10, 25, 47, 0.08), 0 0 0 1px rgba(230, 30, 56, 0.15);
 }
 
 .luxury-glass {
-  background: rgba(244, 241, 234, 0.85);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(247, 225, 215, 0.7);
-  box-shadow: 0 16px 36px rgba(43, 34, 30, 0.1);
+  border: 1px solid rgba(230, 30, 56, 0.25);
+  box-shadow: 0 16px 36px rgba(10, 25, 47, 0.08);
 }
 
 .champagne-text {
-  background: linear-gradient(135deg, #A8893D 0%, #D4AF37 50%, #8A6D28 100%);
+  background: linear-gradient(135deg, #E61E38 0%, #C8102E 50%, #0A192F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-shimmer:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 14px 28px rgba(43, 34, 30, 0.25), 0 0 0 2px #F7E1D7;
+  box-shadow: 0 14px 28px rgba(230, 30, 56, 0.25), 0 0 0 2px #E61E38;
 }
 
 .luxury-card-hover {
@@ -264,7 +264,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .luxury-card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 24px 48px rgba(43, 34, 30, 0.18), 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 24px 48px rgba(10, 25, 47, 0.12), 0 0 0 1.5px rgba(230, 30, 56, 0.4);
 }
 
 /* 4. Ambient Lighting Backdrops */
@@ -272,7 +272,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(247, 225, 215, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(230, 30, 56, 0.12) 0%, transparent 70%);
   filter: blur(50px);
   z-index: 0;
   pointer-events: none;
@@ -282,7 +282,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(10, 25, 47, 0.08) 0%, transparent 70%);
   filter: blur(60px);
   z-index: 0;
   pointer-events: none;
