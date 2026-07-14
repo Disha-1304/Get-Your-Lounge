@@ -1,0 +1,1798 @@
+<?php
+// search.php — LoungePair International Search Results
+require_once __DIR__ . '/data/loungesData.php';
+
+$query = isset($_GET['q']) ? trim($_GET['q']) : '';
+$directId = isset($_GET['id']) ? trim($_GET['id']) : '';
+
+// Filter lounges by query
+if ($query === '') {
+    $results = $LOUNGE_GUIDES;
+} else {
+    $q = strtolower($query);
+    $results = array_filter($LOUNGE_GUIDES, function($l) use ($q) {
+        return
+            str_contains(strtolower($l['city']), $q) ||
+            str_contains(strtolower($l['airportCode']), $q) ||
+            str_contains(strtolower($l['country']), $q) ||
+            str_contains(strtolower($l['region']), $q) ||
+            array_reduce($l['terminals'], fn($carry, $t) => $carry || str_contains(strtolower($t), $q), false);
+    });
+}
+$results = array_values($results);
+$count = count($results);
+
+// Collect all unique amenities across results for sidebar filter
+$allAmenities = [];
+foreach ($results as $l) {
+    foreach ($l['amenities'] as $a) {
+        if (!in_array($a, $allAmenities)) $allAmenities[] = $a;
+    }
+}
+sort($allAmenities);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($query ?: 'All Lounges') ?> — Airport Lounges | LoungePair International</title>
+  <meta name="description" content="Browse and book premium airport lounges<?= $query ? ' near ' . htmlspecialchars($query) : '' ?>. Guaranteed access with no membership required.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+/* ─── Design Tokens (matches main site) ─── */
+:root {
+  --accent: #E61E38;
+  --accent-hover: #C8102E;
+  --navy: #0A192F;
+  --navy-mid: #162C46;
+  --text-main: #0A192F;
+  --text-muted: #334155;
+  --text-light: #64748b;
+  --bg: #FFFFFF;
+  --bg-secondary: #F8F9FB;
+  --border: #e2e8f0;
+  --card-shadow: 0 4px 20px rgba(10,25,47,0.08);
+  --radius: 16px;
+  --radius-lg: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── STICKY HEADER ─── */
+.sr-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(230,30,56,0.3);
+  box-shadow: 0 4px 24px rgba(10,25,47,0.35);
+}
+.sr-header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.sr-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.sr-logo img { height: 52px; width: auto; }
+.sr-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.sr-logo-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+.sr-logo-name span { color: var(--accent); }
+.sr-logo-sub {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+}
+
+/* Header Search Bar */
+.sr-header-search {
+  flex: 1;
+  max-width: 600px;
+  background: rgba(255,255,255,0.10);
+  border: 1.5px solid rgba(230,30,56,0.35);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 8px 8px 8px 20px;
+  gap: 10px;
+  transition: border-color 0.2s;
+}
+.sr-header-search:focus-within {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.15);
+}
+.sr-header-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.sr-header-search input::placeholder { color: rgba(255,255,255,0.5); }
+.sr-header-search-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 22px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.sr-header-search-btn:hover { background: var(--accent-hover); }
+
+/* Currency selector */
+.sr-currency-select {
+  background: rgba(10,25,47,0.6);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(230,30,56,0.4);
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  flex-shrink: 0;
+}
+
+.sr-home-link {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.sr-home-link:hover { color: #fff; }
+
+/* ─── BREADCRUMB ─── */
+.sr-breadcrumb {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+}
+.sr-breadcrumb-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+.sr-breadcrumb a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.sr-breadcrumb-sep { color: #cbd5e1; }
+.sr-breadcrumb-current { font-weight: 700; color: var(--text-main); }
+
+/* ─── MAIN LAYOUT ─── */
+.sr-body {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 24px 60px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ─── FILTER SIDEBAR ─── */
+.sr-sidebar {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.sr-sidebar-header {
+  background: var(--navy);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sr-sidebar-header h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.sr-sidebar-clear {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.75);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sr-sidebar-clear:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+.sr-filter-section {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sr-filter-section:last-child { border-bottom: none; }
+.sr-filter-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Active filter chips */
+.sr-active-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 20px;
+  background: #FDECEF;
+  border-bottom: 1px solid rgba(230,30,56,0.12);
+  min-height: 0;
+}
+.sr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FFFFFF;
+  border: 1px solid rgba(230,30,56,0.4);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sr-chip:hover { background: var(--accent); color: #fff; }
+.sr-chip-x { font-size: 13px; line-height: 1; }
+
+/* Price range */
+.sr-price-range { display: flex; gap: 8px; align-items: center; }
+.sr-price-input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  outline: none;
+  background: var(--bg-secondary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s;
+}
+.sr-price-input:focus { border-color: var(--accent); }
+.sr-price-sep { color: var(--text-light); font-weight: 700; font-size: 12px; flex-shrink: 0; }
+
+/* Range slider */
+.sr-range {
+  width: 100%;
+  accent-color: var(--accent);
+  margin-top: 10px;
+}
+
+/* Checkboxes */
+.sr-check-list { display: flex; flex-direction: column; gap: 8px; }
+.sr-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+.sr-check-item:hover { background: var(--bg-secondary); }
+.sr-check-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+.sr-check-item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex: 1;
+}
+.sr-check-count {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+
+/* Rating stars filter */
+.sr-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+.sr-rating-row:hover { background: var(--bg-secondary); }
+.sr-stars { color: #f59e0b; font-size: 13px; }
+
+/* ─── RESULTS AREA ─── */
+.sr-results { }
+
+/* Results header bar */
+.sr-results-header {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  padding: 16px 22px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sr-results-count h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.sr-results-count h2 span { color: var(--accent); }
+.sr-results-count p {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.sr-results-sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sr-sort-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.sr-sort-select {
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  outline: none;
+  cursor: pointer;
+  background: var(--bg-secondary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s;
+}
+.sr-sort-select:focus { border-color: var(--accent); }
+
+/* View mode toggle */
+.sr-view-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.sr-view-btn {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+.sr-view-btn.active {
+  background: #FFFFFF;
+  color: var(--accent);
+  box-shadow: 0 1px 6px rgba(10,25,47,0.1);
+}
+
+/* ─── LOUNGE CARDS (Horizontal — 99acres style) ─── */
+.sr-card-list { display: flex; flex-direction: column; gap: 16px; }
+
+.sr-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  cursor: default;
+  position: relative;
+}
+.sr-card:hover {
+  box-shadow: 0 16px 40px rgba(10,25,47,0.14), 0 0 0 1.5px rgba(230,30,56,0.35);
+  transform: translateY(-3px);
+}
+
+/* Card Image Side */
+.sr-card-img-wrap {
+  position: relative;
+  width: 280px;
+  min-width: 280px;
+  min-height: 230px;
+  max-height: 270px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.sr-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.sr-card:hover .sr-card-img { transform: scale(1.06); }
+
+/* Heart / Favourite */
+.sr-heart-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(4px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(10,25,47,0.15);
+}
+.sr-heart-btn:hover { transform: scale(1.15); background: #fff; }
+.sr-heart-btn.liked { background: #FDECEF; }
+.sr-heart-btn.liked svg path { fill: var(--accent); stroke: var(--accent); }
+
+/* Trending badge */
+.sr-trending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #ff6b35, #E61E38);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 99px;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: trendingPulse 2s ease-in-out infinite;
+}
+@keyframes trendingPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.sr-card-badge-premium {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--navy);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(230,30,56,0.5);
+}
+.sr-card-badge-tour {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(10,25,47,0.8);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sr-card-badge-tour:hover { background: var(--accent); }
+
+/* Card Body Side */
+.sr-card-body {
+  flex: 1;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sr-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sr-card-title-wrap { flex: 1; min-width: 0; }
+.sr-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sr-card-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sr-card-iata {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+.sr-card-region {
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Availability badge */
+.sr-avail-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 99px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sr-avail-quiet  { background: #d1fae5; color: #059669; }
+.sr-avail-moderate { background: #dbeafe; color: #1d4ed8; }
+.sr-avail-busy   { background: #fef3c7; color: #d97706; }
+
+/* Rating row */
+.sr-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sr-stars-row { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+.sr-rating-num {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.sr-reviews {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+/* Terminal list */
+.sr-terminals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sr-terminal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #F1F5F9;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+}
+.sr-terminal-chip svg { flex-shrink: 0; }
+
+/* Amenity chips */
+.sr-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sr-amenity-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FDECEF;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(230,30,56,0.15);
+}
+
+/* Card footer (price + buttons) */
+.sr-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.sr-price-block { }
+.sr-price-label {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.sr-price-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+}
+.sr-price-per { font-size: 12px; color: var(--text-light); font-weight: 600; }
+.sr-price-tag {
+  font-size: 10px;
+  color: #059669;
+  font-weight: 700;
+  background: #d1fae5;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-top: 3px;
+  display: inline-block;
+}
+
+.sr-card-btns { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.sr-btn-tour {
+  background: #FFFFFF;
+  color: var(--navy);
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.sr-btn-tour:hover {
+  border-color: var(--navy);
+  background: var(--bg-secondary);
+}
+
+.sr-btn-book {
+  background: var(--accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 99px;
+  padding: 11px 24px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-shadow: 0 6px 18px rgba(230,30,56,0.3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.sr-btn-book::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-150%) skewX(-25deg);
+  animation: shimmer 3.5s infinite ease-in-out;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  100% { transform: translateX(300%) skewX(-25deg); }
+}
+.sr-btn-book:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(230,30,56,0.4);
+}
+.sr-btn-book:hover .sr-btn-arrow {
+  transform: translateX(4px);
+}
+.sr-btn-arrow {
+  transition: transform 0.25s ease;
+  display: inline-flex;
+}
+
+/* ─── NO RESULTS STATE ─── */
+.sr-empty {
+  text-align: center;
+  padding: 80px 24px;
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+.sr-empty-icon { font-size: 64px; margin-bottom: 16px; }
+.sr-empty h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.sr-empty p {
+  font-size: 15px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+/* ─── TRUST STRIP (slim single row) ─── */
+.sr-trust-strip {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+  flex-wrap: wrap;
+  border: 1px solid rgba(230,30,56,0.2);
+}
+.sr-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #FFFFFF;
+}
+.sr-trust-icon {
+  width: 26px;
+  height: 26px;
+  background: rgba(230,30,56,0.2);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sr-trust-title { font-size: 12px; font-weight: 800; }
+.sr-trust-sub { font-size: 10px; color: rgba(255,255,255,0.55); font-weight: 500; }
+.sr-trust-sep {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+
+/* ─── ACTIVE CHIPS (above results) ─── */
+.sr-active-bar {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #FFFFFF;
+  border: 1px solid rgba(230,30,56,0.2);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+}
+.sr-active-bar.visible { display: flex; }
+.sr-active-bar-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── MODALS (reused from main site) ─── */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.btn-primary {
+  background: #E61E38;
+  color: #FFFFFF;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  border: 1px solid #E61E38;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(230,30,56,0.25);
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(230,30,56,0.4);
+  background: #C8102E;
+}
+
+/* Amenity modal image */
+#amenity-modal-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+/* FOOTER */
+footer {
+  background: #0A192F;
+  color: #FFFFFF;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .sr-body { grid-template-columns: 240px 1fr; }
+  .sr-card-img-wrap { width: 220px; min-width: 220px; }
+}
+@media (max-width: 860px) {
+  .sr-body { grid-template-columns: 1fr; }
+  .sr-sidebar {
+    position: static;
+    display: none;
+    max-height: none;
+    overflow-y: unset;
+  }
+  .sr-sidebar.mobile-open { display: block; }
+  .sr-card { flex-direction: column; }
+  .sr-card-img-wrap { width: 100%; min-width: unset; height: 200px; max-height: 200px; }
+  .sr-header-search { display: none; }
+}
+
+/* Mobile filter button */
+.sr-mobile-filter-btn {
+  display: none;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  gap: 7px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .sr-mobile-filter-btn { display: flex; }
+}
+
+/* Skeleton loading shimmer */
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     STICKY HEADER
+════════════════════════════════════════════ -->
+<header class="sr-header">
+  <div class="sr-header-inner">
+
+    <!-- Logo -->
+    <a href="/" class="sr-logo">
+      <img src="/logo.png" alt="LoungePair Logo">
+      <div class="sr-logo-text">
+        <div class="sr-logo-name">Lounge<span>Pair</span></div>
+        <div class="sr-logo-sub">International</div>
+      </div>
+    </a>
+
+    <!-- Search Bar -->
+    <div class="sr-header-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <input
+        type="text"
+        id="header-search-input"
+        placeholder="City, airport or lounge..."
+        value="<?= htmlspecialchars($query) ?>"
+      >
+      <button class="sr-header-search-btn" onclick="doHeaderSearch()">Search</button>
+    </div>
+
+    <!-- Spacer -->
+    <div style="flex:1;"></div>
+
+    <!-- Home link -->
+    <a href="/" class="sr-home-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+
+    <!-- Currency -->
+    <select id="currency-select" class="sr-currency-select" onchange="changeCurrency(this.value)">
+      <?php foreach ($CURRENCIES as $code => $info): ?>
+        <option value="<?= $code ?>"><?= $info['name'] ?></option>
+      <?php endforeach; ?>
+    </select>
+
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     BREADCRUMB
+════════════════════════════════════════════ -->
+<nav class="sr-breadcrumb" aria-label="breadcrumb">
+  <div class="sr-breadcrumb-inner">
+    <a href="/">Home</a>
+    <span class="sr-breadcrumb-sep">›</span>
+    <a href="/search.php">All Lounges</a>
+    <?php if ($query): ?>
+      <span class="sr-breadcrumb-sep">›</span>
+      <span class="sr-breadcrumb-current"><?= htmlspecialchars(ucwords($query)) ?></span>
+    <?php endif; ?>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     MAIN BODY
+════════════════════════════════════════════ -->
+<div class="sr-body">
+
+  <!-- ───────────────── SIDEBAR ───────────────── -->
+  <aside class="sr-sidebar" id="filter-sidebar">
+
+    <!-- Header -->
+    <div class="sr-sidebar-header">
+      <h3>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-right:6px"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        Filters
+      </h3>
+      <button class="sr-sidebar-clear" onclick="clearAllFilters()">Clear All</button>
+    </div>
+
+    <!-- Active chips (injected by JS) -->
+    <div class="sr-active-chips" id="active-chip-container" style="display:none;"></div>
+
+    <!-- Price Range -->
+    <div class="sr-filter-section">
+      <div class="sr-filter-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Budget (USD per person)
+      </div>
+      <div class="sr-price-range">
+        <input type="number" class="sr-price-input" id="price-min" placeholder="Min" min="0" max="200" value="0" onchange="applyFilters()">
+        <span class="sr-price-sep">–</span>
+        <input type="number" class="sr-price-input" id="price-max" placeholder="Max" min="0" max="200" value="200" onchange="applyFilters()">
+      </div>
+      <input type="range" class="sr-range" id="price-range-slider" min="0" max="200" value="200" oninput="document.getElementById('price-max').value=this.value; applyFilters();">
+    </div>
+
+    <!-- Minimum Rating -->
+    <div class="sr-filter-section">
+      <div class="sr-filter-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Minimum Rating
+      </div>
+      <div class="sr-check-list" id="rating-filter">
+        <label class="sr-rating-row">
+          <input type="radio" name="rating" value="0" checked onchange="applyFilters()" style="accent-color: var(--accent);">
+          <span class="sr-stars">★★★★★</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text-muted)">Any</span>
+        </label>
+        <label class="sr-rating-row">
+          <input type="radio" name="rating" value="4" onchange="applyFilters()" style="accent-color: var(--accent);">
+          <span class="sr-stars">★★★★</span><span style="font-size:12px;font-weight:600;color:var(--text-muted)">4.0+</span>
+        </label>
+        <label class="sr-rating-row">
+          <input type="radio" name="rating" value="4.5" onchange="applyFilters()" style="accent-color: var(--accent);">
+          <span class="sr-stars">★★★★½</span><span style="font-size:12px;font-weight:600;color:var(--text-muted)">4.5+</span>
+        </label>
+        <label class="sr-rating-row">
+          <input type="radio" name="rating" value="4.9" onchange="applyFilters()" style="accent-color: var(--accent);">
+          <span class="sr-stars">★★★★★</span><span style="font-size:12px;font-weight:600;color:var(--text-muted)">4.9+</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Region -->
+    <div class="sr-filter-section">
+      <div class="sr-filter-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Region
+      </div>
+      <div class="sr-check-list" id="region-filter">
+        <?php
+        $regions = array_unique(array_column($LOUNGE_GUIDES, 'region'));
+        sort($regions);
+        foreach ($regions as $reg):
+          $cnt = count(array_filter($LOUNGE_GUIDES, fn($l) => $l['region'] === $reg));
+        ?>
+        <label class="sr-check-item">
+          <input type="checkbox" value="<?= htmlspecialchars($reg) ?>" onchange="applyFilters()">
+          <span><?= htmlspecialchars($reg) ?></span>
+          <span class="sr-check-count"><?= $cnt ?></span>
+        </label>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <!-- Availability Status -->
+    <div class="sr-filter-section">
+      <div class="sr-filter-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Availability
+      </div>
+      <div class="sr-check-list" id="status-filter">
+        <label class="sr-check-item">
+          <input type="checkbox" value="Quiet & Spacious" onchange="applyFilters()">
+          <span>🟢 Quiet &amp; Spacious</span>
+        </label>
+        <label class="sr-check-item">
+          <input type="checkbox" value="Moderate" onchange="applyFilters()">
+          <span>🔵 Moderate</span>
+        </label>
+        <label class="sr-check-item">
+          <input type="checkbox" value="High Demand" onchange="applyFilters()">
+          <span>🟡 High Demand</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Amenities -->
+    <div class="sr-filter-section">
+      <div class="sr-filter-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Amenities
+      </div>
+      <div class="sr-check-list" id="amenity-filter" style="max-height:200px; overflow-y:auto;">
+        <?php foreach ($allAmenities as $am): ?>
+        <label class="sr-check-item">
+          <input type="checkbox" value="<?= htmlspecialchars($am) ?>" onchange="applyFilters()">
+          <span><?= htmlspecialchars($am) ?></span>
+        </label>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ───────────────── RESULTS ───────────────── -->
+  <section class="sr-results">
+
+    <!-- Trust Strip (slim) -->
+    <div class="sr-trust-strip">
+      <div class="sr-trust-item">
+        <div class="sr-trust-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="sr-trust-title">Guaranteed Entry</div>
+          <div class="sr-trust-sub">Priority capacity allocation</div>
+        </div>
+      </div>
+      <div class="sr-trust-sep"></div>
+      <div class="sr-trust-item">
+        <div class="sr-trust-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="sr-trust-title">Instant Digital Pass</div>
+          <div class="sr-trust-sub">QR issued in 30 seconds</div>
+        </div>
+      </div>
+      <div class="sr-trust-sep"></div>
+      <div class="sr-trust-item">
+        <div class="sr-trust-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div>
+          <div class="sr-trust-title">Free Cancellation</div>
+          <div class="sr-trust-sub">Up to 2hrs before entry</div>
+        </div>
+      </div>
+      <div class="sr-trust-sep"></div>
+      <div class="sr-trust-item">
+        <div class="sr-trust-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div>
+          <div class="sr-trust-title">1,400+ Lounges</div>
+          <div class="sr-trust-sub">60+ countries</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Filter Bar (above results) -->
+    <div class="sr-active-bar" id="active-bar">
+      <span class="sr-active-bar-label">Filters:</span>
+      <div id="active-bar-chips" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;"></div>
+      <button onclick="clearAllFilters()" style="margin-left:auto;background:none;border:none;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;padding:2px 8px;">Clear all ×</button>
+    </div>
+
+    <!-- Results Header Bar -->
+    <div class="sr-results-header">
+      <div class="sr-results-count">
+        <h2 id="results-count-display">
+          <span id="results-num"><?= $count ?></span> <?= $count === 1 ? 'Lounge' : 'Lounges' ?> Found<?php if ($query): ?> near <span>"<?= htmlspecialchars(ucwords($query)) ?>"</span><?php endif; ?>
+        </h2>
+        <p><?php if ($count > 0): ?>Showing <?= $count ?> premium <?= $count === 1 ? 'lounge' : 'lounges' ?> — tap a card to book instantly<?php else: ?>Try a broader search term or browse all lounges<?php endif; ?></p>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <!-- Mobile filter toggle -->
+        <button class="sr-mobile-filter-btn" onclick="toggleMobileFilter()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          Filters
+        </button>
+
+        <div class="sr-results-sort">
+          <span class="sr-sort-label">Sort by:</span>
+          <select class="sr-sort-select" id="sort-select" onchange="applyFilters()" style="font-size:14px;padding:9px 18px;border-radius:12px;border-color:var(--border);">
+            <option value="rating">⭐ Top Rated</option>
+            <option value="price-asc">💰 Price: Low → High</option>
+            <option value="price-desc">💎 Price: High → Low</option>
+            <option value="reviews">🗣️ Most Reviewed</option>
+            <option value="name-asc">🔤 Name A → Z</option>
+          </select>
+        </div>
+
+        <!-- View toggle -->
+        <div class="sr-view-toggle">
+          <button class="sr-view-btn active" id="view-list-btn" onclick="setView('list')" title="List View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+          <button class="sr-view-btn" id="view-grid-btn" onclick="setView('grid')" title="Grid View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card List -->
+    <div class="sr-card-list" id="sr-card-list">
+      <?php foreach ($results as $lounge):
+        $rating     = $lounge['rating'];
+        $fullStars  = floor($rating);
+        $halfStar   = ($rating - $fullStars) >= 0.4;
+        $stars      = str_repeat('★', $fullStars) . ($halfStar ? '½' : '') . str_repeat('☆', 5 - $fullStars - ($halfStar ? 1 : 0));
+        $statusClass = match(true) {
+          str_contains($lounge['status'], 'Quiet')  => 'sr-avail-quiet',
+          str_contains($lounge['status'], 'High')   => 'sr-avail-busy',
+          default                                    => 'sr-avail-moderate',
+        };
+        $statusDot = match(true) {
+          str_contains($lounge['status'], 'Quiet') => '🟢',
+          str_contains($lounge['status'], 'High')  => '🟡',
+          default                                   => '🔵',
+        };
+      ?>
+      <article
+        class="sr-card"
+        data-id="<?= htmlspecialchars($lounge['id']) ?>"
+        data-price="<?= $lounge['priceUSD'] ?>"
+        data-rating="<?= $lounge['rating'] ?>"
+        data-reviews="<?= $lounge['reviewsCount'] ?>"
+        data-city="<?= htmlspecialchars($lounge['city']) ?>"
+        data-region="<?= htmlspecialchars($lounge['region']) ?>"
+        data-status="<?= htmlspecialchars($lounge['status']) ?>"
+        data-amenities="<?= htmlspecialchars(implode('||', $lounge['amenities'])) ?>"
+      >
+        <!-- Image -->
+        <div class="sr-card-img-wrap">
+          <img
+            class="sr-card-img"
+            src="<?= htmlspecialchars($lounge['image']) ?>"
+            alt="<?= htmlspecialchars($lounge['city']) ?> Lounge"
+            loading="lazy"
+          >
+          <div class="sr-card-badge-premium">✦ Premium Lounge</div>
+          <!-- Heart / Favourite -->
+          <button
+            class="sr-heart-btn"
+            id="heart-<?= htmlspecialchars($lounge['id']) ?>"
+            onclick="toggleHeart('<?= htmlspecialchars($lounge['id']) ?>')"
+            title="Save to favourites"
+            aria-label="Add to favourites"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="sr-card-badge-tour" onclick="openVirtualTourModal('<?= htmlspecialchars($lounge['id']) ?>')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            Virtual Tour
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="sr-card-body">
+          <!-- Top row -->
+          <div class="sr-card-top">
+            <div class="sr-card-title-wrap">
+              <div class="sr-card-title">
+                <?= htmlspecialchars($lounge['city']) ?> Lounge
+                <?php if ($lounge['rating'] >= 4.9): ?>
+                  <span class="sr-trending-badge">🔥 Trending</span>
+                <?php endif; ?>
+              </div>
+              <div class="sr-card-subtitle">
+                <span class="sr-card-iata"><?= htmlspecialchars($lounge['airportCode']) ?></span>
+                <span class="sr-card-region">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <?= htmlspecialchars($lounge['country']) ?> · <?= htmlspecialchars($lounge['region']) ?>
+                </span>
+              </div>
+            </div>
+            <span class="sr-avail-badge <?= $statusClass ?>">
+              <?= $statusDot ?> <?= htmlspecialchars($lounge['status']) ?>
+            </span>
+          </div>
+
+          <!-- Rating -->
+          <div class="sr-card-rating">
+            <span class="sr-stars-row"><?= $stars ?></span>
+            <span class="sr-rating-num"><?= number_format($rating, 1) ?></span>
+            <span class="sr-reviews">(<?= number_format($lounge['reviewsCount']) ?> reviews)</span>
+          </div>
+
+          <!-- Description snippet -->
+          <p style="font-size:13px;color:var(--text-light);line-height:1.55;font-weight:500;">
+            <?= htmlspecialchars(strlen($lounge['description']) > 130 ? substr($lounge['description'], 0, 127) . '…' : $lounge['description']) ?>
+          </p>
+
+          <!-- Terminals -->
+          <div class="sr-terminals">
+            <?php foreach (array_slice($lounge['terminals'], 0, 3) as $term): ?>
+            <span class="sr-terminal-chip">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 3.2l-1.5 1.5L5.7 11c-1.8 1.4-1.8 3-.5 4.3l4.2 4.2c1.3 1.3 2.9 1.3 4.3-.5l6.3 5.4 1.5-1.5z"/></svg>
+              <?= htmlspecialchars($term) ?>
+            </span>
+            <?php endforeach; ?>
+            <?php if (count($lounge['terminals']) > 3): ?>
+              <span class="sr-terminal-chip" style="background:rgba(230,30,56,0.07);border-color:rgba(230,30,56,0.2);color:var(--accent);">
+                +<?= count($lounge['terminals']) - 3 ?> more
+              </span>
+            <?php endif; ?>
+          </div>
+
+          <!-- Amenity chips -->
+          <div class="sr-amenities">
+            <?php foreach (array_slice($lounge['amenities'], 0, 5) as $am): ?>
+            <span class="sr-amenity-chip">✦ <?= htmlspecialchars($am) ?></span>
+            <?php endforeach; ?>
+            <?php if (count($lounge['amenities']) > 5): ?>
+              <span class="sr-amenity-chip" style="background:#F1F5F9;color:var(--text-muted);border-color:var(--border);">
+                +<?= count($lounge['amenities']) - 5 ?> more
+              </span>
+            <?php endif; ?>
+          </div>
+
+          <!-- Footer: price + buttons -->
+          <div class="sr-card-footer">
+            <div class="sr-price-block">
+              <div class="sr-price-label">From</div>
+              <div>
+                <span
+                  class="sr-price-val price-display"
+                  data-price-usd="<?= $lounge['priceUSD'] ?>"
+                >$<?= $lounge['priceUSD'] ?></span>
+                <span class="sr-price-per"> / person</span>
+              </div>
+              <div class="sr-price-tag">✓ Free cancellation</div>
+            </div>
+
+            <div class="sr-card-btns">
+              <button
+                class="sr-btn-tour"
+                onclick="openVirtualTourModal('<?= htmlspecialchars($lounge['id']) ?>')"
+                title="Preview this lounge"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                Preview
+              </button>
+              <button
+                class="sr-btn-book"
+                onclick="openBookingModal('<?= htmlspecialchars($lounge['id']) ?>')"
+                id="book-btn-<?= htmlspecialchars($lounge['id']) ?>"
+              >
+                Book Now
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </article>
+      <?php endforeach; ?>
+
+      <!-- Empty state (shown by JS) -->
+      <?php if ($count === 0): ?>
+      <div class="sr-empty">
+        <div class="sr-empty-icon">✈️</div>
+        <h3>No Lounges Found</h3>
+        <p>We couldn't find any lounges matching "<?= htmlspecialchars($query) ?>". Try searching a major hub airport.</p>
+        <a href="/search.php" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;font-weight:700;font-size:14px;text-decoration:none;">
+          Browse All Lounges
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <?php endif; ?>
+
+      <!-- JS-driven no-filter-results -->
+      <div id="no-filter-results" class="sr-empty" style="display:none;">
+        <div class="sr-empty-icon">🔍</div>
+        <h3>No results match your filters</h3>
+        <p>Try adjusting or clearing your filters to see more lounges.</p>
+        <button onclick="clearAllFilters()" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;font-weight:700;font-size:14px;border:none;cursor:pointer;">
+          Clear All Filters
+        </button>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<?php include_once __DIR__ . '/components/footer.php'; ?>
+
+<!-- ═══════════════════════════════════════════
+     MODALS (booking + virtual tour)
+════════════════════════════════════════════ -->
+<?php include_once __DIR__ . '/components/modals.php'; ?>
+
+<!-- Amenity Modal -->
+<div id="amenity-modal" class="modal-overlay" onclick="closeAmenityModal()" style="display:none;">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:28px;max-width:480px;width:100%;padding:28px;box-shadow:0 35px 65px -15px rgba(15,23,42,0.3);">
+    <img id="amenity-modal-image" src="" alt="Amenity">
+    <h3 id="amenity-modal-title" style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin-bottom:10px;"></h3>
+    <p id="amenity-modal-description" style="font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:20px;"></p>
+    <button id="amenity-select-pass-btn" class="btn-primary" style="width:100%;padding:14px;font-size:15px;">Book This Lounge</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT ENGINE
+════════════════════════════════════════════ -->
+<script>
+// ── Data from PHP ──
+const loungesData = <?php echo json_encode(array_values($LOUNGE_GUIDES)); ?>;
+const currencies  = <?php echo json_encode($CURRENCIES); ?>;
+
+let currentCurrency = 'USD';
+let activeVirtualTourLounge = null;
+let virtualTourCurrentSlide = 0;
+let currentView = 'list';
+
+// ── Currency ──
+function changeCurrency(code) {
+  currentCurrency = code;
+  const { rate, symbol } = currencies[code];
+  document.querySelectorAll('.price-display').forEach(el => {
+    const base = parseFloat(el.getAttribute('data-price-usd'));
+    if (!isNaN(base)) {
+      el.textContent = symbol + Math.round(base * rate);
+    }
+  });
+}
+changeCurrency('USD');
+
+// ── Header Search ──
+function doHeaderSearch() {
+  const q = document.getElementById('header-search-input').value.trim();
+  window.location.href = '/search.php?q=' + encodeURIComponent(q);
+}
+document.getElementById('header-search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doHeaderSearch();
+});
+
+// ── Mobile filter toggle ──
+function toggleMobileFilter() {
+  const sidebar = document.getElementById('filter-sidebar');
+  sidebar.classList.toggle('mobile-open');
+}
+
+// ── View Mode ──
+function setView(mode) {
+  currentView = mode;
+  const list = document.getElementById('sr-card-list');
+  const btnList = document.getElementById('view-list-btn');
+  const btnGrid = document.getElementById('view-grid-btn');
+
+  if (mode === 'grid') {
+    list.style.display = 'grid';
+    list.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
+    list.style.gap = '16px';
+    document.querySelectorAll('.sr-card').forEach(c => {
+      c.style.flexDirection = 'column';
+      c.querySelector('.sr-card-img-wrap').style.width = '100%';
+      c.querySelector('.sr-card-img-wrap').style.minWidth = 'unset';
+      c.querySelector('.sr-card-img-wrap').style.height = '180px';
+    });
+    btnGrid.classList.add('active');
+    btnList.classList.remove('active');
+  } else {
+    list.style.display = 'flex';
+    list.style.flexDirection = 'column';
+    document.querySelectorAll('.sr-card').forEach(c => {
+      c.style.flexDirection = 'row';
+      c.querySelector('.sr-card-img-wrap').style.width = '280px';
+      c.querySelector('.sr-card-img-wrap').style.minWidth = '280px';
+      c.querySelector('.sr-card-img-wrap').style.height = '';
+    });
+    btnList.classList.add('active');
+    btnGrid.classList.remove('active');
+  }
+}
+
+// ── Active chips display ──
+function rebuildChips() {
+  const container = document.getElementById('active-chip-container');
+  const chips = [];
+
+  const minPrice = parseInt(document.getElementById('price-min').value) || 0;
+  const maxPrice = parseInt(document.getElementById('price-max').value) || 200;
+  if (minPrice > 0 || maxPrice < 200) {
+    chips.push({ label: `$${minPrice}–$${maxPrice}`, type: 'price' });
+  }
+
+  const ratingVal = document.querySelector('input[name="rating"]:checked')?.value || '0';
+  if (parseFloat(ratingVal) > 0) chips.push({ label: `${ratingVal}+ Stars`, type: 'rating' });
+
+  document.querySelectorAll('#region-filter input:checked').forEach(el => {
+    chips.push({ label: el.value, type: 'region', val: el.value });
+  });
+  document.querySelectorAll('#status-filter input:checked').forEach(el => {
+    chips.push({ label: el.value, type: 'status', val: el.value });
+  });
+  document.querySelectorAll('#amenity-filter input:checked').forEach(el => {
+    chips.push({ label: el.value, type: 'amenity', val: el.value });
+  });
+
+  if (chips.length === 0) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+  container.style.display = 'flex';
+  container.innerHTML = chips.map(c =>
+    `<span class="sr-chip" onclick="removeChip('${c.type}','${(c.val||'').replace(/'/g,"\\'")}')">
+       ${c.label} <span class="sr-chip-x">×</span>
+     </span>`
+  ).join('');
+}
+
+function removeChip(type, val) {
+  if (type === 'price') {
+    document.getElementById('price-min').value = 0;
+    document.getElementById('price-max').value = 200;
+    document.getElementById('price-range-slider').value = 200;
+  } else if (type === 'rating') {
+    document.querySelector('input[name="rating"][value="0"]').checked = true;
+  } else {
+    const selector = `#${type}-filter input[value="${CSS.escape(val)}"]`;
+    const el = document.querySelector(selector);
+    if (el) el.checked = false;
+  }
+  applyFilters();
+}
+
+function clearAllFilters() {
+  document.getElementById('price-min').value = 0;
+  document.getElementById('price-max').value = 200;
+  document.getElementById('price-range-slider').value = 200;
+  document.querySelector('input[name="rating"][value="0"]').checked = true;
+  document.querySelectorAll('#region-filter input, #status-filter input, #amenity-filter input').forEach(el => el.checked = false);
+  applyFilters();
+}
+
+// ── Main Filter & Sort ──
+function applyFilters() {
+  const minPrice  = parseFloat(document.getElementById('price-min').value) || 0;
+  const maxPrice  = parseFloat(document.getElementById('price-max').value) || 999;
+  const minRating = parseFloat(document.querySelector('input[name="rating"]:checked')?.value || '0');
+  const sortVal   = document.getElementById('sort-select').value;
+
+  const checkedRegions  = [...document.querySelectorAll('#region-filter input:checked')].map(el => el.value);
+  const checkedStatuses = [...document.querySelectorAll('#status-filter input:checked')].map(el => el.value);
+  const checkedAmenities= [...document.querySelectorAll('#amenity-filter input:checked')].map(el => el.value);
+
+  const cards = [...document.querySelectorAll('.sr-card[data-id]')];
+  let visible = [];
+
+  cards.forEach(card => {
+    const price   = parseFloat(card.dataset.price);
+    const rating  = parseFloat(card.dataset.rating);
+    const region  = card.dataset.region;
+    const status  = card.dataset.status;
+    const amenStr = card.dataset.amenities;
+
+    let show = true;
+    if (price < minPrice || price > maxPrice) show = false;
+    if (rating < minRating) show = false;
+    if (checkedRegions.length > 0 && !checkedRegions.includes(region)) show = false;
+    if (checkedStatuses.length > 0 && !checkedStatuses.some(s => status.includes(s.replace(/^[^\s]+ /, '')))) show = false;
+    if (checkedAmenities.length > 0 && !checkedAmenities.every(a => amenStr.includes(a))) show = false;
+
+    card.style.display = show ? '' : 'none';
+    if (show) visible.push(card);
+  });
+
+  // Sort visible
+  const parent = document.getElementById('sr-card-list');
+  visible.sort((a, b) => {
+    switch (sortVal) {
+      case 'price-asc':  return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+      case 'price-desc': return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+      case 'rating':     return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+      case 'reviews':    return parseInt(b.dataset.reviews) - parseInt(a.dataset.reviews);
+      case 'name-asc':   return a.dataset.city.localeCompare(b.dataset.city);
+      default: return 0;
+    }
+  });
+  visible.forEach(c => parent.appendChild(c));
+
+  // Update count
+  document.getElementById('results-num').textContent = visible.length;
+
+  // No-results fallback
+  document.getElementById('no-filter-results').style.display = visible.length === 0 ? 'block' : 'none';
+
+  // Re-apply currency
+  changeCurrency(currentCurrency);
+
+  rebuildChips();
+}
+
+// ── Booking Modal ──
+function openBookingModal(loungeId) {
+  const lounge = loungesData.find(l => l.id === loungeId);
+  if (!lounge) return;
+
+  document.getElementById('booking-lounge-id').value = lounge.id;
+  document.getElementById('booking-modal-lounge-name').textContent = lounge.city + ' Lounge';
+  document.getElementById('booking-modal-lounge-terminal').textContent = lounge.terminals[0] + ' • Guaranteed Entry';
+
+  document.getElementById('booking-travelers').value = '1';
+  document.getElementById('booking-date').value = '2026-07-10';
+  document.getElementById('booking-addon-spa').checked = false;
+  document.getElementById('booking-addon-fasttrack').checked = true;
+
+  document.getElementById('booking-total-price-display').setAttribute('data-price-usd', lounge.priceUSD);
+  calculateBookingPrice();
+
+  document.getElementById('booking-form-step-1').style.display = 'block';
+  document.getElementById('booking-form-step-2').style.display = 'none';
+  document.getElementById('booking-modal').style.display = 'flex';
+}
+
+function closeBookingModal() {
+  document.getElementById('booking-modal').style.display = 'none';
+}
+
+function calculateBookingPrice() {
+  const id = document.getElementById('booking-lounge-id').value;
+  const lounge = loungesData.find(l => l.id === id);
+  if (!lounge) return;
+
+  let priceUSD = lounge.priceUSD;
+  if (document.getElementById('booking-addon-spa').checked) priceUSD += 15;
+  const travelers = parseInt(document.getElementById('booking-travelers').value) || 1;
+  const total = priceUSD * travelers;
+
+  const el = document.getElementById('booking-total-price-display');
+  el.setAttribute('data-price-usd', total);
+  const { rate, symbol } = currencies[currentCurrency];
+  el.textContent = symbol + Math.round(total * rate);
+}
+
+function submitBooking(e) {
+  e.preventDefault();
+  const id = document.getElementById('booking-lounge-id').value;
+  const lounge = loungesData.find(l => l.id === id);
+  if (!lounge) return;
+  document.getElementById('confirmation-lounge-name').textContent = lounge.city;
+  document.getElementById('booking-form-step-1').style.display = 'none';
+  document.getElementById('booking-form-step-2').style.display = 'block';
+  try {
+    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+  } catch(err) {}
+}
+
+// ── How it Works Modal ──
+function openHowItWorksModal() {
+  document.getElementById('how-it-works-modal').style.display = 'flex';
+}
+function closeHowItWorksModal() {
+  document.getElementById('how-it-works-modal').style.display = 'none';
+}
+
+// ── Virtual Tour Modal ──
+function openVirtualTourModal(loungeId) {
+  const lounge = loungesData.find(l => l.id === loungeId);
+  if (!lounge) return;
+  activeVirtualTourLounge = lounge;
+  virtualTourCurrentSlide = 0;
+  document.getElementById('tour-modal-title').textContent = `${lounge.city} (${lounge.airportCode})`;
+  document.getElementById('tour-modal-amenities').textContent = lounge.amenities.join(', ');
+  const bookBtn = document.getElementById('tour-modal-book-btn');
+  bookBtn.onclick = () => { closeVirtualTourModal(); openBookingModal(lounge.id); };
+  renderTourSlide();
+  document.getElementById('tour-modal').style.display = 'flex';
+}
+function closeVirtualTourModal() {
+  document.getElementById('tour-modal').style.display = 'none';
+  activeVirtualTourLounge = null;
+}
+function renderTourSlide() {
+  if (!activeVirtualTourLounge) return;
+  const slides = (activeVirtualTourLounge.virtualTour && activeVirtualTourLounge.virtualTour.length > 0)
+    ? activeVirtualTourLounge.virtualTour
+    : [{ title: 'Main Lounge Area', url: activeVirtualTourLounge.image }];
+  const slide = slides[virtualTourCurrentSlide];
+  document.getElementById('tour-modal-slide-image').src = slide.url;
+  document.getElementById('tour-modal-slide-counter').textContent = `Area ${virtualTourCurrentSlide + 1} of ${slides.length}`;
+  document.getElementById('tour-modal-slide-title').textContent = slide.title;
+  const dots = document.getElementById('tour-modal-dots');
+  dots.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.style.cssText = `width:${i===virtualTourCurrentSlide?'20px':'8px'};height:8px;border-radius:4px;background:${i===virtualTourCurrentSlide?'#E61E38':'rgba(255,255,255,0.4)'};transition:all 0.3s;`;
+    dots.appendChild(d);
+  });
+}
+function prevTourSlide() {
+  const slides = activeVirtualTourLounge?.virtualTour || [];
+  const len = slides.length || 1;
+  virtualTourCurrentSlide = virtualTourCurrentSlide === 0 ? len - 1 : virtualTourCurrentSlide - 1;
+  renderTourSlide();
+}
+function nextTourSlide() {
+  const slides = activeVirtualTourLounge?.virtualTour || [];
+  const len = slides.length || 1;
+  virtualTourCurrentSlide = virtualTourCurrentSlide === len - 1 ? 0 : virtualTourCurrentSlide + 1;
+  renderTourSlide();
+}
+
+// ── Amenity Modal ──
+function openAmenityModal(amenityName, loungeName, loungeId) {
+  const modal = document.getElementById('amenity-modal');
+  document.getElementById('amenity-modal-title').textContent = amenityName;
+  document.getElementById('amenity-modal-description').innerHTML = `Enjoy complimentary, guaranteed priority access to <strong>${amenityName}</strong> at the <strong>${loungeName} Lounge</strong>. Included seamlessly with your LoungePair digital boarding pass—no extra fees or waitlists.`;
+  const lower = amenityName.toLowerCase();
+  let img = 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80';
+  if (lower.includes('shower')) img = 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80';
+  else if (lower.includes('chef') || lower.includes('buffet') || lower.includes('noodle')) img = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80';
+  else if (lower.includes('bar') || lower.includes('cocktail') || lower.includes('champagne')) img = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80';
+  document.getElementById('amenity-modal-image').src = img;
+  document.getElementById('amenity-select-pass-btn').onclick = () => { closeAmenityModal(); openBookingModal(loungeId); };
+  modal.style.display = 'flex';
+}
+function closeAmenityModal() {
+  document.getElementById('amenity-modal').style.display = 'none';
+}
+
+// ── Open direct booking if ?id= param present ──
+<?php if ($directId): ?>
+window.addEventListener('DOMContentLoaded', () => openBookingModal('<?= htmlspecialchars($directId) ?>'));
+<?php endif; ?>
+
+// ── Initial sort apply ──
+applyFilters();
+</script>
+
+</body>
+</html>
