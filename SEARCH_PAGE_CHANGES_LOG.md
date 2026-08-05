@@ -23,17 +23,66 @@
 
 ### Available Data Fields for New Filters
 - **tier**: Gold, Platinum, Elite (Package Tier)
-- **gateType**: Departure (Gate Type)
+- **gateType**: Departure, Arrival, Landside, Airside (Gate Type)
 - **terminals**: Array of terminal names (Terminal Type can be derived)
 
-## Planned Changes
-The filter sidebar will be rebuilt to use:
-1. **Terminal Type** (replacing Region)
-2. **Gate Type** (replacing Amenities)  
-3. **Package Tier** (new filter)
+## Changes Implemented
 
-Existing filters to keep:
-- Price Range
-- Guest Rating
-- Availability Status
+### 1. PHP Data Collection (Lines 28-59)
+**Removed:** Old amenities collection logic  
+**Added:** New filter value collection from current results:
+- `$allGateTypes`: Collects unique gateType values (Departure, Arrival, Landside, Airside)
+- `$allTiers`: Collects unique tier values (Gold, Platinum, Elite, etc.)
+- `$allTerminalTypes`: Derives terminal type from terminal names/description (International, Domestic, Domestic-International)
+- All counts computed from current search result set (not global)
+
+### 2. Filter Sidebar HTML Changes
+
+**Removed:** Region filter section (lines 1619-1640)  
+**Added:** Terminal Type filter section (lines 1643-1671)
+- Checkbox list with counts from current results
+- Icon: Airplane
+- Values: International, Domestic, Domestic-International
+
+**Removed:** Amenities filter section (lines 1666-1681)  
+**Added:** Gate Type filter section (lines 1697-1715)
+- Checkbox list with counts from current results
+- Icon: Cross/Plus
+- Values: Departure, Arrival, Landside, Airside
+
+**Added:** Package Tier filter section (lines 1717-1735)
+- Checkbox list with counts from current results
+- Icon: Star
+- Values: Gold, Platinum, Elite, etc. (dynamic based on results)
+
+### 3. JavaScript applyFilters() Function (Lines 2046-2078)
+**Removed:** Region, Amenities filter logic  
+**Added:** New filter logic:
+- Terminal Type: Derives type from terminals/description on each lounge
+- Gate Type: Direct match against lounge.gateType field
+- Package Tier: Direct match against lounge.tier field
+- All filters applied to current result set only
+
+### 4. JavaScript rebuildChips() Function (Lines 1991-2002)
+**Removed:** Region, Amenity chip collection  
+**Added:** New chip collection:
+- terminalType chips
+- gateType chips
+- tier chips
+- status chips (kept existing)
+
+### 5. JavaScript clearAllFilters() Function (Line 2038)
+**Removed:** Region, Amenity filter clearing  
+**Added:** New filter clearing:
+- terminal-type-filter
+- gate-type-filter
+- tier-filter
+- status-filter (kept existing)
+
+## Result
+- Filter sidebar now uses real data fields (tier, gateType, derived terminalType)
+- All checkbox counts computed from current search results (accurate totals)
+- Region filter removed (redundant with search scoping)
+- Amenities filter removed (no real data)
+- Price Range, Guest Rating, Availability Status filters preserved
 
