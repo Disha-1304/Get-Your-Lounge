@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCurrency } from '../context/CurrencyContext';
-import loungesData from '../data/loungesData.json';
-import globalLounges from '../data/globalLoungesData.json';
-import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import { useCurrency } from '../../context/CurrencyContext';
+import loungesData from '../../data/loungesData.json';
+import globalLounges from '../../data/globalLoungesData.json';
+import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
 
 const getCapacity = (id) => {
   const hash = String(id).split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -59,7 +59,7 @@ export const LoungeGuides = () => {
       <div className="flex justify-between items-end flex-wrap gap-6 mb-12 relative z-10">
         <div>
 
-          <h2 className="luxury-serif text-[clamp(36px,4.5vw,52px)] text-navy mb-3">
+          <h2 className="font-quicksand font-extrabold text-[clamp(36px,4.5vw,52px)] text-navy mb-3">
             International <span className="bg-gradient-to-br from-accent-rose via-[#C8102E] to-navy bg-clip-text text-transparent font-extrabold">Lounge Guides</span>
           </h2>
           <p className="text-lg text-slate-700 max-w-[640px]">

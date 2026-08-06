@@ -8,7 +8,7 @@ import {
 import { useCurrency } from '../context/CurrencyContext';
 import globalLounges from '../data/globalLoungesData.json';
 import loungesData from '../data/loungesData.json';
-import { Footer } from '../components/Footer';
+import { Footer } from '../components/home/Footer';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 
 export const LoungeDetailsPage = () => {
@@ -57,7 +57,7 @@ export const LoungeDetailsPage = () => {
             </button>
             <Link to="/" className="flex items-center gap-2 no-underline">
               <div className="text-[20px] font-extrabold tracking-wider text-navy font-outfit uppercase">
-                LOUNGE<span className="text-accent-rose">PAIR</span>
+                GET MY <span className="text-accent-rose">LOUNGE</span>
               </div>
             </Link>
           </div>

@@ -28,19 +28,21 @@
   --glass-border: rgba(254, 44, 28, 0.15);
 }
 
-body {
-  font-family: 'Quicksand', 'Plus Jakarta Sans', 'Outfit', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-main);
-  overflow-x: hidden;
+body, p, span, div, button, input, select, textarea {
+  font-family: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.5px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: inherit;
+  letter-spacing: -0.3px;
+}
+
+.font-quicksand {
+  font-family: 'Quicksand', sans-serif !important;
 }
 
 .gradient-text {

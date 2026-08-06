@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CurrencyProvider } from './context/CurrencyContext';
-import { ScrollToTop } from './components/ScrollToTop';
+import { ScrollToTop } from './components/home/ScrollToTop';
 import { HomePage } from './pages/HomePage';
 import { SearchPage } from './pages/SearchPage';
 import { LoungeDetailsPage } from './pages/LoungeDetailsPage';

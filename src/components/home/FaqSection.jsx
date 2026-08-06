@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
-import loungesData from '../data/loungesData.json';
+import loungesData from '../../data/loungesData.json';
 
 export const FaqSection = () => {
   const [search, setSearch] = useState('');
@@ -15,7 +15,7 @@ export const FaqSection = () => {
     <section className="py-[60px] px-5 pb-[80px] max-w-[960px] mx-auto">
       <div className="text-center mb-10">
         <h2 className="text-[clamp(28px,4vw,40px)] text-navy mb-3 font-outfit font-extrabold">
-          Buying lounge access with <span className="text-accent-rose">LoungePair</span>
+          Buying lounge access with <span className="text-accent-rose">Get My Lounge</span>
         </h2>
         <p className="text-[16px] text-slate-700 mb-6">
           Everything you need to know about our instant international airport lounge pass system.

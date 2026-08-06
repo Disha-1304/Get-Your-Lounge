@@ -3,7 +3,7 @@ import { Quote, CheckCircle } from 'lucide-react';
 
 const reviews = [
   {
-    quote: "LoungePair transformed our international corporate travel. Having instant guaranteed access to private suites and rainfall showers during 8-hour layovers in Singapore and Dubai is invaluable.",
+    quote: "Get My Lounge transformed our international corporate travel. Having instant guaranteed access to private suites and rainfall showers during 8-hour layovers in Singapore and Dubai is invaluable.",
     author: "Julianne Vance",
     title: "Managing Director, Global Wealth Partners",
     route: "Frequent Flyer • JFK ⇄ SIN",
@@ -34,11 +34,11 @@ export const ExecutiveReviews = () => {
             <span className="text-accent-rose">★</span> Executive Testimonials
           </div>
 
-          <h2 className="luxury-serif text-[42px] text-navy mb-4">
+          <h2 className="font-quicksand font-bold text-[38px] text-navy mb-3">
             Accolades from the <span className="bg-gradient-to-br from-accent-rose to-[#C8102E] bg-clip-text text-transparent font-bold">Discerning Flyer</span>
           </h2>
-          <p className="text-[16px] text-slate-700 max-w-[580px] mx-auto leading-relaxed">
-            Read how global executives, diplomats, and frequent travelers experience effortless airport hospitality with LoungePair International.
+          <p className="font-quicksand text-[16px] text-slate-600 max-w-[580px] mx-auto leading-relaxed font-medium">
+            Read how global executives, diplomats, and frequent travelers experience effortless airport hospitality with Get My Lounge International.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export const ExecutiveReviews = () => {
                     <span key={i} className="text-accent-rose text-sm">★</span>
                   ))}
                 </div>
-                <p className="luxury-serif text-[19px] text-navy leading-relaxed italic font-semibold">
+                <p className="font-quicksand text-[15.5px] text-slate-800 leading-[1.75] font-semibold tracking-normal">
                   "{rev.quote}"
                 </p>
               </div>

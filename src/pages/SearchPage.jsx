@@ -11,7 +11,7 @@ export const SearchPage = () => {
   const query = searchParams.get('q') || '';
   const navigate = useNavigate();
 
-  const { currentSymbol, convertPrice } = useCurrency();
+  const { currency, currentSymbol, convertPrice } = useCurrency();
 
   // Search input state
   const [searchInput, setSearchInput] = useState(query);
@@ -133,10 +133,10 @@ export const SearchPage = () => {
       <header className="sticky top-0 z-50 bg-navy border-b border-accent-rose/30 shadow-xl">
         <div className="max-w-[1440px] mx-auto px-6 h-[68px] flex items-center justify-between gap-5">
           <Link to="/" className="flex items-center gap-2.5 shrink-0 no-underline">
-            <img src="/logo.png" alt="LoungePair" className="h-[52px] w-auto" />
+            <img src="/logo.png" alt="Get My Lounge" className="h-[52px] w-auto" />
             <div className="flex flex-col leading-[1.1]">
               <div className="font-outfit text-[18px] font-extrabold tracking-[0.5px] text-white uppercase">
-                Lounge<span className="text-accent-rose">Pair</span>
+                GET MY <span className="text-accent-rose">LOUNGE</span>
               </div>
               <div className="text-[8px] font-bold tracking-[2.5px] text-white/55 uppercase">
                 International
@@ -182,15 +182,15 @@ export const SearchPage = () => {
             <div className="mb-8">
               <div className="font-bold text-[14px] text-navy mb-4 flex justify-between items-end">
                 <span>Max Budget</span>
-                <span className="text-[12px] text-slate-500 font-normal">USD</span>
+                <span className="text-[12px] text-slate-500 font-normal">{currency}</span>
               </div>
               <div className="flex items-center gap-3 mb-3 text-[14px] font-bold text-navy">
                 <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-center">
-                  $0
+                  {currentSymbol}0
                 </div>
                 <span className="text-slate-400">—</span>
                 <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-center">
-                  ${priceMax}
+                  {currentSymbol}{convertPrice(priceMax)}
                 </div>
               </div>
               <input 

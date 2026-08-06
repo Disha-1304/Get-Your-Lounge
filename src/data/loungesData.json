@@ -557,32 +557,32 @@
     ],
     "FAQ_ITEMS": [
         {
-            "q": "What exactly do I get with a LoungePair Pass?",
-            "a": "A LoungePair Pass gives you full, guaranteed entry to premium airport lounges worldwide without requiring an annual airline or credit card membership. Your pass includes complimentary gourmet food, alcoholic and non-alcoholic beverages, high-speed Wi-Fi, comfortable reclining workstations, and access to luxury amenities like showers and nap pods (subject to lounge availability)."
+            "q": "What exactly do I get with a Get My Lounge Pass?",
+            "a": "A Get My Lounge Pass gives you full, guaranteed entry to premium airport lounges worldwide without requiring an annual airline or credit card membership. Your pass includes complimentary gourmet food, alcoholic and non-alcoholic beverages, high-speed Wi-Fi, comfortable reclining workstations, and access to luxury amenities like showers and nap pods (subject to lounge availability)."
         },
         {
-            "q": "What makes the LoungePair Pass flexible?",
-            "a": "We understand travel plans change! With LoungePair, your pass is valid for any flight delay or reschedule up to 365 days from purchase. If your flight arrives early or late, your access window automatically adjusts. Plus, you get 100% money-back cancellation up to 2 hours before your scheduled entry time."
+            "q": "What makes the Get My Lounge Pass flexible?",
+            "a": "We understand travel plans change! With Get My Lounge, your pass is valid for any flight delay or reschedule up to 365 days from purchase. If your flight arrives early or late, your access window automatically adjusts. Plus, you get 100% money-back cancellation up to 2 hours before your scheduled entry time."
         },
         {
-            "q": "How do LoungePair passes work?",
-            "a": "Simply search your departure airport or layover city on our app, select your preferred lounge, and complete a 30-second checkout. You will instantly receive a digital 3D QR boarding pass on your phone and email. Just scan your phone screen at the lounge front desk\u2014no printing or paperwork required!"
+            "q": "How do Get My Lounge passes work?",
+            "a": "Simply search your departure airport or layover city on our app, select your preferred lounge, and complete a 30-second checkout. You will instantly receive a digital 3D QR boarding pass on your phone and email. Just scan your phone screen at the lounge front desk—no printing or paperwork required!"
         },
         {
-            "q": "Can I use my LoungePair Lounge Pass immediately?",
+            "q": "Can I use my Get My Lounge Pass immediately?",
             "a": "Yes! Instant digital issuance means you can buy your pass while standing right outside the lounge doors at the airport terminal and enter immediately within seconds."
         },
         {
             "q": "Is my payment secure?",
-            "a": "Absolutely. All transactions are encrypted with enterprise-grade 256-bit SSL encryption and processed through PCI-DSS Level 1 certified international payment gateways (Stripe & Apple\/Google Pay)."
+            "a": "Absolutely. All transactions are encrypted with enterprise-grade 256-bit SSL encryption and processed through PCI-DSS Level 1 certified international payment gateways (Stripe & Apple/Google Pay)."
         },
         {
             "q": "Can I cancel or change my booking?",
-            "a": "Yes. You can manage, reschedule, or cancel your booking directly from your LoungePair account dashboard with zero penalty fees up to 2 hours prior to check-in."
+            "a": "Yes. You can manage, reschedule, or cancel your booking directly from your Get My Lounge account dashboard with zero penalty fees up to 2 hours prior to check-in."
         },
         {
             "q": "What if a lounge is full when I arrive?",
-            "a": "Unlike walk-in travelers who get turned away during peak hours, LoungePair pass holders receive Priority Guaranteed Capacity Allocation at over 92% of our partner network. In the rare event of temporary maximum capacity, you will either receive priority front-of-line VIP access or an instant voucher for an alternative lounge terminal plus a 20% credit."
+            "a": "Unlike walk-in travelers who get turned away during peak hours, Get My Lounge pass holders receive Priority Guaranteed Capacity Allocation at over 92% of our partner network. In the rare event of temporary maximum capacity, you will either receive priority front-of-line VIP access or an instant voucher for an alternative lounge terminal plus a 20% credit."
         }
     ],
     "SOCIAL_GALLERY": [
@@ -592,7 +592,7 @@
             "location": "Singapore Changi T3 Sanctuary",
             "likes": "1,420",
             "image": "https://res.klook.com/images/w_900,h_600,c_fill,q_85/activities/yuwlqirck1qonxdprvzf/SingaporeChangiAirportLoungeService-Klook.jpg",
-            "comment": "Nothing beats starting a 14-hour flight with a rainfall shower and laksa chef bar overlooking the indoor rainforest thanks to @LoungePair! #Ilovemylounge"
+            "comment": "Nothing beats starting a 14-hour flight with a rainfall shower and laksa chef bar overlooking the indoor rainforest thanks to @GetMyLounge! #Ilovemylounge"
         },
         {
             "id": 2,
@@ -600,7 +600,7 @@
             "location": "Dubai International DXB VIP Concourse",
             "likes": "2,890",
             "image": "https://res.klook.com/images/w_900,h_600,c_fill,q_85/activities/uaddihye78c8w0qozvbz/DubaiInternationalAirportLoungeServicebyMarhabaLounge-Klook.jpg",
-            "comment": "No membership? No problem! Bought my LoungePair digital pass 5 mins before boarding. Total lifesaver during a 5-hour layover."
+            "comment": "No membership? No problem! Bought my Get My Lounge digital pass 5 mins before boarding. Total lifesaver during a 5-hour layover."
         },
         {
             "id": 3,
@@ -608,7 +608,7 @@
             "location": "Bangkok BKK Coral Executive Lounge",
             "likes": "945",
             "image": "https://res.klook.com/images/w_900,h_600,c_fill,q_85/activities/sobbyoelucf8phzsttlq/TheCoralExecutiveLoungeSuvarnabhumiAirport(BKK)-Klook.jpg",
-            "comment": "Ultra high-speed Wi-Fi and quiet cubicles. Closed 3 deals before my transatlantic flight. Highly recommend @LoungePair!"
+            "comment": "Ultra high-speed Wi-Fi and quiet cubicles. Closed 3 deals before my transatlantic flight. Highly recommend @GetMyLounge!"
         },
         {
             "id": 4,

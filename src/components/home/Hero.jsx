@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CurrencySelect } from './CurrencySelect';
+import { CurrencySelect } from './Currency';
 import { Search, User, Briefcase, Globe, Train } from 'lucide-react';
-import loungesData from '../data/loungesData.json';
-import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import loungesData from '../../data/loungesData.json';
+import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
 
 export const Hero = () => {
   const navigate = useNavigate();
@@ -71,10 +71,10 @@ export const Hero = () => {
         
         {/* Logo */}
         <div className="flex items-center gap-3 cursor-pointer select-none pointer-events-auto" onClick={() => navigate('/')}>
-          <img src="/loungepair-logo.png" alt="LoungePair Logo" className="h-[100px] w-auto block brightness-0" />
+          <img src="/loungepair-logo.png" alt="Get My Lounge Logo" className="h-[100px] w-auto block brightness-0" />
           <div className="flex flex-col leading-[1.1]">
             <div className="font-outfit text-[22px] font-extrabold tracking-[1px] text-navy uppercase">
-              GET YOUR <span className="text-accent-rose">LOUNGE</span>
+              GET MY <span className="text-accent-rose">LOUNGE</span>
             </div>
           </div>
         </div>
@@ -86,23 +86,20 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Background Cinematic Video */}
+      {/* Background Cover Image */}
       <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          src="/hero-video.mp4"
-          className="w-full h-full object-cover object-center scale-125 brightness-110 contrast-105"
-        ></video>
-        {/* Soft, highly translucent White overlay */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/65 via-white/30 to-white/75 z-[2]"></div>
+        <img
+          src="/lounge-pair-final-image.jpg"
+          alt="Lounge Background"
+          className="w-full h-full object-cover object-center"
+        />
+        {/* Translucent overlay */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/50 via-white/30 to-white/60 z-[2]"></div>
       </div>
 
       {/* Centered Composition */}
       <div className="relative z-10 w-full max-w-[950px] text-center flex flex-col items-center mt-8">
-        <h1 className="luxury-serif text-[clamp(28px,3.5vw,42px)] text-navy mb-10 drop-shadow-sm leading-[1.15]">
+        <h1 className="font-quicksand font-extrabold text-[clamp(28px,3.5vw,42px)] text-navy mb-10 drop-shadow-sm leading-[1.15]">
           Your Exclusive Gateway to 1,400+<br/>Premium Airport Lounges Worldwide.
         </h1>
 
@@ -167,10 +164,6 @@ export const Hero = () => {
         </div>
 
         {/* Subtitle Centered Between Bars */}
-        <p className="text-[15px] font-extrabold text-navy my-3 opacity-90 font-plus-jakarta tracking-wide">
-          No membership required. Pay as you go.
-        </p>
-
         {/* Stats Strip Below Search Bar */}
         <div className="relative flex justify-around items-center bg-white py-5 px-10 rounded-[32px] max-w-[850px] w-full shadow-xl mb-4 overflow-hidden border border-slate-100">
           
