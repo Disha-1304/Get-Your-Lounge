@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { 
+import {
   ArrowLeft, Check, Shield, Lock, CheckCircle2, QrCode, Download, Home, MapPin,
   Smartphone, CreditCard, Building2, Wallet, Tag
 } from 'lucide-react';
@@ -8,6 +8,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import globalLounges from '../data/globalLoungesData.json';
 import loungesData from '../data/loungesData.json';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import { AppLogo } from '../components/common/AppLogo';
 
 export const PaymentPage = () => {
   const { id } = useParams();
@@ -45,7 +46,7 @@ export const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState('UPI');
   const [selectedUpiApp, setSelectedUpiApp] = useState('gpay');
   const [upiId, setUpiId] = useState('');
-  
+
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -97,15 +98,11 @@ export const PaymentPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col pb-20">
+    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col pb-20 overflow-x-hidden max-w-full">
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs">
         <div className="max-w-[1350px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <div className="text-[20px] font-extrabold tracking-wider text-navy font-outfit uppercase">
-              GET MY <span className="text-accent-rose">LOUNGE</span>
-            </div>
-          </Link>
+          <AppLogo size="sm" />
           <div className="flex items-center gap-2 text-[13px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-3.5 rounded-full border border-emerald-200">
             <Lock className="w-3.5 h-3.5" /> 256-Bit SSL Encrypted Checkout
           </div>
@@ -114,11 +111,11 @@ export const PaymentPage = () => {
 
       {/* Main Container */}
       <main className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-10 w-full flex-1 pt-6 space-y-5">
-        
+
         {/* 1. Stepper Header Bar Card (2-Step) */}
         <div className="bg-white rounded-[20px] p-4 sm:p-5 border border-slate-200/80 shadow-xs">
           <div className="flex items-center justify-between relative px-4 sm:px-12">
-            
+
             {/* Step 1: Fill Your Info (Completed Green Check) */}
             <div className="flex flex-col items-center gap-1 z-10">
               <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-xs">
@@ -141,13 +138,15 @@ export const PaymentPage = () => {
           </div>
         </div>
 
+
+
         {/* 2. Lounge Header Card */}
         <div className="bg-white rounded-[20px] p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <img 
-              src={getCleanLoungeImage(lounge)} 
-              alt={lounge.outletName || lounge.city} 
-              className="w-[100px] sm:w-[110px] h-[75px] rounded-[14px] object-cover shrink-0 border border-slate-100 shadow-xs" 
+            <img
+              src={getCleanLoungeImage(lounge)}
+              alt={lounge.outletName || lounge.city}
+              className="w-[100px] sm:w-[110px] h-[75px] rounded-[14px] object-cover shrink-0 border border-slate-100 shadow-xs"
             />
             <div>
               <h3 className="text-[18px] sm:text-[20px] font-bold text-navy leading-snug">
@@ -186,7 +185,7 @@ export const PaymentPage = () => {
 
           {/* Details Table */}
           <div className="divide-y divide-slate-100 text-[14px]">
-            
+
             {/* Package */}
             <div className="py-3.5 flex justify-between items-center">
               <span className="text-slate-500 font-semibold">Package</span>
@@ -247,14 +246,14 @@ export const PaymentPage = () => {
         {/* 4. Coupon Code Box Card */}
         <div className="bg-white rounded-[20px] p-5 sm:p-6 border border-slate-200/80 shadow-xs">
           <div className="flex flex-col sm:flex-row items-center gap-3 mb-3">
-            <input 
+            <input
               type="text"
               placeholder="Enter coupon code"
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
               className="w-full sm:flex-1 bg-[#F8F9FA] border border-slate-200 rounded-[12px] px-4 py-3 text-[14px] font-semibold text-slate-800 outline-none focus:border-[#FE2C1C] transition-colors"
             />
-            <button 
+            <button
               type="button"
               onClick={() => handleApplyCoupon()}
               className="w-full sm:w-auto border border-[#FE2C1C] text-[#FE2C1C] hover:bg-rose-50 px-6 py-3 rounded-[12px] font-bold text-[14px] transition-colors cursor-pointer"
@@ -291,7 +290,7 @@ export const PaymentPage = () => {
 
         {/* 5. Payment Methods Tabs & Details Card */}
         <div className="bg-white rounded-[20px] border border-slate-200/80 shadow-xs overflow-hidden">
-          
+
           {/* Payment Method Selector Tabs Header */}
           <div className="grid grid-cols-2 sm:grid-cols-4 bg-[#F8F9FA] border-b border-slate-200">
             <button
@@ -333,14 +332,14 @@ export const PaymentPage = () => {
 
           {/* Tab Contents */}
           <div className="p-5 sm:p-6">
-            
+
             {/* 1. UPI Tab Content */}
             {activeTab === 'UPI' && (
               <div>
                 <label className="block text-[12px] font-bold text-slate-600 mb-1.5">UPI ID *</label>
                 <div className="relative mb-6">
                   <Smartphone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input 
+                  <input
                     type="text"
                     value={upiId}
                     onChange={(e) => setUpiId(e.target.value)}
@@ -354,49 +353,59 @@ export const PaymentPage = () => {
                 <label className="block text-[12px] font-bold text-slate-600 mb-3">Popular UPI Apps</label>
 
                 {/* Popular UPI Apps Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-6">
                   {/* GPay */}
-                  <div 
+                  <div
                     onClick={() => setSelectedUpiApp('gpay')}
-                    className={`bg-sky-50/80 border rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${selectedUpiApp === 'gpay' ? 'border-sky-400 ring-2 ring-sky-300/50 shadow-sm' : 'border-sky-200/70 hover:border-sky-300'}`}
+                    className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'gpay'
+                        ? 'bg-[#E3EFFD] border-[#3B82F6] ring-2 ring-[#3B82F6]/30 shadow-xs'
+                        : 'bg-[#EEF5FF] border-[#C4DEFF] hover:border-[#93C5FD]'
+                      }`}
                   >
-                    <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-xs font-bold text-[13px] text-blue-600">
-                      GPay
+                    <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1">
+                      <img src="/payment-logos/gpay.png" alt="GPay" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[13px] font-bold text-slate-800">GPay</span>
+                    <span className="text-[13.5px] font-bold text-slate-800">GPay</span>
                   </div>
 
                   {/* PhonePe */}
-                  <div 
+                  <div
                     onClick={() => setSelectedUpiApp('phonepe')}
-                    className={`bg-purple-50/80 border rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${selectedUpiApp === 'phonepe' ? 'border-purple-400 ring-2 ring-purple-300/50 shadow-sm' : 'border-purple-200/70 hover:border-purple-300'}`}
+                    className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'phonepe'
+                        ? 'bg-[#F3E8FF] border-[#9333EA] ring-2 ring-[#9333EA]/30 shadow-xs'
+                        : 'bg-[#F8F2FF] border-[#E9D5FF] hover:border-[#D8B4FE]'
+                      }`}
                   >
-                    <div className="w-9 h-9 rounded-full bg-[#5f259f] text-white flex items-center justify-center shadow-xs font-bold text-[14px]">
-                      पे
-                    </div>
-                    <span className="text-[13px] font-bold text-slate-800">PhonePe</span>
+                    <img src="/payment-logos/phonepe.png" alt="PhonePe" className="w-12 h-12 rounded-[14px] mb-2 object-cover shrink-0 shadow-2xs" />
+                    <span className="text-[13.5px] font-bold text-slate-800">PhonePe</span>
                   </div>
 
                   {/* Paytm */}
-                  <div 
+                  <div
                     onClick={() => setSelectedUpiApp('paytm')}
-                    className={`bg-sky-50/80 border rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${selectedUpiApp === 'paytm' ? 'border-sky-400 ring-2 ring-sky-300/50 shadow-sm' : 'border-sky-200/70 hover:border-sky-300'}`}
+                    className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'paytm'
+                        ? 'bg-[#E0F2FE] border-[#0284C7] ring-2 ring-[#0284C7]/30 shadow-xs'
+                        : 'bg-[#EEF9FF] border-[#BAE6FD] hover:border-[#7DD3FC]'
+                      }`}
                   >
-                    <div className="w-9 h-9 rounded-full bg-white text-[#002e6e] flex items-center justify-center shadow-xs font-extrabold text-[11px] tracking-tighter">
-                      Paytm
+                    <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1.5">
+                      <img src="/payment-logos/paytm.png" alt="Paytm" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[13px] font-bold text-slate-800">Paytm</span>
+                    <span className="text-[13.5px] font-bold text-slate-800">Paytm</span>
                   </div>
 
                   {/* BHIM */}
-                  <div 
+                  <div
                     onClick={() => setSelectedUpiApp('bhim')}
-                    className={`bg-amber-50/80 border rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${selectedUpiApp === 'bhim' ? 'border-amber-400 ring-2 ring-amber-300/50 shadow-sm' : 'border-amber-200/70 hover:border-amber-300'}`}
+                    className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'bhim'
+                        ? 'bg-[#FFEDD5] border-[#EA580C] ring-2 ring-[#EA580C]/30 shadow-xs'
+                        : 'bg-[#FFF6ED] border-[#FFEDD5] hover:border-[#FDBA74]'
+                      }`}
                   >
-                    <div className="w-9 h-9 rounded-full bg-white text-orange-600 flex items-center justify-center shadow-xs font-black text-[11px]">
-                      BHIM
+                    <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1.5">
+                      <img src="/payment-logos/bhim.png" alt="BHIM" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[13px] font-bold text-slate-800">BHIM</span>
+                    <span className="text-[13.5px] font-bold text-slate-800">BHIM</span>
                   </div>
                 </div>
 
@@ -420,7 +429,7 @@ export const PaymentPage = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-[12px] font-bold text-slate-600 mb-1.5">Card Number *</label>
-                  <input 
+                  <input
                     type="text"
                     placeholder="4532 •••• •••• 8921"
                     value={cardDetails.number}
@@ -431,9 +440,9 @@ export const PaymentPage = () => {
 
                 <div>
                   <label className="block text-[12px] font-bold text-slate-600 mb-1.5">Cardholder Name *</label>
-                  <input 
+                  <input
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Name on card"
                     value={cardDetails.name}
                     onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
                     className="w-full bg-[#F8F9FA] border border-slate-200 rounded-[12px] px-4 py-3 text-[14px] font-semibold text-slate-800 outline-none focus:border-[#FE2C1C]"
@@ -443,7 +452,7 @@ export const PaymentPage = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[12px] font-bold text-slate-600 mb-1.5">Expiry Date *</label>
-                    <input 
+                    <input
                       type="text"
                       placeholder="MM / YY"
                       value={cardDetails.expiry}
@@ -453,7 +462,7 @@ export const PaymentPage = () => {
                   </div>
                   <div>
                     <label className="block text-[12px] font-bold text-slate-600 mb-1.5">CVV *</label>
-                    <input 
+                    <input
                       type="password"
                       placeholder="•••"
                       maxLength="4"
@@ -515,7 +524,7 @@ export const PaymentPage = () => {
 
         {/* 7. Primary Action Button */}
         <div>
-          <button 
+          <button
             type="button"
             onClick={handlePayment}
             disabled={isProcessing}
@@ -547,7 +556,7 @@ export const PaymentPage = () => {
             <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            
+
             <h3 className="text-[26px] font-extrabold text-navy font-outfit mb-2">Payment Confirmed!</h3>
             <p className="text-slate-600 text-[14px] mb-6">
               Your lounge access pass has been successfully issued. A copy has been emailed to <strong className="text-navy">{bookingData.email}</strong>.
@@ -573,13 +582,13 @@ export const PaymentPage = () => {
             </div>
 
             <div className="flex flex-col gap-3">
-              <button 
+              <button
                 onClick={() => alert('Digital Pass downloaded successfully!')}
                 className="w-full bg-navy hover:bg-slate-800 text-white py-3.5 px-6 rounded-full font-bold text-[14px] flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Download className="w-4 h-4" /> Download E-Pass PDF
               </button>
-              <button 
+              <button
                 onClick={() => navigate('/')}
                 className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-3.5 px-6 rounded-full font-bold text-[14px] flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >

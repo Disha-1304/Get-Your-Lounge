@@ -5,6 +5,8 @@ import { Search, User, Briefcase, Globe, Train } from 'lucide-react';
 import loungesData from '../../data/loungesData.json';
 import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
 
+import { AppLogo } from '../common/AppLogo';
+
 export const Hero = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
@@ -70,13 +72,8 @@ export const Hero = () => {
       <div className="absolute top-3 left-0 w-full px-10 z-20 flex items-center justify-between pointer-events-none">
         
         {/* Logo */}
-        <div className="flex items-center gap-3 cursor-pointer select-none pointer-events-auto" onClick={() => navigate('/')}>
-          <img src="/loungepair-logo.png" alt="Get My Lounge Logo" className="h-[100px] w-auto block brightness-0" />
-          <div className="flex flex-col leading-[1.1]">
-            <div className="font-outfit text-[22px] font-extrabold tracking-[1px] text-navy uppercase">
-              GET MY <span className="text-accent-rose">LOUNGE</span>
-            </div>
-          </div>
+        <div className="pointer-events-auto">
+          <AppLogo size="md" />
         </div>
 
 
@@ -99,9 +96,44 @@ export const Hero = () => {
 
       {/* Centered Composition */}
       <div className="relative z-10 w-full max-w-[950px] text-center flex flex-col items-center mt-8">
-        <h1 className="font-quicksand font-extrabold text-[clamp(28px,3.5vw,42px)] text-navy mb-10 drop-shadow-sm leading-[1.15]">
+        
+        {/* Airport Flight Board Ticker Marquee */}
+        <div className="mb-4 inline-flex items-center gap-2.5 px-4 py-1.5 bg-navy/90 text-white rounded-full border border-white/20 shadow-md backdrop-blur-md">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[11px] font-extrabold tracking-[2px] uppercase font-outfit text-white/90">
+            DEL ✈ DXB • SIN ✈ LHR • JFK ✈ CDG • BOM ✈ BKK • GUARANTEED INSTANT PASSES
+          </span>
+        </div>
+
+        <h1 className="font-quicksand font-extrabold text-[clamp(28px,3.5vw,42px)] text-navy mb-6 drop-shadow-sm leading-[1.15]">
           Your Exclusive Gateway to 1,400+<br/>Premium Airport Lounges Worldwide.
         </h1>
+
+        {/* Quick Filter Pills */}
+        <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-[750px]">
+          {[
+            { label: '✨ All Lounges', q: '' },
+            { label: '✈ International', q: 'International' },
+            { label: '🇮🇳 Domestic', q: 'Domestic' },
+            { label: '🚄 Rail Lounges', q: 'Train' }
+          ].map((pill, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => {
+                setSearchValue(pill.q);
+                if (pill.q) {
+                  navigate(`/search?q=${encodeURIComponent(pill.q)}`);
+                } else {
+                  navigate('/search');
+                }
+              }}
+              className="bg-white/90 hover:bg-white text-navy hover:text-accent-rose text-[12px] font-extrabold py-1.5 px-4 rounded-full border border-slate-200 shadow-2xs hover:shadow-md transition-all cursor-pointer font-plus-jakarta"
+            >
+              {pill.label}
+            </button>
+          ))}
+        </div>
 
         {/* Pill-shaped White Search Input Field */}
         <div className="relative w-full max-w-[650px] mb-3">
@@ -136,26 +168,44 @@ export const Hero = () => {
           </div>
 
           {/* Autocomplete Dropdown */}
-          {showAutocomplete && (
-            <div className="absolute top-[calc(100%+10px)] left-0 right-0 bg-white rounded-3xl shadow-2xl border border-accent-rose/20 max-h-[340px] overflow-y-auto text-left z-50">
-              <div className="px-5 py-3 text-[11px] font-bold text-accent-rose uppercase tracking-[1px] border-b border-navy/10">
-                Matching Airport Lounges ({matches.length})
+          {showAutocomplete && matches.length > 0 && (
+            <div 
+              className="absolute top-[calc(100%+10px)] left-0 right-0 bg-white rounded-3xl shadow-2xl border border-accent-rose/20 max-h-[380px] overflow-y-auto text-left z-[100] divide-y divide-slate-100"
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              <div className="px-5 py-3 text-[11px] font-bold text-accent-rose uppercase tracking-[1px] bg-slate-50 rounded-t-3xl flex justify-between items-center">
+                <span>Matching Lounges ({matches.length})</span>
+                <span className="text-[10px] text-slate-400 font-normal">Click to open</span>
               </div>
               {matches.map((l, idx) => (
                 <div
-                  key={idx}
-                  className="px-5 py-3.5 flex items-center justify-between border-b border-navy/10 cursor-pointer hover:bg-[#F8F9FB] transition-colors"
-                  onClick={() => navigate(`/search?q=${encodeURIComponent(l.city)}&id=${encodeURIComponent(l.id)}`)}
+                  key={l.id || idx}
+                  className="px-5 py-3.5 flex items-center justify-between cursor-pointer hover:bg-rose-50/50 transition-all group"
+                  onClick={() => {
+                    setSearchValue(l.outletName ? `${l.city} - ${l.outletName}` : l.city);
+                    setShowAutocomplete(false);
+                    navigate(`/lounge/${l.id}`);
+                  }}
                 >
-                  <div className="flex items-center gap-3.5">
-                    <img src={getCleanLoungeImage(l, idx)} alt={l.city} className="w-12 h-12 rounded-xl object-cover" />
-                    <div>
-                      <div className="font-extrabold text-[15px] text-navy">{l.city} ({l.airportCode})</div>
-                      <div className="text-[13px] text-slate-700">{l.terminals.join(', ')}</div>
+                  <div className="flex items-center gap-3.5 min-w-0 pr-2">
+                    <img 
+                      src={getCleanLoungeImage(l, idx)} 
+                      alt={l.city} 
+                      className="w-12 h-12 rounded-xl object-cover border border-slate-100 shrink-0 group-hover:scale-105 transition-transform" 
+                    />
+                    <div className="min-w-0">
+                      <div className="font-extrabold text-[15px] text-navy truncate group-hover:text-accent-rose transition-colors">
+                        {l.outletName || l.city}
+                      </div>
+                      <div className="text-[13px] text-slate-500 font-medium truncate">
+                        📍 {l.city} ({l.airportCode}) • {l.terminals ? l.terminals.join(', ') : 'All Terminals'}
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[13px] text-accent-rose font-bold">Select Lounge →</span>
+                  <div className="shrink-0 text-right">
+                    <span className="inline-flex items-center gap-1 text-[12px] bg-accent-rose text-white px-3 py-1.5 rounded-full font-bold shadow-xs group-hover:bg-accent-rose-hover transition-colors">
+                      Open Lounge →
+                    </span>
                   </div>
                 </div>
               ))}
@@ -195,39 +245,19 @@ export const Hero = () => {
             <div className="w-px h-12 bg-slate-200"></div>
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">DOMESTIC</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">50</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">46</div>
             </div>
           </div>
 
           <div className="flex flex-1 justify-around items-center pl-6 relative z-10">
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">RAIL</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">17</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">13</div>
             </div>
             <div className="w-px h-12 bg-slate-200"></div>
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">COUNTRIES</div>
               <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">60+</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Terminal/Type Filter */}
-        <div className="w-full flex justify-center -mt-2 mb-6 relative z-20">
-          <div className="relative inline-flex items-center bg-white rounded-full py-0.5 px-1 shadow-md border border-slate-200/90 w-auto">
-            <select
-              onChange={(e) => {
-                if (e.target.value) navigate(`/search?q=${encodeURIComponent(e.target.value)}`);
-              }}
-              className="appearance-none bg-transparent text-navy font-bold text-[13px] py-1.5 pl-3.5 pr-7 cursor-pointer outline-none font-plus-jakarta w-auto"
-            >
-              <option value="">Browse by Lounge Type...</option>
-              <option value="International">International Lounges</option>
-              <option value="Domestic">Domestic Lounges</option>
-              <option value="Train">Train Lounges</option>
-            </select>
-            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-accent-rose text-[11px] font-black">
-              ▼
             </div>
           </div>
         </div>

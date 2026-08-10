@@ -5,6 +5,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import globalLounges from '../data/globalLoungesData.json';
 import loungesData from '../data/loungesData.json';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import { AppLogo } from '../components/common/AppLogo';
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,37 +22,60 @@ export const SearchPage = () => {
   const [minRating, setMinRating] = useState(0);
   const [selectedTerminalTypes, setSelectedTerminalTypes] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState(() => {
+    const q = (query || '').toLowerCase();
+    if (q.includes('rail') || q.includes('train')) return 'RailwayLounges';
+    return 'All';
+  });
 
   // Combine both local featured lounges and global lounges
   const allLounges = useMemo(() => {
     return [...loungesData.LOUNGE_GUIDES, ...globalLounges];
   }, []);
 
-  // Base results based only on search query
+  // Base results based only on search query & category tab
   const baseResults = useMemo(() => {
-    if (!query.trim()) return allLounges;
+    let list = allLounges;
     const q = query.toLowerCase().trim();
 
-    // Check if query matches a country exactly
-    const exactCountryMatch = allLounges.some(l => (l.country || '').toLowerCase() === q);
-    
-    if (exactCountryMatch) {
-      return allLounges.filter(l => (l.country || '').toLowerCase() === q);
+    if (q) {
+      if (q.includes('rail') || q.includes('train')) {
+        return allLounges.filter(l => l.isTrainLounge);
+      }
+
+      if (q.includes('indian') || q === 'india' || q.includes('domestic')) {
+        return allLounges.filter(l => l.country === 'India' && !l.isTrainLounge);
+      }
+
+      const exactCountryMatch = allLounges.some(l => (l.country || '').toLowerCase() === q);
+      if (exactCountryMatch) {
+        list = allLounges.filter(l => (l.country || '').toLowerCase() === q);
+      } else {
+        list = allLounges.filter((l) => {
+          const terms = l.terminals || [];
+          return (
+            (l.city || '').toLowerCase().includes(q) ||
+            (l.airportCode || '').toLowerCase().includes(q) ||
+            (l.airportName || '').toLowerCase().includes(q) ||
+            (l.outletName || '').toLowerCase().includes(q) ||
+            (l.country || '').toLowerCase().includes(q) ||
+            (l.region || '').toLowerCase().includes(q) ||
+            terms.some((t) => t.toLowerCase().includes(q))
+          );
+        });
+      }
     }
 
-    return allLounges.filter((l) => {
-      const terms = l.terminals || [];
-      return (
-        (l.city || '').toLowerCase().includes(q) ||
-        (l.airportCode || '').toLowerCase().includes(q) ||
-        (l.airportName || '').toLowerCase().includes(q) ||
-        (l.outletName || '').toLowerCase().includes(q) ||
-        (l.country || '').toLowerCase().includes(q) ||
-        (l.region || '').toLowerCase().includes(q) ||
-        terms.some((t) => t.toLowerCase().includes(q))
-      );
-    });
-  }, [query]);
+    if (categoryFilter === 'IndiaAirports') {
+      return list.filter(l => l.country === 'India' && !l.isTrainLounge);
+    } else if (categoryFilter === 'RailwayLounges') {
+      return list.filter(l => l.isTrainLounge || (l.type || '').toLowerCase().includes('railway') || (l.city || '').toLowerCase().includes('railway') || (l.airportCode || '').toLowerCase().includes('rail'));
+    } else if (categoryFilter === 'International') {
+      return list.filter(l => l.country !== 'India' && !l.isTrainLounge);
+    }
+
+    return list;
+  }, [query, categoryFilter, allLounges]);
 
   // Derive filter options from base results
   const filterOptions = useMemo(() => {
@@ -127,33 +151,86 @@ export const SearchPage = () => {
     setSelectedAmenities([]);
   };
 
+  // Autocomplete state for header search
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
+
+  const headerMatches = useMemo(() => {
+    if (!searchInput || !searchInput.trim()) return [];
+    const q = searchInput.toLowerCase().trim();
+    return allLounges.filter(l => 
+      (l.outletName || '').toLowerCase().includes(q) ||
+      (l.city || '').toLowerCase().includes(q) ||
+      (l.airportCode || '').toLowerCase().includes(q)
+    ).slice(0, 8);
+  }, [searchInput, allLounges]);
+
   return (
-    <div className="min-h-screen bg-[#F8F9FB] flex flex-col font-plus-jakarta">
+    <div className="min-h-screen bg-[#F8F9FB] flex flex-col font-plus-jakarta overflow-x-hidden max-w-full">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-navy border-b border-accent-rose/30 shadow-xl">
         <div className="max-w-[1440px] mx-auto px-6 h-[68px] flex items-center justify-between gap-5">
-          <Link to="/" className="flex items-center gap-2.5 shrink-0 no-underline">
-            <img src="/logo.png" alt="Get My Lounge" className="h-[52px] w-auto" />
-            <div className="flex flex-col leading-[1.1]">
-              <div className="font-outfit text-[18px] font-extrabold tracking-[0.5px] text-white uppercase">
-                GET MY <span className="text-accent-rose">LOUNGE</span>
-              </div>
-              <div className="text-[8px] font-bold tracking-[2.5px] text-white/55 uppercase">
-                International
-              </div>
-            </div>
-          </Link>
+          <AppLogo size="sm" isDark={true} />
           
-          <form onSubmit={handleSearchSubmit} className="flex-1 max-w-[600px]">
+          <form onSubmit={handleSearchSubmit} className="flex-1 max-w-[600px] relative">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-accent-rose" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-accent-rose z-10" />
               <input
                 type="text"
                 value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  setShowAutocomplete(true);
+                }}
+                onFocus={() => setShowAutocomplete(true)}
+                onBlur={() => setTimeout(() => setShowAutocomplete(false), 200)}
                 placeholder="Search by city, airport, or lounge..."
                 className="w-full bg-white text-navy font-bold text-[14px] py-2.5 pr-4 pl-10 rounded-full border-none outline-none shadow-inner"
               />
+
+              {/* Live Autocomplete Dropdown */}
+              {showAutocomplete && headerMatches.length > 0 && (
+                <div 
+                  className="absolute top-[calc(100%+8px)] left-0 right-0 bg-white rounded-2xl shadow-2xl border border-accent-rose/20 max-h-[360px] overflow-y-auto z-[100] text-left divide-y divide-slate-100"
+                  onMouseDown={(e) => e.preventDefault()}
+                >
+                  <div className="px-4 py-2 text-[11px] font-bold text-accent-rose uppercase tracking-[1px] bg-slate-50 rounded-t-2xl flex justify-between items-center">
+                    <span>Matching Lounges ({headerMatches.length})</span>
+                    <span className="text-[10px] text-slate-400 font-normal">Click to open</span>
+                  </div>
+                  {headerMatches.map((l, idx) => (
+                    <div
+                      key={l.id || idx}
+                      className="px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-rose-50/50 transition-all group"
+                      onClick={() => {
+                        setSearchInput(l.outletName || l.city);
+                        setShowAutocomplete(false);
+                        navigate(`/lounge/${l.id}`);
+                      }}
+                    >
+                      <div className="flex items-center gap-3 min-w-0 pr-2">
+                        <img 
+                          src={getCleanLoungeImage(l, idx)} 
+                          alt={l.city} 
+                          className="w-10 h-10 rounded-lg object-cover border border-slate-100 shrink-0 group-hover:scale-105 transition-transform" 
+                        />
+                        <div className="min-w-0">
+                          <div className="font-extrabold text-[14px] text-navy truncate group-hover:text-accent-rose transition-colors">
+                            {l.outletName || l.city}
+                          </div>
+                          <div className="text-[12px] text-slate-500 font-medium truncate">
+                            📍 {l.city} ({l.airportCode})
+                          </div>
+                        </div>
+                      </div>
+                      <div className="shrink-0">
+                        <span className="text-[12px] bg-accent-rose text-white px-3 py-1 rounded-full font-bold shadow-2xs group-hover:bg-accent-rose-hover transition-colors">
+                          Open →
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </form>
 
@@ -257,12 +334,14 @@ export const SearchPage = () => {
 
         {/* Results */}
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4">
             <h2 className="text-[24px] font-outfit font-extrabold text-navy">
               {query ? `Results for "${query}"` : 'All Lounges'} 
               <span className="text-slate-400 text-[18px] ml-2 font-medium">({filteredResults.length})</span>
             </h2>
           </div>
+
+
 
           <div className="flex flex-col gap-6">
             {filteredResults.length === 0 ? (
@@ -285,6 +364,11 @@ export const SearchPage = () => {
                     <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md py-1 px-2.5 rounded-full text-[12px] font-bold text-navy flex items-center gap-1 shadow-sm">
                       <span className="text-accent-rose">★</span> {lounge.rating}
                     </div>
+                    {lounge.isTrainLounge && (
+                      <div className="absolute bottom-3 left-3 bg-amber-500 text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md">
+                        🚄 Executive Rail Lounge
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex-1 flex flex-col justify-between">

@@ -10,6 +10,7 @@ import globalLounges from '../data/globalLoungesData.json';
 import loungesData from '../data/loungesData.json';
 import { Footer } from '../components/home/Footer';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import { AppLogo } from '../components/common/AppLogo';
 
 export const LoungeDetailsPage = () => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ export const LoungeDetailsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col">
+    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col overflow-x-hidden max-w-full">
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-[1440px] mx-auto px-6 h-[72px] flex items-center justify-between">
@@ -55,11 +56,7 @@ export const LoungeDetailsPage = () => {
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <Link to="/" className="flex items-center gap-2 no-underline">
-              <div className="text-[20px] font-extrabold tracking-wider text-navy font-outfit uppercase">
-                GET MY <span className="text-accent-rose">LOUNGE</span>
-              </div>
-            </Link>
+            <AppLogo size="sm" />
           </div>
 
           <div className="flex items-center gap-3">
@@ -191,6 +188,77 @@ export const LoungeDetailsPage = () => {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* Guest Ratings & Verified Reviews */}
+            <div className="bg-white rounded-[24px] p-6 lg:p-8 border border-slate-200/80 shadow-sm mb-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 mb-6 border-b border-slate-100">
+                <div>
+                  <h2 className="text-[24px] font-extrabold font-outfit text-navy mb-1 flex items-center gap-2">
+                    <Star className="w-6 h-6 fill-amber-400 text-amber-400" />
+                    Guest Rating & Reviews
+                  </h2>
+                  <p className="text-[14px] text-slate-500 font-medium">
+                    Verified guest feedback based on {lounge.reviewsCount || 1240} recent visits
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 bg-amber-50/80 border border-amber-200/80 py-3 px-5 rounded-2xl shrink-0">
+                  <div className="text-[36px] font-black text-navy font-outfit leading-none">
+                    {lounge.rating || 4.8}
+                  </div>
+                  <div>
+                    <div className="flex items-center text-amber-400 text-[14px]">
+                      ★★★★★
+                    </div>
+                    <div className="text-[12px] font-extrabold text-navy tracking-wide uppercase">
+                      EXCEPTIONAL
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rating Breakdown Progress Bars */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                {[
+                  { name: 'Food & Gourmet Buffet', score: '4.9', width: '98%' },
+                  { name: 'Comfort & Seating', score: '4.8', width: '96%' },
+                  { name: 'Cleanliness & Showers', score: '4.9', width: '98%' },
+                  { name: 'Wi-Fi & Workstation', score: '4.7', width: '94%' },
+                ].map((item, idx) => (
+                  <div key={idx} className="bg-slate-50 p-3.5 rounded-xl border border-slate-150">
+                    <div className="flex justify-between items-center text-[13px] font-bold text-navy mb-1.5">
+                      <span>{item.name}</span>
+                      <span className="text-amber-500 font-extrabold">{item.score} ★</span>
+                    </div>
+                    <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div className="bg-amber-400 h-full rounded-full" style={{ width: item.width }}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Guest Review Cards */}
+              <div className="flex flex-col gap-4">
+                <div className="font-bold text-[15px] text-navy mb-1">Recent Verified Reviews</div>
+                {[
+                  { name: "Rahul Sharma", date: "Verified Pass Holder • 2 days ago", rating: 5, comment: "Outstanding food spread and private recliners! Shower room was spotless and check-in with the digital pass was seamless." },
+                  { name: "Ananya Roy", date: "Verified Pass Holder • 5 days ago", rating: 5, comment: "Very quiet ambiance, great espresso coffee bar and high speed Wi-Fi for work before my flight. Highly recommended." },
+                  { name: "David Miller", date: "Verified Pass Holder • 1 week ago", rating: 5, comment: "Exceeded my expectations. Staff was attentive, food was fresh and hot, hassle-free lounge access." }
+                ].map((rev, idx) => (
+                  <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-150 text-left">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <div className="font-bold text-[14px] text-navy">{rev.name}</div>
+                        <div className="text-[11px] text-slate-400 font-medium">{rev.date}</div>
+                      </div>
+                      <div className="flex items-center text-amber-400 text-[12px]">
+                        {'★'.repeat(rev.rating)}
+                      </div>
+                    </div>
+                    <p className="text-[13px] text-slate-600 leading-relaxed font-medium">"{rev.comment}"</p>
+                  </div>
+                ))}
               </div>
             </div>
 

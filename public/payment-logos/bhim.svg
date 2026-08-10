@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 160">
+  <text x="5" y="95" fill="#4B5563" fontFamily="system-ui, sans-serif" fontWeight="900" fontStyle="italic" fontSize="100" letterSpacing="-2">BHIM</text>
+  <text x="8" y="140" fill="#1F2937" fontFamily="system-ui, sans-serif" fontWeight="800" fontStyle="italic" fontSize="24" letterSpacing="4">BHARAT INTERFACE FOR MONEY</text>
+  <polygon points="350,15 390,15 350,95" fill="#F7931E"/>
+  <polygon points="362,95 395,25 410,50" fill="#00A651"/>
+</svg>

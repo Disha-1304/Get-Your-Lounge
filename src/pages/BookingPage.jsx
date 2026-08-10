@@ -5,6 +5,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import globalLounges from '../data/globalLoungesData.json';
 import loungesData from '../data/loungesData.json';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
+import { AppLogo } from '../components/common/AppLogo';
 
 export const BookingPage = () => {
   const { id } = useParams();
@@ -84,15 +85,11 @@ export const BookingPage = () => {
   const basePrice = lounge?.priceUSD || 40;
 
   return (
-    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col pb-20">
+    <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col pb-20 overflow-x-hidden max-w-full">
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs">
         <div className="max-w-[1350px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <div className="text-[20px] font-extrabold tracking-wider text-navy font-outfit uppercase">
-              GET MY <span className="text-accent-rose">LOUNGE</span>
-            </div>
-          </Link>
+          <AppLogo size="sm" />
           <button 
             onClick={() => navigate(-1)} 
             className="text-slate-600 font-bold text-[13px] hover:text-accent-rose transition-colors flex items-center gap-2 cursor-pointer"

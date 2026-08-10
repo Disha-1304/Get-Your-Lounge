@@ -42,7 +42,7 @@ export const ExecutiveReviews = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-8">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8">
           {reviews.map((rev, idx) => (
             <div
               key={idx}

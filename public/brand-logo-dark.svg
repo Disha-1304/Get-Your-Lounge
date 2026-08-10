@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <path id="topArcDark" d="M 60,200 A 140,140 0 1,1 340,200" fill="none" />
+    <path id="bottomArcDark" d="M 340,200 A 140,140 0 0,1 60,200" fill="none" />
+  </defs>
+
+  <!-- Top Arc Text -->
+  <text font-family="'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif" font-size="28" font-weight="900" fill="#0F172A" letter-spacing="5">
+    <textPath href="#topArcDark" startOffset="50%" text-anchor="middle">GET MY LOUNGE</textPath>
+  </text>
+
+  <!-- Bottom Arc Text -->
+  <text font-family="'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif" font-size="25" font-weight="900" fill="#0F172A" letter-spacing="5">
+    <textPath href="#bottomArcDark" startOffset="50%" text-anchor="middle">EXECUTIVE PASS</textPath>
+  </text>
+
+  <!-- Left ESTD -->
+  <text x="78" y="193" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="1">ES</text>
+  <text x="78" y="215" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="1">TD</text>
+
+  <!-- Right 2026 -->
+  <text x="322" y="193" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="1">20</text>
+  <text x="322" y="215" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="1">26</text>
+
+  <!-- Center Glass Illustration (Thicker, Larger, Super Clear) -->
+  <g fill="none" stroke="#0F172A" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Glass bowl (Larger bounds) -->
+    <polygon points="148,155 252,155 200,215" stroke-width="6" />
+    <!-- Liquid level line -->
+    <line x1="160" y1="175" x2="240" y2="175" stroke-width="4.5" />
+    <!-- Olive -->
+    <circle cx="212" cy="175" r="12" fill="#0F172A" />
+    <!-- Stick/straw -->
+    <line x1="205" y1="182" x2="255" y2="132" stroke-width="5.5" />
+    <!-- Stem -->
+    <line x1="200" y1="215" x2="200" y2="275" stroke-width="7" />
+    <!-- Base -->
+    <line x1="165" y1="275" x2="235" y2="275" stroke-width="7" />
+    
+    <!-- Sparkles -->
+    <circle cx="238" cy="105" r="5.5" fill="#0F172A" stroke="none" />
+    <circle cx="225" cy="132" r="4.5" fill="#0F172A" stroke="none" />
+    <!-- Sparkle Cross -->
+    <path d="M 200,105 L 200,122 M 191.5,113.5 L 208.5,113.5" stroke-width="4" />
+  </g>
+</svg>

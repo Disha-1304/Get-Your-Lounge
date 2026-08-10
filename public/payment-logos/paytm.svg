@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+  <path fill="#002970" d="M 20,20 C 15,20 10,24 10,30 L 10,90 C 10,95 15,100 20,100 L 35,100 C 40,100 45,95 45,90 L 45,65 L 60,65 C 75,65 85,55 85,42.5 C 85,30 75,20 60,20 Z M 45,35 L 60,35 C 65,35 70,37.5 70,42.5 C 70,47.5 65,50 L 60,50 L 45,50 Z"/>
+  <text x="10" y="82" fill="#002970" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="76" letterSpacing="-3">pay</text>
+  <text x="145" y="82" fill="#00B9F1" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="76" letterSpacing="-3">tm</text>
+</svg>

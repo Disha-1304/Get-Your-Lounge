@@ -7,7 +7,7 @@ import { Footer } from '../components/home/Footer';
 
 export const HomePage = () => {
   return (
-    <div className="w-full">
+    <div className="w-full max-w-full overflow-x-hidden">
       <Hero />
       <LoungeGuides />
       <ExecutiveReviews />

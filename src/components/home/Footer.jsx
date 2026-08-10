@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppLogo } from '../common/AppLogo';
 
 export const Footer = () => {
   return (
@@ -6,16 +7,8 @@ export const Footer = () => {
       <div className="max-w-[1350px] mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-14 items-start">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <img src="/loungepair-logo.png" alt="Get My Lounge Logo" className="h-[75px] w-auto block" />
-              <div className="flex flex-col leading-[1.1]">
-                <div className="font-outfit text-[20px] font-extrabold tracking-[1px] text-white uppercase">
-                  GET MY <span className="text-accent-rose">LOUNGE</span>
-                </div>
-                <div className="font-outfit text-[11px] font-normal tracking-[3px] text-white/70 uppercase mt-0.5">
-                  now
-                </div>
-              </div>
+            <div className="mb-4">
+              <AppLogo size="md" isDark={true} />
             </div>
           </div>
 

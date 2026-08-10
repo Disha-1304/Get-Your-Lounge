@@ -6,17 +6,17 @@
             "name": "USD - US Dollar"
         },
         "EUR": {
-            "symbol": "\u20ac",
+            "symbol": "€",
             "rate": 0.92,
             "name": "EUR - Euro"
         },
         "GBP": {
-            "symbol": "\u00a3",
+            "symbol": "£",
             "rate": 0.79,
             "name": "GBP - British Pound"
         },
         "INR": {
-            "symbol": "\u20b9",
+            "symbol": "₹",
             "rate": 83.5,
             "name": "INR - Indian Rupee"
         },
@@ -34,30 +34,1765 @@
     "HERO_SHOWCASE": [
         {
             "title": "Singapore Changi Rainforest Sanctuary",
-            "location": "SIN \u2022 Terminal 3",
+            "location": "SIN • Terminal 3",
             "tag": "WORLD #1 RATED",
             "image": "https://res.klook.com/images/w_1400,h_630,c_fill,q_85/activities/mjpkxxyilqn7ze5ty64t/SingaporeChangiAirportLoungeService-Klook.jpg",
-            "videoUrl": "https:\/\/assets.mixkit.co\/videos\/preview\/mixkit-luxury-hotel-lobby-with-modern-lighting-41551-large.mp4",
+            "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-luxury-hotel-lobby-with-modern-lighting-41551-large.mp4",
             "price": 36
         },
         {
             "title": "Dubai First Class Champagne Concourse",
-            "location": "DXB \u2022 Concourse B",
+            "location": "DXB • Concourse B",
             "tag": "ULTRA LUXURY",
             "image": "https://res.klook.com/images/w_1400,h_630,c_fill,q_85/activities/gzu2mi9kpe5gydlgrnlh/DubaiInternationalAirportLoungeServicebyMarhabaLounge-Klook.jpg",
-            "videoUrl": "https:\/\/assets.mixkit.co\/videos\/preview\/mixkit-bartender-making-a-cocktail-in-a-bar-41618-large.mp4",
+            "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-bartender-making-a-cocktail-in-a-bar-41618-large.mp4",
             "price": 42
         },
         {
             "title": "Bangkok Suvarnabhumi Executive Lounge",
-            "location": "BKK \u2022 Terminal 1",
+            "location": "BKK • Terminal 1",
             "tag": "BEST VALUE",
             "image": "https://res.klook.com/images/w_1400,h_630,c_fill,q_85/activities/jkwk2ajw03ampiyblmrc/TheCoralExecutiveLoungeSuvarnabhumiAirport(BKK)-Klook.jpg",
-            "videoUrl": "https:\/\/assets.mixkit.co\/videos\/preview\/mixkit-serving-drinks-in-a-luxury-bar-41614-large.mp4",
+            "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-serving-drinks-in-a-luxury-bar-41614-large.mp4",
             "price": 30
         }
     ],
     "LOUNGE_GUIDES": [
+        {
+            "id": "731771846381",
+            "city": "Agartala",
+            "outletName": "Primus Lounge",
+            "country": "India",
+            "airportCode": "IXA",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 800,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Agartala Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "599002602494",
+            "city": "Allahabad",
+            "outletName": "Zesto Lounge",
+            "country": "India",
+            "airportCode": "IXD",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 825,
+            "priceUSD": 6.6,
+            "priceINR": 553,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Allahabad Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "861497383987",
+            "city": "Amritsar",
+            "outletName": "Primus Lounge",
+            "country": "India",
+            "airportCode": "ATQ",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 850,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Amritsar Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "428076918781",
+            "city": "Amritsar",
+            "outletName": "Airr Lounge",
+            "country": "India",
+            "airportCode": "ATQ",
+            "terminals": [
+                "Main Terminal (International Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 875,
+            "priceUSD": 14.2,
+            "priceINR": 1189,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Amritsar Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "895636519657",
+            "city": "Ayodhya",
+            "outletName": "Kailash Parbat",
+            "country": "India",
+            "airportCode": "AYJ",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 900,
+            "priceUSD": 10.2,
+            "priceINR": 849,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Ayodhya Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "881830457175",
+            "city": "Bengaluru",
+            "outletName": "080 Domestic T2 Departure",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 925,
+            "priceUSD": 18.8,
+            "priceINR": 1573,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "436836648775",
+            "city": "Bengaluru",
+            "outletName": "080 VIP Domestic T2 Departure",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 950,
+            "priceUSD": 41.7,
+            "priceINR": 3483,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "711866761557",
+            "city": "Bengaluru",
+            "outletName": "080 International T2 Arrival",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (International Arrival)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 975,
+            "priceUSD": 15.3,
+            "priceINR": 1275,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "941077739957",
+            "city": "Bengaluru",
+            "outletName": "080 VIP International T2 Arrival",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (International Arrival)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1000,
+            "priceUSD": 32.3,
+            "priceINR": 2697,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "816839087929",
+            "city": "Bengaluru",
+            "outletName": "080 International T2 Departure",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (International Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1025,
+            "priceUSD": 38.7,
+            "priceINR": 3230,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "142753549161",
+            "city": "Bengaluru",
+            "outletName": "080 VIP International T2 Departure",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (International Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1050,
+            "priceUSD": 64.6,
+            "priceINR": 5393,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "502473741199",
+            "city": "Bhopal",
+            "outletName": "Primus Lounge",
+            "country": "India",
+            "airportCode": "BHO",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1075,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bhopal Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "701575592007",
+            "city": "Bhubaneswar",
+            "outletName": "Bird Lounge",
+            "country": "India",
+            "airportCode": "BBI",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1100,
+            "priceUSD": 8.6,
+            "priceINR": 720,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bhubaneswar Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "382104374320",
+            "city": "Calicut",
+            "outletName": "Bird Lounge",
+            "country": "India",
+            "airportCode": "CCJ",
+            "terminals": [
+                "Terminal 1 (International Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1125,
+            "priceUSD": 12.9,
+            "priceINR": 1080,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Calicut Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "679081914664",
+            "city": "Chandigarh",
+            "outletName": "Primus Lounge Domestic Departure",
+            "country": "India",
+            "airportCode": "IXC",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1150,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Chandigarh Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "754783885591",
+            "city": "Chandigarh",
+            "outletName": "Primus Lounge International Departure",
+            "country": "India",
+            "airportCode": "IXC",
+            "terminals": [
+                "Main Terminal (International Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1175,
+            "priceUSD": 8.4,
+            "priceINR": 700,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Chandigarh Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "458221640689",
+            "city": "Cochin",
+            "outletName": "Earth Business Class Lounge T3 Departure",
+            "country": "India",
+            "airportCode": "COK",
+            "terminals": [
+                "Terminal 3 (International Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1200,
+            "priceUSD": 35.6,
+            "priceINR": 2975,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Cochin Airport (Terminal 3). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "743736482822",
+            "city": "Cochin",
+            "outletName": "Earth Lounge International T3 Departure",
+            "country": "India",
+            "airportCode": "COK",
+            "terminals": [
+                "Terminal 3 (International Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1225,
+            "priceUSD": 23.4,
+            "priceINR": 1955,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Cochin Airport (Terminal 3). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "401687192794",
+            "city": "Coimbatore",
+            "outletName": "Blackberry Lounge",
+            "country": "India",
+            "airportCode": "CJB",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1250,
+            "priceUSD": 10.7,
+            "priceINR": 890,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Coimbatore Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "569941324376",
+            "city": "Dehradun",
+            "outletName": "Bird Lounge",
+            "country": "India",
+            "airportCode": "DED",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1275,
+            "priceUSD": 8.6,
+            "priceINR": 720,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Dehradun Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "421261619955",
+            "city": "Dibrugarh",
+            "outletName": "Saptagiri Restaurant",
+            "country": "India",
+            "airportCode": "DIB",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1300,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Dibrugarh Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "550505106541",
+            "city": "Durgapur",
+            "outletName": "Flurys",
+            "country": "India",
+            "airportCode": "RGD",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1325,
+            "priceUSD": 6.7,
+            "priceINR": 560,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Durgapur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "476032565855",
+            "city": "Gwalior",
+            "outletName": "Paahun Executive Lounge",
+            "country": "India",
+            "airportCode": "GWL",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1350,
+            "priceUSD": 8.3,
+            "priceINR": 690,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Gwalior Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "104809728512",
+            "city": "Indore",
+            "outletName": "Primus Lounge",
+            "country": "India",
+            "airportCode": "IDR",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1375,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Indore Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "612613967011",
+            "city": "Jammu",
+            "outletName": "Paahun The Executive Lounge",
+            "country": "India",
+            "airportCode": "IXJ",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1400,
+            "priceUSD": 8.3,
+            "priceINR": 690,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Jammu Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "641887659385",
+            "city": "Kannur",
+            "outletName": "Pearl Lounge Domestic T1 Departure",
+            "country": "India",
+            "airportCode": "CNN",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1425,
+            "priceUSD": 12.6,
+            "priceINR": 1051,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Kannur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "111398002157",
+            "city": "Kannur",
+            "outletName": "Pearl Lounge International T1 Departure",
+            "country": "India",
+            "airportCode": "CNN",
+            "terminals": [
+                "Main Terminal (International Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1450,
+            "priceUSD": 26,
+            "priceINR": 2175,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Kannur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "698728816186",
+            "city": "Madurai",
+            "outletName": "Primus Lounge",
+            "country": "India",
+            "airportCode": "IXM",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1475,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Madurai Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "303841535140",
+            "city": "Nagpur",
+            "outletName": "The Airr Lounge And Bar",
+            "country": "India",
+            "airportCode": "NAG",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1500,
+            "priceUSD": 8.6,
+            "priceINR": 718,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Nagpur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "305062877398",
+            "city": "Nagpur",
+            "outletName": "Mandarin Lounge",
+            "country": "India",
+            "airportCode": "NAG",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1525,
+            "priceUSD": 5.6,
+            "priceINR": 470,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Nagpur Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "717601274705",
+            "city": "Pune",
+            "outletName": "Elysian Lounge FF Domestic Departure",
+            "country": "India",
+            "airportCode": "PNQ",
+            "terminals": [
+                "New Terminal (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1550,
+            "priceUSD": 13.2,
+            "priceINR": 1105,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Pune Airport (New Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "577270975132",
+            "city": "Pune",
+            "outletName": "Elysian Lounge GF Domestic Departure",
+            "country": "India",
+            "airportCode": "PNQ",
+            "terminals": [
+                "New Terminal (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1575,
+            "priceUSD": 13.2,
+            "priceINR": 1105,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Pune Airport (New Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "460505866897",
+            "city": "Pune",
+            "outletName": "Elysian Lounge International Departure",
+            "country": "India",
+            "airportCode": "PNQ",
+            "terminals": [
+                "New Terminal (International Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1600,
+            "priceUSD": 21.8,
+            "priceINR": 1820,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Pune Airport (New Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "608690471785",
+            "city": "Ranchi",
+            "outletName": "Airr Lounge",
+            "country": "India",
+            "airportCode": "IXR",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1625,
+            "priceUSD": 8.6,
+            "priceINR": 718,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Ranchi Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "289921891705",
+            "city": "Siliguri",
+            "outletName": "Take Off Bar And Lounge",
+            "country": "India",
+            "airportCode": "IXB",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1650,
+            "priceUSD": 7.5,
+            "priceINR": 630,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Siliguri Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "958399698187",
+            "city": "Srinagar",
+            "outletName": "Paahun The Executive Lounge",
+            "country": "India",
+            "airportCode": "SXR",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1675,
+            "priceUSD": 8.3,
+            "priceINR": 690,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Srinagar Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "817867641145",
+            "city": "Vadodara",
+            "outletName": "Premium Lounge",
+            "country": "India",
+            "airportCode": "BDQ",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1700,
+            "priceUSD": 8.1,
+            "priceINR": 674,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Vadodara Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "648161205493",
+            "city": "Varanasi",
+            "outletName": "Take Off Bar",
+            "country": "India",
+            "airportCode": "VNS",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1725,
+            "priceUSD": 6.6,
+            "priceINR": 553,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Varanasi Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "638663673303",
+            "city": "Visakhapatnam",
+            "outletName": "Airr Lounge",
+            "country": "India",
+            "airportCode": "VTZ",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1750,
+            "priceUSD": 8.6,
+            "priceINR": 718,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Visakhapatnam Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "412115096184",
+            "city": "Bengaluru",
+            "outletName": "Z  lounge",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 2 (International Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1775,
+            "priceUSD": 31.7,
+            "priceINR": 2650,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "649823566956",
+            "city": "Bengaluru",
+            "outletName": "Care By BLR Domestic T1  Arrival",
+            "country": "India",
+            "airportCode": "BLR",
+            "terminals": [
+                "Terminal 1 (Domestic Arrival)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1800,
+            "priceUSD": 10.8,
+            "priceINR": 900,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "512885304627",
+            "city": "Tiruchirappalli",
+            "outletName": "O Vetra International Departure Lounge",
+            "country": "India",
+            "airportCode": "TRZ",
+            "terminals": [
+                "Terminal 1 (International Departure)"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1825,
+            "priceUSD": 20.5,
+            "priceINR": 1710,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Tiruchirappalli Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "713456277729",
+            "city": "Tiruchirappalli",
+            "outletName": "O Vetra Domestic Departure Lounge",
+            "country": "India",
+            "airportCode": "TRZ",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1850,
+            "priceUSD": 10.9,
+            "priceINR": 910,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Tiruchirappalli Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "987509979478",
+            "city": "Deoghar",
+            "outletName": "Elevate The Lounge Experience",
+            "country": "India",
+            "airportCode": "DGH",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1875,
+            "priceUSD": 6,
+            "priceINR": 500,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Deoghar Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "418148268652",
+            "city": "Raipur",
+            "outletName": "Airr Lounge",
+            "country": "India",
+            "airportCode": "RPR",
+            "terminals": [
+                "Main Terminal (Domestic Departure)"
+            ],
+            "rating": 4.9,
+            "reviewsCount": 1900,
+            "priceUSD": 8.1,
+            "priceINR": 675,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Raipur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "553101003992",
+            "city": "Bhubaneswar",
+            "outletName": "O Vetra Lounge",
+            "country": "India",
+            "airportCode": "BBI",
+            "terminals": [
+                "Terminal 1 (Domestic Departure)"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 1925,
+            "priceUSD": 10.2,
+            "priceINR": 850,
+            "status": "Available",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "description": "Exclusive 5-star airport lounge at Bhubaneswar Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
+            "amenities": [
+                "Gourmet Hot Buffet",
+                "AC Reclining Chairs",
+                "High-Speed Wi-Fi",
+                "Beverage Station",
+                "Flight Information Displays"
+            ],
+            "region": "Asia",
+            "isTrainLounge": false,
+            "isIndianAirportLounge": true,
+            "type": "Indian Airport Lounge"
+        },
+        {
+            "id": "397213435070",
+            "city": "New Delhi Railway Station",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "NDLS (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 2890,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1400&q=85",
+            "description": "5-star air-conditioned IRCTC executive lounge at New Delhi Platform 1. Features 24/7 hot buffet spreads, private shower suites, recliner sofas, and high-speed Wi-Fi.",
+            "amenities": [
+                "Hot Buffet Meals",
+                "AC Recliner Sofa Seating",
+                "Shower & Washroom Suites",
+                "High-Speed Wi-Fi",
+                "Tea & Coffee Counter"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "422156536880",
+            "city": "New Delhi Railway Station",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "NDLS (Rail)",
+            "terminals": [
+                "Platform 16"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1950,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1400&q=85",
+            "description": "IRCTC Executive Lounge located at Platform 16, New Delhi Station. Air-conditioned quiet recliners, hot meals, shower facilities, and Wi-Fi.",
+            "amenities": [
+                "Hot Buffet Meals",
+                "AC Recliner Sofa Seating",
+                "Shower Facilities",
+                "Wi-Fi",
+                "Beverage Station"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "334317740641",
+            "city": "Old Delhi Railway Station",
+            "outletName": "IRCTC Lounge",
+            "country": "India",
+            "airportCode": "DLI (Rail)",
+            "terminals": [
+                "Platform 5"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 1420,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1515165562839-978bbcf18277?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1515165562839-978bbcf18277?auto=format&fit=crop&w=1400&q=85",
+            "description": "Air-conditioned IRCTC station lounge at Old Delhi Platform 5. Unlimited hot snacks, tea/coffee, comfortable seating, and clean washrooms.",
+            "amenities": [
+                "Hot Snacks & Meals",
+                "AC Reclining Sofas",
+                "Clean Washrooms",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "986175225885",
+            "city": "Chennai Central Railway Station",
+            "outletName": "Executive Lounge",
+            "country": "India",
+            "airportCode": "MAS (Rail)",
+            "terminals": [
+                "Platform 6-7"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1820,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=85",
+            "description": "Executive station lounge at Chennai Central Platform 6-7. Live South Indian breakfast & meal spreads, filter coffee bar, and shower rooms.",
+            "amenities": [
+                "South Indian Buffet",
+                "Filter Coffee Bar",
+                "AC Recliner Chairs",
+                "Shower Suites",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "717371822392",
+            "city": "Jaipur Railway Station",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "JP (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1610,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=85",
+            "description": "Rajasthani royal heritage IRCTC lounge at Jaipur Platform 1. Hot Rajasthani thali & meal buffets, AC luxury sofas, and shower rooms.",
+            "amenities": [
+                "Rajasthani Thali Buffet",
+                "Royal Heritage Sofas",
+                "Shower Rooms",
+                "Wi-Fi",
+                "Tea Service"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "723776662804",
+            "city": "Sealdah Railway Station Kolkata",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "SDAH (Rail)",
+            "terminals": [
+                "Platform 8"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1540,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=85",
+            "description": "5-star IRCTC executive lounge at Sealdah Station Platform 8. Hot Bengali & North Indian buffet spreads, quiet sofa pods, and shower suites.",
+            "amenities": [
+                "Bengali & North Indian Buffet",
+                "AC Sofa Pods",
+                "Shower Suites",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "962130057027",
+            "city": "Madurai Railway Station",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "MDU (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.8,
+            "reviewsCount": 1180,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=85",
+            "description": "IRCTC Executive Lounge at Madurai Platform 1. Hot South Indian buffet, filter coffee bar, AC recliner chairs, and clean showers.",
+            "amenities": [
+                "South Indian Buffet",
+                "Filter Coffee Bar",
+                "AC Recliner Chairs",
+                "Clean Showers"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "114753146806",
+            "city": "Varanasi Cantt Railway Station",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "BSB (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1690,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1400&q=85",
+            "description": "Peaceful AC IRCTC executive sanctuary at Varanasi Cantt Platform 1. Freshly prepared pure veg hot buffets, recliner sofas, and shower stalls.",
+            "amenities": [
+                "Pure Veg Hot Buffet",
+                "AC Reclining Sofas",
+                "Shower Rooms",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "424481887276",
+            "city": "Asansol Junction Railway Station",
+            "outletName": "Refreshing Lounge",
+            "country": "India",
+            "airportCode": "ASN (Rail)",
+            "terminals": [
+                "Platform 5"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 940,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1400&q=85",
+            "description": "Air-conditioned Refreshing Lounge at Asansol Junction Platform 5. Unlimited hot tea/coffee, snacks, recliner sofas, and clean washrooms.",
+            "amenities": [
+                "Hot Snacks & Beverages",
+                "AC Reclining Sofas",
+                "Washrooms",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "104249189089",
+            "city": "Asansol Junction Railway Station",
+            "outletName": "Beverage Lounge",
+            "country": "India",
+            "airportCode": "ASN (Rail)",
+            "terminals": [
+                "Platform 5"
+            ],
+            "rating": 4.6,
+            "reviewsCount": 820,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1400&q=85",
+            "description": "Beverage Executive Lounge at Asansol Junction Platform 5. Fresh juices, artisanal coffee, gourmet teas, light snacks, and AC seating.",
+            "amenities": [
+                "Artisanal Beverage Counter",
+                "Light Gourmet Snacks",
+                "AC Seating",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "299684090463",
+            "city": "Asansol Junction Railway Station",
+            "outletName": "Premium Lounge",
+            "country": "India",
+            "airportCode": "ASN (Rail)",
+            "terminals": [
+                "Platform 2"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 1120,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=85",
+            "description": "Premium Station Lounge at Asansol Junction Platform 2. Full hot buffet dining, plush recliners, shower rooms, and high-speed Wi-Fi.",
+            "amenities": [
+                "Hot Food Buffet",
+                "Plush Recliners",
+                "Shower Rooms",
+                "High-Speed Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "146842826958",
+            "city": "Durgapur Railway Station",
+            "outletName": "Premium Lounge",
+            "country": "India",
+            "airportCode": "DGR (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.7,
+            "reviewsCount": 980,
+            "priceUSD": 6.6,
+            "status": "Operational",
+            "statusColor": "#10b981",
+            "image": "https://images.unsplash.com/photo-1532105956626-9569c03602f6?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1532105956626-9569c03602f6?auto=format&fit=crop&w=1400&q=85",
+            "description": "5-star Premium Lounge at Durgapur Station Platform 1. Hot meal spreads, quiet air-conditioned relaxation seats, and shower facilities.",
+            "amenities": [
+                "Hot Meal Spread",
+                "AC Relaxation Seats",
+                "Shower Facilities",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
+        {
+            "id": "308421349129",
+            "city": "Kalupur Railway Station Ahmedabad",
+            "outletName": "IRCTC Executive Lounge",
+            "country": "India",
+            "airportCode": "ADI (Rail)",
+            "terminals": [
+                "Platform 1"
+            ],
+            "rating": 4.5,
+            "reviewsCount": 750,
+            "priceUSD": 6.6,
+            "status": "Non - Operational",
+            "statusColor": "#ef4444",
+            "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1400&q=85",
+            "description": "IRCTC Executive Lounge at Kalupur Railway Station Ahmedabad (Platform 1). Currently non-operational for maintenance.",
+            "amenities": [
+                "Hot Food Buffet",
+                "AC Recliners",
+                "Shower Suites",
+                "Wi-Fi"
+            ],
+            "region": "Asia",
+            "isTrainLounge": true,
+            "type": "Executive Railway Lounge"
+        },
         {
             "id": "sin-changi",
             "city": "Singapore Changi",
@@ -76,7 +1811,7 @@
             "statusColor": "#10b981",
             "image": "https://res.klook.com/images/w_900,h_600,c_fill,q_85/activities/mjpkxxyilqn7ze5ty64t/SingaporeChangiAirportLoungeService-Klook.jpg",
             "heroImage": "https://res.klook.com/images/w_1400,h_630,c_fill,q_85/activities/ueh03x7cyrhhdi6uxqx4/SingaporeChangiAirportLoungeService-Klook.jpg",
-            "description": "Experience world-class luxury overlooking Changi\u2019s indoor rainforest and Jewel waterfall. Features live chef noodle bars, private rainfall shower suites, and sleep suites.",
+            "description": "Experience world-class luxury overlooking Changi’s indoor rainforest and Jewel waterfall. Features live chef noodle bars, private rainfall shower suites, and sleep suites.",
             "amenities": [
                 "Buffet & Live Chef",
                 "Private Showers",
@@ -215,8 +1950,8 @@
             "priceUSD": 45,
             "status": "Quiet & Spacious",
             "statusColor": "#10b981",
-            "image": "https:\/\/images.unsplash.com\/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=900&q=85",
-            "heroImage": "https:\/\/images.unsplash.com\/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=85",
+            "image": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=85",
             "description": "Sleek Manhattan speakeasy-inspired lounge with craft mixologists, local NY bagel spreads, private soundproof phone booths, and work desks.",
             "amenities": [
                 "Craft Speakeasy Bar",
@@ -228,7 +1963,7 @@
             "virtualTour": [
                 {
                     "title": "Manhattan Skyline Lounge Bar",
-                    "url": "https:\/\/images.unsplash.com\/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1200&q=85"
+                    "url": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1200&q=85"
                 }
             ],
             "region": "Americas",
@@ -284,7 +2019,7 @@
         {
             "id": "ist-istanbul",
             "city": "Istanbul",
-            "country": "T\u00fcrkiye",
+            "country": "Türkiye",
             "airportCode": "IST",
             "terminals": [
                 "International Terminal - Mezzanine Level"
@@ -325,43 +2060,6 @@
             }
         },
         {
-            "id": "del-delhi",
-            "city": "Delhi Indira Gandhi",
-            "country": "India",
-            "airportCode": "DEL",
-            "terminals": [
-                "Terminal 3 International",
-                "Terminal 3 Domestic",
-                "Terminal 2"
-            ],
-            "rating": 4.8,
-            "reviewsCount": 1890,
-            "priceUSD": 28,
-            "status": "Moderate",
-            "statusColor": "#3b82f6",
-            "image": "https:\/\/images.unsplash.com\/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=85",
-            "heroImage": "https:\/\/images.unsplash.com\/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1400&q=85",
-            "description": "Spacious sanctuary with rich Indian royal decor, live chaat & tandoori counters, Ayurvedic spa therapists, and dedicated nap cubicles.",
-            "amenities": [
-                "Live Tandoori & Chaat Bar",
-                "Ayurvedic Spa Treatments",
-                "Dedicated Nap Rooms",
-                "High-Speed Wi-Fi",
-                "Cocktail Lounge"
-            ],
-            "virtualTour": [
-                {
-                    "title": "Royal Heritage Seating Atrium",
-                    "url": "https:\/\/images.unsplash.com\/photo-1563911302283-d2bc129e7570?auto=format&fit=crop&w=1200&q=85"
-                }
-            ],
-            "region": "Asia",
-            "coordinates": {
-                "x": 70,
-                "y": 44
-            }
-        },
-        {
             "id": "fra-frankfurt",
             "city": "Frankfurt",
             "country": "Germany",
@@ -375,8 +2073,8 @@
             "priceUSD": 39,
             "status": "Quiet & Spacious",
             "statusColor": "#10b981",
-            "image": "https:\/\/images.unsplash.com\/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=900&q=85",
-            "heroImage": "https:\/\/images.unsplash.com\/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1400&q=85",
+            "image": "https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&w=900&q=85",
+            "heroImage": "https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1400&q=85",
             "description": "Precision engineering meets relaxation. Enjoy German pretzel stations, premium Bavarian beer taps, ergonomic workstations, and spa showers.",
             "amenities": [
                 "Bavarian Draft Beers",
@@ -388,7 +2086,7 @@
             "virtualTour": [
                 {
                     "title": "Skyline Business Club & Tarmac Views",
-                    "url": "https:\/\/images.unsplash.com\/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85"
+                    "url": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85"
                 }
             ],
             "region": "Europe",
@@ -413,8 +2111,8 @@
             "priceUSD": 44,
             "status": "High Demand",
             "statusColor": "#f59e0b",
-            "image": "\/heathrow-t2.png",
-            "heroImage": "\/heathrow-t2.png",
+            "image": "/heathrow-t2.png",
+            "heroImage": "/heathrow-t2.png",
             "description": "Sophisticated British elegance featuring complimentary champagne bars, afternoon tea towers, cinema screening rooms, and luxury spa suites in Terminal 2.",
             "amenities": [
                 "Afternoon Tea & Champagne Bar",
@@ -426,7 +2124,7 @@
             "virtualTour": [
                 {
                     "title": "Terminal 2 Plaza & Luxury Lounge Suite",
-                    "url": "\/heathrow-t2.png"
+                    "url": "/heathrow-t2.png"
                 }
             ],
             "region": "Europe",
@@ -482,77 +2180,77 @@
     "FEATURED_PARTNERS": [
         {
             "name": "Plaza Premium Lounge",
-            "logo": "\/partner-logo-1.png"
+            "logo": "/partner-logo-1.png"
         },
         {
             "name": "Lounge Me",
-            "logo": "\/partner-logo-2.png"
+            "logo": "/partner-logo-2.png"
         },
         {
             "name": "The Coral",
-            "logo": "\/partner-logo-3.png"
+            "logo": "/partner-logo-3.png"
         },
         {
             "name": "Zero Eight Zero",
-            "logo": "\/partner-logo-4.png"
+            "logo": "/partner-logo-4.png"
         },
         {
             "name": "W Premium Group",
-            "logo": "\/partner-logo-5.png"
+            "logo": "/partner-logo-5.png"
         },
         {
             "name": "Goldair Handling",
-            "logo": "\/partner-logo-6.png"
+            "logo": "/partner-logo-6.png"
         },
         {
             "name": "Aspire Airport Lounges",
-            "logo": "\/partner-logo-8.png"
+            "logo": "/partner-logo-8.png"
         },
         {
             "name": "Ahlan Lounge DXB",
-            "logo": "\/partner-logo-9.png"
+            "logo": "/partner-logo-9.png"
         },
         {
             "name": "NASCO",
-            "logo": "\/partner-logo-10.png"
+            "logo": "/partner-logo-10.png"
         },
         {
             "name": "Bidvest Premier Lounge",
-            "logo": "\/partner-logo-11.png"
+            "logo": "/partner-logo-11.png"
         },
         {
             "name": "Travel Club Lounge",
-            "logo": "\/partner-logo-12.png"
+            "logo": "/partner-logo-12.png"
         }
     ],
     "FEATURED_AIRLINES": [
         {
             "name": "Air France KLM Group",
-            "logo": "\/airline-logo-1.png"
+            "logo": "/airline-logo-1.png"
         },
         {
             "name": "Air India",
-            "logo": "\/airline-logo-2.png"
+            "logo": "/airline-logo-2.png"
         },
         {
             "name": "Avianca",
-            "logo": "\/airline-logo-3.png"
+            "logo": "/airline-logo-3.png"
         },
         {
             "name": "Bangkok Airways",
-            "logo": "\/airline-logo-4.png"
+            "logo": "/airline-logo-4.png"
         },
         {
             "name": "Star Alliance",
-            "logo": "\/airline-logo-5.png"
+            "logo": "/airline-logo-5.png"
         },
         {
             "name": "Turkish Airlines",
-            "logo": "\/airline-logo-6.png"
+            "logo": "/airline-logo-6.png"
         },
         {
             "name": "Vietnam Airlines",
-            "logo": "\/airline-logo-7.png"
+            "logo": "/airline-logo-7.png"
         }
     ],
     "FAQ_ITEMS": [

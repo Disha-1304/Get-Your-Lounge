@@ -16,6 +16,7 @@ const getCapacity = (id) => {
 export const LoungeGuides = () => {
   const navigate = useNavigate();
   const { currentSymbol, convertPrice } = useCurrency();
+  const [categoryFilter, setCategoryFilter] = useState('All');
   const [countryFilter, setCountryFilter] = useState('All Countries');
   const [sortVal, setSortVal] = useState('Default');
   const [visibleCount, setVisibleCount] = useState(12);
@@ -33,6 +34,15 @@ export const LoungeGuides = () => {
 
   const filteredAndSorted = useMemo(() => {
     let filtered = shuffledLounges;
+
+    if (categoryFilter === 'IndiaAirports') {
+      filtered = filtered.filter(l => l.country === 'India' && !l.isTrainLounge);
+    } else if (categoryFilter === 'RailwayLounges') {
+      filtered = filtered.filter(l => l.isTrainLounge || l.type === 'Executive Railway Lounge' || (l.city || '').toLowerCase().includes('railway'));
+    } else if (categoryFilter === 'International') {
+      filtered = filtered.filter(l => l.country !== 'India' && !l.isTrainLounge);
+    }
+
     if (countryFilter !== 'All Countries') {
       filtered = filtered.filter(l => l.country === countryFilter);
     }
@@ -48,12 +58,12 @@ export const LoungeGuides = () => {
       sorted.sort((a, b) => b.priceUSD - a.priceUSD);
     }
     return sorted;
-  }, [countryFilter, sortVal, shuffledLounges]);
+  }, [categoryFilter, countryFilter, sortVal, shuffledLounges]);
 
   const visibleLounges = filteredAndSorted.slice(0, visibleCount);
 
   return (
-    <section id="guides-section" className="py-20 px-6 bg-bg-secondary max-w-[1440px] mx-auto relative">
+    <section id="guides-section" className="py-20 px-6 bg-bg-secondary max-w-[1440px] mx-auto relative overflow-hidden">
       <div className="absolute top-[10%] right-[5%] w-[500px] h-[500px] bg-accent-rose/10 rounded-full blur-[50px] z-0 pointer-events-none"></div>
 
       <div className="flex justify-between items-end flex-wrap gap-6 mb-12 relative z-10">
@@ -102,9 +112,11 @@ export const LoungeGuides = () => {
         </div>
       </div>
 
+
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 relative z-10">
         {visibleLounges.map((lounge, idx) => (
-          <div key={lounge.id || lounge.outletId} className="bg-white rounded-3xl overflow-hidden border border-navy/10 shadow-lg transition-all duration-400 flex flex-col hover:-translate-y-2 hover:shadow-2xl hover:border-accent-rose/40">
+          <div key={lounge.id || lounge.outletId} className="luxury-card-hover bg-white rounded-3xl overflow-hidden border border-navy/10 shadow-lg transition-all duration-400 flex flex-col hover:-translate-y-2.5 hover:shadow-2xl hover:border-accent-rose/40">
               <div 
                 className="relative h-[200px] overflow-hidden bg-navy group cursor-pointer"
                 onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
@@ -134,8 +146,18 @@ export const LoungeGuides = () => {
                 </div>
 
 
-                <div className="absolute bottom-4 right-4 text-white font-black text-[22px] tracking-[1px] drop-shadow-md">
-                  {lounge.airportCode}
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase border shadow-md ${
+                    lounge.isTrainLounge 
+                      ? 'bg-amber-500 text-white border-amber-400' 
+                      : 'bg-navy/80 text-white border-white/20 backdrop-blur-md'
+                  }`}>
+                    {lounge.isTrainLounge ? '🚄 Executive Rail Lounge' : '✈ Airport Lounge'}
+                  </span>
+
+                  <div className="text-white font-black text-[22px] tracking-[1px] drop-shadow-md">
+                    {lounge.airportCode}
+                  </div>
                 </div>
               </div>
 
@@ -144,9 +166,9 @@ export const LoungeGuides = () => {
                   className="cursor-pointer"
                   onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                 >
-                  <div className="flex items-center gap-1.5 text-[12px] text-slate-500 font-bold mb-1.5 uppercase tracking-wider">
+                  <div className="flex items-center gap-1.5 text-[11.5px] text-slate-500 font-extrabold mb-1.5 uppercase tracking-wider">
                     <span className="text-accent-rose">•</span>
-                    {lounge.country} • {lounge.terminals[0]}
+                    {lounge.city} • {lounge.country}
                   </div>
                   <h3 className="text-[20px] font-extrabold text-navy mb-2 leading-tight hover:text-accent-rose transition-colors">
                     {lounge.outletName || `${lounge.city} Lounge`}
