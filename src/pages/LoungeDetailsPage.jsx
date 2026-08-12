@@ -16,7 +16,6 @@ export const LoungeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { currentSymbol, convertPrice } = useCurrency();
-  const [isLiked, setIsLiked] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // Combine datasets
@@ -60,18 +59,18 @@ export const LoungeDetailsPage = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <Link 
+              to="/" 
+              className="px-4 py-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2 text-[13px] font-bold no-underline"
+            >
+              Home
+            </Link>
             <button 
               onClick={handleShare} 
               className="p-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2 text-[13px] font-bold"
             >
               <Share2 className="w-4 h-4 text-slate-600" />
               {copied ? 'Copied Link!' : 'Share'}
-            </button>
-            <button 
-              onClick={() => setIsLiked(!isLiked)} 
-              className={`p-2.5 rounded-full border transition-colors ${isLiked ? 'border-rose-300 bg-rose-50 text-accent-rose' : 'border-slate-200 text-slate-700 hover:bg-slate-50'}`}
-            >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-accent-rose text-accent-rose' : ''}`} />
             </button>
           </div>
         </div>
@@ -120,7 +119,7 @@ export const LoungeDetailsPage = () => {
           <div className="grid grid-rows-2 gap-4 h-[380px] lg:h-[480px]">
             <div className="relative overflow-hidden rounded-[16px] bg-slate-800">
               <img 
-                src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80" 
+                src={lounge.images?.[1] || lounge.image} 
                 alt="Lounge Seating" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
               />
@@ -130,7 +129,7 @@ export const LoungeDetailsPage = () => {
             </div>
             <div className="relative overflow-hidden rounded-[16px] bg-slate-800">
               <img 
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" 
+                src={lounge.images?.[2] || lounge.image} 
                 alt="Dining Area" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
               />

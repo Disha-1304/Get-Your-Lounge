@@ -102,7 +102,15 @@ export const PaymentPage = () => {
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs">
         <div className="max-w-[1350px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
-          <AppLogo size="sm" />
+          <div className="flex items-center gap-4">
+            <AppLogo size="sm" />
+            <Link
+              to="/"
+              className="hidden sm:flex px-4 py-2 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors items-center gap-2 text-[13px] font-bold no-underline"
+            >
+              Home
+            </Link>
+          </div>
           <div className="flex items-center gap-2 text-[13px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-3.5 rounded-full border border-emerald-200">
             <Lock className="w-3.5 h-3.5" /> 256-Bit SSL Encrypted Checkout
           </div>
@@ -358,8 +366,8 @@ export const PaymentPage = () => {
                   <div
                     onClick={() => setSelectedUpiApp('gpay')}
                     className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'gpay'
-                        ? 'bg-[#E3EFFD] border-[#3B82F6] ring-2 ring-[#3B82F6]/30 shadow-xs'
-                        : 'bg-[#EEF5FF] border-[#C4DEFF] hover:border-[#93C5FD]'
+                      ? 'bg-[#E3EFFD] border-[#3B82F6] ring-2 ring-[#3B82F6]/30 shadow-xs'
+                      : 'bg-[#EEF5FF] border-[#C4DEFF] hover:border-[#93C5FD]'
                       }`}
                   >
                     <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1">
@@ -372,8 +380,8 @@ export const PaymentPage = () => {
                   <div
                     onClick={() => setSelectedUpiApp('phonepe')}
                     className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'phonepe'
-                        ? 'bg-[#F3E8FF] border-[#9333EA] ring-2 ring-[#9333EA]/30 shadow-xs'
-                        : 'bg-[#F8F2FF] border-[#E9D5FF] hover:border-[#D8B4FE]'
+                      ? 'bg-[#F3E8FF] border-[#9333EA] ring-2 ring-[#9333EA]/30 shadow-xs'
+                      : 'bg-[#F8F2FF] border-[#E9D5FF] hover:border-[#D8B4FE]'
                       }`}
                   >
                     <img src="/payment-logos/phonepe.png" alt="PhonePe" className="w-12 h-12 rounded-[14px] mb-2 object-cover shrink-0 shadow-2xs" />
@@ -384,8 +392,8 @@ export const PaymentPage = () => {
                   <div
                     onClick={() => setSelectedUpiApp('paytm')}
                     className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'paytm'
-                        ? 'bg-[#E0F2FE] border-[#0284C7] ring-2 ring-[#0284C7]/30 shadow-xs'
-                        : 'bg-[#EEF9FF] border-[#BAE6FD] hover:border-[#7DD3FC]'
+                      ? 'bg-[#E0F2FE] border-[#0284C7] ring-2 ring-[#0284C7]/30 shadow-xs'
+                      : 'bg-[#EEF9FF] border-[#BAE6FD] hover:border-[#7DD3FC]'
                       }`}
                   >
                     <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1.5">
@@ -398,8 +406,8 @@ export const PaymentPage = () => {
                   <div
                     onClick={() => setSelectedUpiApp('bhim')}
                     className={`border rounded-[20px] p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${selectedUpiApp === 'bhim'
-                        ? 'bg-[#FFEDD5] border-[#EA580C] ring-2 ring-[#EA580C]/30 shadow-xs'
-                        : 'bg-[#FFF6ED] border-[#FFEDD5] hover:border-[#FDBA74]'
+                      ? 'bg-[#FFEDD5] border-[#EA580C] ring-2 ring-[#EA580C]/30 shadow-xs'
+                      : 'bg-[#FFF6ED] border-[#FFEDD5] hover:border-[#FDBA74]'
                       }`}
                   >
                     <div className="w-12 h-12 rounded-[14px] bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center mb-2 shrink-0 p-1.5">

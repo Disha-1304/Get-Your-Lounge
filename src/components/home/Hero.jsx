@@ -97,13 +97,7 @@ export const Hero = () => {
       {/* Centered Composition */}
       <div className="relative z-10 w-full max-w-[950px] text-center flex flex-col items-center mt-8">
         
-        {/* Airport Flight Board Ticker Marquee */}
-        <div className="mb-4 inline-flex items-center gap-2.5 px-4 py-1.5 bg-navy/90 text-white rounded-full border border-white/20 shadow-md backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-extrabold tracking-[2px] uppercase font-outfit text-white/90">
-            DEL ✈ DXB • SIN ✈ LHR • JFK ✈ CDG • BOM ✈ BKK • GUARANTEED INSTANT PASSES
-          </span>
-        </div>
+
 
         <h1 className="font-quicksand font-extrabold text-[clamp(28px,3.5vw,42px)] text-navy mb-6 drop-shadow-sm leading-[1.15]">
           Your Exclusive Gateway to 1,400+<br/>Premium Airport Lounges Worldwide.
@@ -112,20 +106,20 @@ export const Hero = () => {
         {/* Quick Filter Pills */}
         <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-[750px]">
           {[
-            { label: '✨ All Lounges', q: '' },
-            { label: '✈ International', q: 'International' },
-            { label: '🇮🇳 Domestic', q: 'Domestic' },
-            { label: '🚄 Rail Lounges', q: 'Train' }
+            { label: '✨ All Lounges', filter: 'All' },
+            { label: '✈ International', filter: 'International' },
+            { label: '🇮🇳 Domestic', filter: 'IndiaAirports' },
+            { label: '🚄 Rail Lounges', filter: 'RailwayLounges' }
           ].map((pill, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => {
-                setSearchValue(pill.q);
-                if (pill.q) {
-                  navigate(`/search?q=${encodeURIComponent(pill.q)}`);
-                } else {
+                setSearchValue('');
+                if (pill.filter === 'All') {
                   navigate('/search');
+                } else {
+                  navigate(`/search?filter=${encodeURIComponent(pill.filter)}`);
                 }
               }}
               className="bg-white/90 hover:bg-white text-navy hover:text-accent-rose text-[12px] font-extrabold py-1.5 px-4 rounded-full border border-slate-200 shadow-2xs hover:shadow-md transition-all cursor-pointer font-plus-jakarta"

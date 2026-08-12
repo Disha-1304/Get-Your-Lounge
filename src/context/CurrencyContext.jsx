@@ -46,8 +46,8 @@ export const CurrencyProvider = ({ children }) => {
   useEffect(() => {
     fetchLiveRates();
 
-    // Auto-refresh rates every 60 seconds for live market movements
-    const interval = setInterval(fetchLiveRates, 60000);
+    // Auto-refresh rates every 10 seconds for live market movements
+    const interval = setInterval(fetchLiveRates, 10000);
     return () => clearInterval(interval);
   }, [fetchLiveRates]);
 

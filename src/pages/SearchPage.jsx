@@ -18,15 +18,33 @@ export const SearchPage = () => {
   const [searchInput, setSearchInput] = useState(query);
 
   // Filters State
-  const [priceMax, setPriceMax] = useState(200);
+  const [localBudgetInput, setLocalBudgetInput] = useState("");
   const [minRating, setMinRating] = useState(0);
   const [selectedTerminalTypes, setSelectedTerminalTypes] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [sortBy, setSortBy] = useState('relevance');
+
+  // Read filter param from URL (e.g., /search?filter=International)
+  const filterParam = searchParams.get('filter') || '';
+
   const [categoryFilter, setCategoryFilter] = useState(() => {
+    if (filterParam) return filterParam;
     const q = (query || '').toLowerCase();
     if (q.includes('rail') || q.includes('train')) return 'RailwayLounges';
+    if (q.includes('domestic') || q.includes('indian') || q === 'india') return 'IndiaAirports';
+    if (q.includes('international')) return 'International';
     return 'All';
   });
+
+  // Sync categoryFilter when URL filter param changes
+  useEffect(() => {
+    if (filterParam) {
+      setCategoryFilter(filterParam);
+      setSearchInput('');
+    } else if (!query) {
+      setCategoryFilter('All');
+    }
+  }, [filterParam, query]);
 
   // Combine both local featured lounges and global lounges
   const allLounges = useMemo(() => {
@@ -38,15 +56,8 @@ export const SearchPage = () => {
     let list = allLounges;
     const q = query.toLowerCase().trim();
 
+    // If there's a text query, filter by text first
     if (q) {
-      if (q.includes('rail') || q.includes('train')) {
-        return allLounges.filter(l => l.isTrainLounge);
-      }
-
-      if (q.includes('indian') || q === 'india' || q.includes('domestic')) {
-        return allLounges.filter(l => l.country === 'India' && !l.isTrainLounge);
-      }
-
       const exactCountryMatch = allLounges.some(l => (l.country || '').toLowerCase() === q);
       if (exactCountryMatch) {
         list = allLounges.filter(l => (l.country || '').toLowerCase() === q);
@@ -66,6 +77,7 @@ export const SearchPage = () => {
       }
     }
 
+    // Apply category filter
     if (categoryFilter === 'IndiaAirports') {
       return list.filter(l => l.country === 'India' && !l.isTrainLounge);
     } else if (categoryFilter === 'RailwayLounges') {
@@ -107,8 +119,14 @@ export const SearchPage = () => {
 
   // Final Filtered Results
   const filteredResults = useMemo(() => {
-    return baseResults.filter(l => {
-      if (l.priceUSD > priceMax) return false;
+    const filtered = baseResults.filter(l => {
+      if (localBudgetInput !== "") {
+        const maxLimit = parseFloat(localBudgetInput);
+        if (!isNaN(maxLimit)) {
+          const loungeLocalPrice = convertPrice(l.priceUSD);
+          if (loungeLocalPrice > maxLimit) return false;
+        }
+      }
       if (l.rating < minRating) return false;
       
       let termType = 'International';
@@ -125,7 +143,39 @@ export const SearchPage = () => {
       
       return true;
     });
-  }, [baseResults, priceMax, minRating, selectedTerminalTypes, selectedAmenities]);
+
+    // Apply Sorting
+    return filtered.sort((a, b) => {
+      if (sortBy === 'price-low-high') return a.priceUSD - b.priceUSD;
+      if (sortBy === 'price-high-low') return b.priceUSD - a.priceUSD;
+      if (sortBy === 'top-rated') return (b.rating || 0) - (a.rating || 0);
+      
+      // relevance (default): score based on search query match
+      if (sortBy === 'relevance' && query) {
+        const q = query.toLowerCase().trim();
+        const getScore = (l) => {
+          const name = (l.outletName || '').toLowerCase();
+          const city = (l.city || '').toLowerCase();
+          const code = (l.airportCode || '').toLowerCase();
+          const airport = (l.airportName || '').toLowerCase();
+          const country = (l.country || '').toLowerCase();
+          
+          if (name === q) return 100;
+          if (city === q) return 90;
+          if (code === q) return 80;
+          if (name.includes(q)) return 70;
+          if (city.includes(q)) return 60;
+          if (airport.includes(q)) return 50;
+          if (country.includes(q)) return 40;
+          return 0;
+        };
+        return getScore(b) - getScore(a);
+      }
+      
+      return 0; 
+    });
+
+  }, [baseResults, localBudgetInput, minRating, selectedTerminalTypes, selectedAmenities, sortBy]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -145,10 +195,11 @@ export const SearchPage = () => {
   };
 
   const clearAllFilters = () => {
-    setPriceMax(200);
+    setLocalBudgetInput("");
     setMinRating(0);
     setSelectedTerminalTypes([]);
     setSelectedAmenities([]);
+    setSortBy('relevance');
   };
 
   // Autocomplete state for header search
@@ -234,8 +285,8 @@ export const SearchPage = () => {
             </div>
           </form>
 
-          <Link to="/" className="text-white font-bold text-[13px] no-underline hover:text-accent-rose transition-colors shrink-0">
-            Home
+          <Link to="/" className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-[13px] py-2 px-4 rounded-full no-underline hover:text-accent-rose transition-all shrink-0 border border-white/20 hover:border-accent-rose/50 shadow-sm">
+            <span>Home</span>
           </Link>
         </div>
       </header>
@@ -248,11 +299,31 @@ export const SearchPage = () => {
           <div className="bg-white rounded-[24px] border border-slate-200 shadow-[0_12px_36px_rgba(10,25,47,0.06)] p-6 sticky top-[100px]">
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
               <h3 className="font-outfit font-extrabold text-[18px] text-navy flex items-center gap-2">
-                <Filter className="w-4 h-4" /> Filters
+                <Filter className="w-4 h-4" /> Filters & Sort
               </h3>
               <button onClick={clearAllFilters} className="bg-transparent border-none text-[12px] font-bold text-accent-rose cursor-pointer hover:underline">
                 Clear All
               </button>
+            </div>
+
+            {/* Sort By */}
+            <div className="mb-8">
+              <div className="font-bold text-[14px] text-navy mb-4">Sort By</div>
+              <div className="relative">
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full appearance-none bg-slate-50 border border-slate-200 text-navy text-[14px] font-semibold py-3 px-4 rounded-xl outline-none cursor-pointer hover:border-slate-300 focus:border-accent-rose transition-colors"
+                >
+                  <option value="relevance">✨ Most Relevant</option>
+                  <option value="top-rated">🌟 Top Rated First</option>
+                  <option value="price-low-high">💎 Most Affordable (Price: Low to High)</option>
+                  <option value="price-high-low">👑 Premium First (Price: High to Low)</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-[10px]">
+                  ▼
+                </div>
+              </div>
             </div>
 
             {/* Budget */}
@@ -261,23 +332,19 @@ export const SearchPage = () => {
                 <span>Max Budget</span>
                 <span className="text-[12px] text-slate-500 font-normal">{currency}</span>
               </div>
-              <div className="flex items-center gap-3 mb-3 text-[14px] font-bold text-navy">
-                <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-center">
-                  {currentSymbol}0
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
+                  {currentSymbol}
                 </div>
-                <span className="text-slate-400">—</span>
-                <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-center">
-                  {currentSymbol}{convertPrice(priceMax)}
-                </div>
+                <input 
+                  type="number"
+                  min="0"
+                  value={localBudgetInput}
+                  onChange={(e) => setLocalBudgetInput(e.target.value)}
+                  placeholder="Enter max amount"
+                  className="w-full appearance-none bg-slate-50 border border-slate-200 text-navy text-[14px] font-semibold py-3 pl-10 pr-4 rounded-xl outline-none hover:border-slate-300 focus:border-accent-rose transition-colors"
+                />
               </div>
-              <input 
-                type="range" 
-                min="0" 
-                max="200" 
-                value={priceMax} 
-                onChange={(e) => setPriceMax(Number(e.target.value))}
-                className="w-full accent-accent-rose cursor-pointer h-[4px] bg-slate-200 rounded-lg appearance-none"
-              />
             </div>
 
             {/* Rating */}
@@ -285,10 +352,12 @@ export const SearchPage = () => {
               <div className="font-bold text-[14px] text-navy mb-4">Guest Rating</div>
               <div className="flex flex-col gap-3">
                 {[
-                  { val: 0, label: "Any" },
-                  { val: 4, label: "4.0 & above" },
-                  { val: 4.5, label: "4.5 & above" },
-                  { val: 4.9, label: "Exceptional 4.9+" }
+                  { val: 0, label: "All Ratings" },
+                  { val: 4.5, label: "5 ★" },
+                  { val: 4, label: "4 ★ & above" },
+                  { val: 3, label: "3 ★ & above" },
+                  { val: 2, label: "2 ★ & above" },
+                  { val: 1, label: "1 ★ & above" }
                 ].map(r => (
                   <label key={r.val} className="flex items-center gap-3 cursor-pointer group">
                     <input 
@@ -307,28 +376,8 @@ export const SearchPage = () => {
               </div>
             </div>
 
-            {/* Terminal Types */}
-            {filterOptions.terminalTypes.length > 0 && (
-              <div className="mb-8">
-                <div className="font-bold text-[14px] text-navy mb-4">Terminal Type</div>
-                <div className="flex flex-col gap-3">
-                  {filterOptions.terminalTypes.map(tt => (
-                    <label key={tt} className="flex items-center gap-3 cursor-pointer group">
-                      <input 
-                        type="checkbox" 
-                        checked={selectedTerminalTypes.includes(tt)}
-                        onChange={() => handleTerminalChange(tt)}
-                        className="hidden"
-                      />
-                      <div className={`w-5 h-5 rounded-[6px] border-2 flex items-center justify-center transition-colors ${selectedTerminalTypes.includes(tt) ? 'border-accent-rose bg-accent-rose' : 'border-slate-300 bg-white group-hover:border-accent-rose/50'}`}>
-                        {selectedTerminalTypes.includes(tt) && <Check className="w-3.5 h-3.5 text-white" />}
-                      </div>
-                      <span className="text-[14px] text-slate-700 font-semibold group-hover:text-navy">{tt}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
+
+
           </div>
         </aside>
 
@@ -336,12 +385,43 @@ export const SearchPage = () => {
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-[24px] font-outfit font-extrabold text-navy">
-              {query ? `Results for "${query}"` : 'All Lounges'} 
+              {categoryFilter === 'International' ? 'International Lounges' :
+               categoryFilter === 'IndiaAirports' ? 'Domestic Lounges' :
+               categoryFilter === 'RailwayLounges' ? 'Rail Lounges' :
+               query ? `Results for "${query}"` : 'All Lounges'} 
               <span className="text-slate-400 text-[18px] ml-2 font-medium">({filteredResults.length})</span>
             </h2>
           </div>
 
-
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {[
+              { label: '✨ All Lounges', value: 'All' },
+              { label: '✈ International', value: 'International' },
+              { label: '🇮🇳 Domestic', value: 'IndiaAirports' },
+              { label: '🚄 Rail Lounges', value: 'RailwayLounges' }
+            ].map((tab) => (
+              <button
+                key={tab.value}
+                type="button"
+                onClick={() => {
+                  setCategoryFilter(tab.value);
+                  if (tab.value === 'All') {
+                    setSearchParams(query ? { q: query } : {});
+                  } else {
+                    setSearchParams(query ? { q: query, filter: tab.value } : { filter: tab.value });
+                  }
+                }}
+                className={`py-2 px-5 rounded-full text-[13px] font-extrabold border transition-all cursor-pointer font-plus-jakarta ${
+                  categoryFilter === tab.value
+                    ? 'bg-accent-rose text-white border-accent-rose shadow-md'
+                    : 'bg-white text-navy border-slate-200 hover:border-accent-rose/40 hover:text-accent-rose shadow-sm'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
           <div className="flex flex-col gap-6">
             {filteredResults.length === 0 ? (

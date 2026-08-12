@@ -89,7 +89,15 @@ export const BookingPage = () => {
       {/* Top Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-xs">
         <div className="max-w-[1350px] mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
-          <AppLogo size="sm" />
+          <div className="flex items-center gap-4">
+            <AppLogo size="sm" />
+            <Link 
+              to="/" 
+              className="hidden sm:flex px-4 py-2 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors items-center gap-2 text-[13px] font-bold no-underline"
+            >
+              Home
+            </Link>
+          </div>
           <button 
             onClick={() => navigate(-1)} 
             className="text-slate-600 font-bold text-[13px] hover:text-accent-rose transition-colors flex items-center gap-2 cursor-pointer"
