@@ -49,3 +49,6 @@ Thumbs.db
 
 # Temp / Zip files
 *.zip
+
+# Images
+lounge_images/
