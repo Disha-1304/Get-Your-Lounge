@@ -20,6 +20,8 @@ export const LoungeGuides = () => {
   const [countryFilter, setCountryFilter] = useState('All Countries');
   const [sortVal, setSortVal] = useState('Default');
   const [visibleCount, setVisibleCount] = useState(12);
+  const [selectedAmenity, setSelectedAmenity] = useState('');
+  const [is24x7Open, setIs24x7Open] = useState(false);
 
   // Combine featured lounges with a subset of global lounges and shuffle them
   const [shuffledLounges] = useState(() => {
@@ -47,6 +49,20 @@ export const LoungeGuides = () => {
       filtered = filtered.filter(l => l.country === countryFilter);
     }
 
+    if (selectedAmenity) {
+      filtered = filtered.filter(l => {
+        const amStr = Array.isArray(l.amenities) ? l.amenities.join(' ') : (l.amenities || '');
+        return amStr.toLowerCase().includes(selectedAmenity.toLowerCase());
+      });
+    }
+
+    if (is24x7Open) {
+      filtered = filtered.filter(l => {
+        const text = `${l.description || ''} ${Array.isArray(l.amenities) ? l.amenities.join(' ') : ''} ${l.openingHours || ''}`.toLowerCase();
+        return text.includes('24x7') || text.includes('24 hours') || text.includes('24 hrs');
+      });
+    }
+
     const sorted = [...filtered];
     if (sortVal === 'Name (a-z)') {
       sorted.sort((a, b) => a.city.localeCompare(b.city));
@@ -68,7 +84,6 @@ export const LoungeGuides = () => {
 
       <div className="flex justify-between items-end flex-wrap gap-6 mb-12 relative z-10">
         <div>
-
           <h2 className="font-quicksand font-extrabold text-[clamp(36px,4.5vw,52px)] text-navy mb-3">
             International <span className="bg-gradient-to-br from-accent-rose via-[#C8102E] to-navy bg-clip-text text-transparent font-extrabold">Lounge Guides</span>
           </h2>
@@ -77,7 +92,26 @@ export const LoungeGuides = () => {
           </p>
         </div>
 
-        <div className="flex gap-4 flex-wrap items-center">
+        <div className="flex flex-col gap-4 items-end">
+          <div className="flex gap-2 flex-wrap justify-end">
+            {['Shower', 'Wi-Fi', 'Bar', 'Food'].map(amenity => (
+              <button
+                key={amenity}
+                onClick={() => setSelectedAmenity(a => a === amenity ? '' : amenity)}
+                className={`text-[12px] font-bold py-1.5 px-4 rounded-full border transition-all cursor-pointer font-plus-jakarta ${selectedAmenity === amenity ? 'bg-accent-rose text-white border-accent-rose shadow-md' : 'bg-white text-navy border-slate-200 hover:border-accent-rose/50'}`}
+              >
+                {amenity}
+              </button>
+            ))}
+            <button
+              onClick={() => setIs24x7Open(!is24x7Open)}
+              className={`text-[12px] font-bold py-1.5 px-4 rounded-full border transition-all cursor-pointer font-plus-jakarta ${is24x7Open ? 'bg-accent-rose text-white border-accent-rose shadow-md' : 'bg-white text-navy border-slate-200 hover:border-accent-rose/50'}`}
+            >
+              24x7 Open
+            </button>
+          </div>
+
+          <div className="flex gap-4 flex-wrap items-center">
           <div className="relative">
             <select
               value={countryFilter}
@@ -111,6 +145,7 @@ export const LoungeGuides = () => {
           </div>
         </div>
       </div>
+      </div>
 
 
 
@@ -124,6 +159,7 @@ export const LoungeGuides = () => {
                 <img
                   src={getCleanLoungeImage(lounge, idx)}
                   alt={lounge.city}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105"
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-navy/20 to-navy/80"></div>

@@ -22,6 +22,7 @@ export const SearchPage = () => {
   const [minRating, setMinRating] = useState(0);
   const [selectedTerminalTypes, setSelectedTerminalTypes] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [is24x7Open, setIs24x7Open] = useState(false);
   const [sortBy, setSortBy] = useState('relevance');
 
   // Read filter param from URL (e.g., /search?filter=International)
@@ -137,8 +138,14 @@ export const SearchPage = () => {
       if (selectedTerminalTypes.length > 0 && !selectedTerminalTypes.includes(termType)) return false;
       
       if (selectedAmenities.length > 0) {
-        const hasAll = selectedAmenities.every(a => (l.amenities || []).includes(a));
+        const amStr = Array.isArray(l.amenities) ? l.amenities.join(' ') : (l.amenities || '');
+        const hasAll = selectedAmenities.every(a => amStr.toLowerCase().includes(a.toLowerCase()));
         if (!hasAll) return false;
+      }
+
+      if (is24x7Open) {
+        const text = `${l.description || ''} ${Array.isArray(l.amenities) ? l.amenities.join(' ') : ''} ${l.openingHours || ''}`.toLowerCase();
+        if (!(text.includes('24x7') || text.includes('24 hours') || text.includes('24 hrs'))) return false;
       }
       
       return true;
@@ -175,7 +182,7 @@ export const SearchPage = () => {
       return 0; 
     });
 
-  }, [baseResults, localBudgetInput, minRating, selectedTerminalTypes, selectedAmenities, sortBy]);
+  }, [baseResults, localBudgetInput, minRating, selectedTerminalTypes, selectedAmenities, is24x7Open, sortBy, query, convertPrice]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -199,6 +206,7 @@ export const SearchPage = () => {
     setMinRating(0);
     setSelectedTerminalTypes([]);
     setSelectedAmenities([]);
+    setIs24x7Open(false);
     setSortBy('relevance');
   };
 
@@ -376,6 +384,42 @@ export const SearchPage = () => {
               </div>
             </div>
 
+            {/* Amenities */}
+            <div className="mb-8">
+              <div className="font-bold text-[14px] text-navy mb-4">Amenities</div>
+              <div className="flex flex-col gap-3">
+                {['Shower', 'Wi-Fi', 'Bar', 'Food'].map(amenity => (
+                  <label key={amenity} className="flex items-center gap-3 cursor-pointer group">
+                    <input 
+                      type="checkbox"
+                      checked={selectedAmenities.includes(amenity)}
+                      onChange={() => handleAmenityChange(amenity)}
+                      className="hidden"
+                    />
+                    <div className={`w-5 h-5 rounded-[6px] border-2 flex items-center justify-center transition-colors ${selectedAmenities.includes(amenity) ? 'border-accent-rose bg-accent-rose' : 'border-slate-300 group-hover:border-accent-rose/50'}`}>
+                      {selectedAmenities.includes(amenity) && <Check className="w-3.5 h-3.5 text-white" />}
+                    </div>
+                    <span className="text-[14px] text-slate-700 font-semibold group-hover:text-navy transition-colors">{amenity}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* 24x7 Open */}
+            <div className="mb-8">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <input 
+                  type="checkbox"
+                  checked={is24x7Open}
+                  onChange={() => setIs24x7Open(!is24x7Open)}
+                  className="hidden"
+                />
+                <div className={`w-5 h-5 rounded-[6px] border-2 flex items-center justify-center transition-colors ${is24x7Open ? 'border-accent-rose bg-accent-rose' : 'border-slate-300 group-hover:border-accent-rose/50'}`}>
+                  {is24x7Open && <Check className="w-3.5 h-3.5 text-white" />}
+                </div>
+                <span className="text-[14px] font-bold text-navy group-hover:text-accent-rose transition-colors">24x7 Open</span>
+              </label>
+            </div>
 
 
           </div>

@@ -3,9 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { CurrencySelect } from './Currency';
 import { Search, User, Briefcase, Globe, Train } from 'lucide-react';
 import loungesData from '../../data/loungesData.json';
+import globalLounges from '../../data/globalLoungesData.json';
 import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
 
 import { AppLogo } from '../common/AppLogo';
+
+const allLounges = [...loungesData.LOUNGE_GUIDES, ...globalLounges];
+const dynamicStats = {
+  international: allLounges.filter(l => l.country !== 'India' && !l.isTrainLounge).length,
+  domestic: allLounges.filter(l => l.country === 'India' && !l.isTrainLounge).length,
+  rail: allLounges.filter(l => l.isTrainLounge || l.type === 'Executive Railway Lounge' || (l.city || '').toLowerCase().includes('railway')).length,
+  countries: new Set(allLounges.map(l => l.country).filter(Boolean)).size
+};
 
 export const Hero = () => {
   const navigate = useNavigate();
@@ -234,24 +243,24 @@ export const Hero = () => {
           <div className="flex flex-1 justify-around items-center border-r border-transparent relative z-10 pr-6">
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">INTERNATIONAL</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">1022</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">{dynamicStats.international}</div>
             </div>
             <div className="w-px h-12 bg-slate-200"></div>
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">DOMESTIC</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">46</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">{dynamicStats.domestic}</div>
             </div>
           </div>
 
           <div className="flex flex-1 justify-around items-center pl-6 relative z-10">
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">RAIL</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">13</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">{dynamicStats.rail}</div>
             </div>
             <div className="w-px h-12 bg-slate-200"></div>
             <div className="text-center relative z-10">
               <div className="text-[11px] font-extrabold text-navy tracking-[1.5px] uppercase mb-1.5 opacity-80">COUNTRIES</div>
-              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">60+</div>
+              <div className="text-[34px] font-extrabold text-navy font-plus-jakarta">{dynamicStats.countries}+</div>
             </div>
           </div>
         </div>
