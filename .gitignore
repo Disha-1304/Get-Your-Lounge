@@ -1,44 +1,24 @@
-
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-
-
-# Diagnostic reports
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Directory for instrumented code coverage outputs
-coverage
-*.lcov
 
 # node_modules
 node_modules/
+backend/node_modules/
+lounge pair/node_modules/
 
 # Production build output
 dist/
-dist-ssr/
+build/
+backend/dist/
+lounge pair/dist/
 
-# IDE / Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS files
-.DS_Store
-Thumbs.db
+# SQLite local database
+*.db
+*.db-journal
+backend/prisma/dev.db
 
 # Environment variables
 .env
@@ -46,9 +26,10 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
 
-# Temp / Zip files
-*.zip
-
-# Images
-lounge_images/
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

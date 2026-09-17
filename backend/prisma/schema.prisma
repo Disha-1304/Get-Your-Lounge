@@ -1,0 +1,74 @@
+// Prisma schema for SQLite local database
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Lounge {
+  id               String     @id @default(cuid())
+  legacyId         String?    @unique // original JSON id for backward compat
+  name             String
+  description      String?
+  airportCode      String
+  city             String
+  country          String     @default("Unknown")
+  terminal         String?
+  type             String     @default("INTERNATIONAL")
+  amenities        String     @default("[]") // stored as JSON array string
+  images           String     @default("[]") // stored as JSON array string
+  price            Float      @default(0)
+  currency         String     @default("USD")
+  capacity         Int        @default(50)
+  isActive         Boolean    @default(true)
+
+  rating           Float?
+  reviewsCount     Int?
+  region           String?
+  airportName      String?
+
+  bookings         Booking[]
+
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@index([airportCode])
+  @@index([city])
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  phone     String?
+
+  bookings  Booking[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Booking {
+  id               String        @id @default(cuid())
+  loungeId         String
+  userId           String
+  visitDate        DateTime
+  numberOfGuests   Int           @default(1)
+  totalPrice       Float
+  currency         String        @default("USD")
+  status           String        @default("PENDING")
+  flightNumber     String?
+  confirmationCode String        @unique @default(cuid())
+
+  lounge           Lounge        @relation(fields: [loungeId], references: [id])
+  user             User          @relation(fields: [userId], references: [id])
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([loungeId])
+}

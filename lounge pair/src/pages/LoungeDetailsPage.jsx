@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, MapPin, Star, Clock, ShieldCheck, 
@@ -6,8 +6,7 @@ import {
   Info, Wifi, Coffee, Utensils, Tv, Zap, Check
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
-import globalLounges from '../data/globalLoungesData.json';
-import loungesData from '../data/loungesData.json';
+
 import { Footer } from '../components/home/Footer';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
@@ -18,14 +17,34 @@ export const LoungeDetailsPage = () => {
   const { currentSymbol, convertPrice } = useCurrency();
   const [copied, setCopied] = useState(false);
 
-  // Combine datasets
-  const allLounges = useMemo(() => {
-    return [...loungesData.LOUNGE_GUIDES, ...globalLounges];
-  }, []);
+  const [lounge, setLounge] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const lounge = useMemo(() => {
-    return allLounges.find(l => String(l.id) === String(id) || String(l.outletId) === String(id)) || allLounges[0];
-  }, [id, allLounges]);
+  useEffect(() => {
+    const fetchLounge = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/lounges/${id}`);
+        if (!res.ok) throw new Error('Lounge not found');
+        const data = await res.json();
+        setLounge(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLounge();
+  }, [id]);
+
+  if (loading || !lounge) {
+    return (
+      <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-4 border-accent-rose border-t-transparent rounded-full animate-spin mb-4"></div>
+        <h2 className="text-2xl font-bold text-navy">Loading Lounge Details...</h2>
+      </div>
+    );
+  }
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);

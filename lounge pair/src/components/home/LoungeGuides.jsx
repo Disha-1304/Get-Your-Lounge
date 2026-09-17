@@ -4,6 +4,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 import loungesData from '../../data/loungesData.json';
 import globalLounges from '../../data/globalLoungesData.json';
 import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
+import { matchesAmenity } from '../../utils/amenityMatcher';
 
 const getCapacity = (id) => {
   const hash = String(id).split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -50,10 +51,7 @@ export const LoungeGuides = () => {
     }
 
     if (selectedAmenity) {
-      filtered = filtered.filter(l => {
-        const amStr = Array.isArray(l.amenities) ? l.amenities.join(' ') : (l.amenities || '');
-        return amStr.toLowerCase().includes(selectedAmenity.toLowerCase());
-      });
+      filtered = filtered.filter(l => matchesAmenity(l, selectedAmenity));
     }
 
     if (is24x7Open) {

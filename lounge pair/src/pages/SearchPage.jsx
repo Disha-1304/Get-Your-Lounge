@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { Search, MapPin, Filter, X, Star, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Filter, X, Star, ArrowRight, Check } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
-import globalLounges from '../data/globalLoungesData.json';
-import loungesData from '../data/loungesData.json';
+
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
+import { matchesAmenity } from '../utils/amenityMatcher';
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,9 +47,25 @@ export const SearchPage = () => {
     }
   }, [filterParam, query]);
 
-  // Combine both local featured lounges and global lounges
-  const allLounges = useMemo(() => {
-    return [...loungesData.LOUNGE_GUIDES, ...globalLounges];
+  const [allLounges, setAllLounges] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLounges = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/lounges`);
+        if (!res.ok) throw new Error('Failed to fetch lounges');
+        const data = await res.json();
+        setAllLounges(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLounges();
   }, []);
 
   // Base results based only on search query & category tab
@@ -121,31 +137,42 @@ export const SearchPage = () => {
   // Final Filtered Results
   const filteredResults = useMemo(() => {
     const filtered = baseResults.filter(l => {
+      // Budget Filter
       if (localBudgetInput !== "") {
         const maxLimit = parseFloat(localBudgetInput);
         if (!isNaN(maxLimit)) {
-          const loungeLocalPrice = convertPrice(l.priceUSD);
+          const loungeLocalPrice = convertPrice(l.priceUSD || 0);
           if (loungeLocalPrice > maxLimit) return false;
         }
       }
-      if (l.rating < minRating) return false;
+
+      // Guest Rating Filter
+      if (minRating > 0 && (l.rating || 0) < minRating) return false;
       
+      // Terminal Classification
       let termType = 'International';
-      const termStr = ((l.terminals || []).join(' ') + ' ' + (l.description || '')).toLowerCase();
-      if (termStr.includes('domestic') && termStr.includes('international')) termType = 'Domestic-International';
-      else if (termStr.includes('domestic')) termType = 'Domestic';
+      if (l.isTrainLounge || (l.type || '').toLowerCase().includes('railway') || (l.city || '').toLowerCase().includes('railway')) {
+        termType = 'Railway';
+      } else if (l.type === 'DOMESTIC') {
+        termType = 'Domestic';
+      } else {
+        const termStr = ((l.terminals || []).join(' ') + ' ' + (l.terminal || '') + ' ' + (l.description || '')).toLowerCase();
+        if (termStr.includes('domestic') && termStr.includes('international')) termType = 'Domestic-International';
+        else if (termStr.includes('domestic')) termType = 'Domestic';
+      }
       
       if (selectedTerminalTypes.length > 0 && !selectedTerminalTypes.includes(termType)) return false;
       
+      // Amenities Filter
       if (selectedAmenities.length > 0) {
-        const amStr = Array.isArray(l.amenities) ? l.amenities.join(' ') : (l.amenities || '');
-        const hasAll = selectedAmenities.every(a => amStr.toLowerCase().includes(a.toLowerCase()));
+        const hasAll = selectedAmenities.every(a => matchesAmenity(l, a));
         if (!hasAll) return false;
       }
 
+      // 24x7 Open Filter
       if (is24x7Open) {
         const text = `${l.description || ''} ${Array.isArray(l.amenities) ? l.amenities.join(' ') : ''} ${l.openingHours || ''}`.toLowerCase();
-        if (!(text.includes('24x7') || text.includes('24 hours') || text.includes('24 hrs'))) return false;
+        if (!(text.includes('24x7') || text.includes('24 hours') || text.includes('24/7') || text.includes('24 hrs'))) return false;
       }
       
       return true;
@@ -153,9 +180,10 @@ export const SearchPage = () => {
 
     // Apply Sorting
     return filtered.sort((a, b) => {
-      if (sortBy === 'price-low-high') return a.priceUSD - b.priceUSD;
-      if (sortBy === 'price-high-low') return b.priceUSD - a.priceUSD;
+      if (sortBy === 'price-low-high') return (a.priceUSD || 0) - (b.priceUSD || 0);
+      if (sortBy === 'price-high-low') return (b.priceUSD || 0) - (a.priceUSD || 0);
       if (sortBy === 'top-rated') return (b.rating || 0) - (a.rating || 0);
+      if (sortBy === 'name-asc') return (a.outletName || a.city || '').localeCompare(b.outletName || b.city || '');
       
       // relevance (default): score based on search query match
       if (sortBy === 'relevance' && query) {
@@ -325,8 +353,9 @@ export const SearchPage = () => {
                 >
                   <option value="relevance">✨ Most Relevant</option>
                   <option value="top-rated">🌟 Top Rated First</option>
-                  <option value="price-low-high">💎 Most Affordable (Price: Low to High)</option>
-                  <option value="price-high-low">👑 Premium First (Price: High to Low)</option>
+                  <option value="price-low-high">💎 Price: Low to High</option>
+                  <option value="price-high-low">👑 Price: High to Low</option>
+                  <option value="name-asc">🔤 Alphabetical (A to Z)</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-[10px]">
                   ▼
@@ -388,7 +417,7 @@ export const SearchPage = () => {
             <div className="mb-8">
               <div className="font-bold text-[14px] text-navy mb-4">Amenities</div>
               <div className="flex flex-col gap-3">
-                {['Shower', 'Wi-Fi', 'Bar', 'Food'].map(amenity => (
+                {['Shower', 'Wi-Fi', 'Bar', 'Food', 'AC', 'TV', 'Spa', 'Flight Info'].map(amenity => (
                   <label key={amenity} className="flex items-center gap-3 cursor-pointer group">
                     <input 
                       type="checkbox"
@@ -438,7 +467,7 @@ export const SearchPage = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-4">
             {[
               { label: '✨ All Lounges', value: 'All' },
               { label: '✈ International', value: 'International' },
@@ -456,10 +485,10 @@ export const SearchPage = () => {
                     setSearchParams(query ? { q: query, filter: tab.value } : { filter: tab.value });
                   }
                 }}
-                className={`py-2 px-5 rounded-full text-[13px] font-extrabold border transition-all cursor-pointer font-plus-jakarta ${
+                className={`py-2 px-5 rounded-full text-[13px] font-bold transition-all cursor-pointer ${
                   categoryFilter === tab.value
-                    ? 'bg-accent-rose text-white border-accent-rose shadow-md'
-                    : 'bg-white text-navy border-slate-200 hover:border-accent-rose/40 hover:text-accent-rose shadow-sm'
+                    ? 'bg-navy text-white shadow-xs'
+                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
                 }`}
               >
                 {tab.label}
@@ -467,8 +496,64 @@ export const SearchPage = () => {
             ))}
           </div>
 
+          {/* Active Filter Pills */}
+          {(localBudgetInput !== '' || minRating > 0 || selectedAmenities.length > 0 || is24x7Open) && (
+            <div className="flex flex-wrap items-center gap-2 mb-6 p-3 rounded-2xl bg-slate-100/70 border border-slate-200/80">
+              <span className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mr-1">Active Filters:</span>
+              
+              {localBudgetInput !== '' && (
+                <span className="px-3 py-1 rounded-full bg-white text-navy font-bold text-[12px] border border-slate-200 shadow-2xs flex items-center gap-1.5">
+                  Max: {currentSymbol}{localBudgetInput}
+                  <button onClick={() => setLocalBudgetInput('')} className="hover:text-accent-rose"><X className="w-3 h-3"/></button>
+                </span>
+              )}
+
+              {minRating > 0 && (
+                <span className="px-3 py-1 rounded-full bg-white text-navy font-bold text-[12px] border border-slate-200 shadow-2xs flex items-center gap-1.5">
+                  Rating: {minRating}★+
+                  <button onClick={() => setMinRating(0)} className="hover:text-accent-rose"><X className="w-3 h-3"/></button>
+                </span>
+              )}
+
+              {selectedAmenities.map(a => (
+                <span key={a} className="px-3 py-1 rounded-full bg-[#FE2C1C]/10 text-[#FE2C1C] font-bold text-[12px] border border-[#FE2C1C]/20 shadow-2xs flex items-center gap-1.5">
+                  {a}
+                  <button onClick={() => handleAmenityChange(a)} className="hover:text-navy"><X className="w-3 h-3"/></button>
+                </span>
+              ))}
+
+              {is24x7Open && (
+                <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[12px] border border-emerald-200 shadow-2xs flex items-center gap-1.5">
+                  24x7 Open
+                  <button onClick={() => setIs24x7Open(false)} className="hover:text-rose-600"><X className="w-3 h-3"/></button>
+                </span>
+              )}
+
+              <button 
+                onClick={clearAllFilters}
+                className="ml-auto text-[12px] font-bold text-slate-500 hover:text-accent-rose underline cursor-pointer"
+              >
+                Reset All
+              </button>
+            </div>
+          )}
+
           <div className="flex flex-col gap-6">
-            {filteredResults.length === 0 ? (
+            {loading ? (
+              <div className="bg-white p-12 text-center rounded-[24px] border border-slate-200">
+                <div className="w-8 h-8 border-4 border-accent-rose border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <h3 className="text-[20px] font-bold text-navy mb-2">Loading Lounges...</h3>
+                <p className="text-slate-500">Fetching the best lounges for you from the server.</p>
+              </div>
+            ) : error ? (
+              <div className="bg-white p-12 text-center rounded-[24px] border border-rose-200">
+                <h3 className="text-[20px] font-bold text-rose-600 mb-2">Error connecting to server</h3>
+                <p className="text-slate-500">{error}</p>
+                <button onClick={() => window.location.reload()} className="mt-6 bg-accent-rose text-white py-2 px-6 rounded-full font-bold">
+                  Retry
+                </button>
+              </div>
+            ) : filteredResults.length === 0 ? (
               <div className="bg-white p-12 text-center rounded-[24px] border border-slate-200">
                 <h3 className="text-[20px] font-bold text-navy mb-2">No lounges found</h3>
                 <p className="text-slate-500">Try adjusting your filters or search criteria.</p>
@@ -485,8 +570,8 @@ export const SearchPage = () => {
                     onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                   >
                     <img src={getCleanLoungeImage(lounge, idx)} alt={lounge.city} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md py-1 px-2.5 rounded-full text-[12px] font-bold text-navy flex items-center gap-1 shadow-sm">
-                      <span className="text-accent-rose">★</span> {lounge.rating}
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md py-1 px-3 rounded-full text-[12px] font-bold text-navy flex items-center gap-1.5 shadow-md">
+                      <span className="text-amber-500">★</span> {lounge.rating} <span className="text-slate-400 font-normal">({lounge.reviewsCount || 850})</span>
                     </div>
                     {lounge.isTrainLounge && (
                       <div className="absolute bottom-3 left-3 bg-amber-500 text-white font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md">
@@ -555,7 +640,4 @@ export const SearchPage = () => {
   );
 };
 
-// Quick missing icon implementation
-const Check = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-);
+

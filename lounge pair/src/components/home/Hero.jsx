@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrencySelect } from './Currency';
-import { Search, User, Briefcase, Globe, Train } from 'lucide-react';
+import { Search, User, Briefcase, Globe, Train, Shield } from 'lucide-react';
 import loungesData from '../../data/loungesData.json';
 import globalLounges from '../../data/globalLoungesData.json';
 import { getCleanLoungeImage } from '../../utils/loungeImageHelper';
 
 import { AppLogo } from '../common/AppLogo';
+import { MyBookingsModal } from '../common/MyBookingsModal';
+import { Ticket } from 'lucide-react';
 
 const allLounges = [...loungesData.LOUNGE_GUIDES, ...globalLounges];
 const dynamicStats = {
@@ -21,6 +23,7 @@ export const Hero = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showAutocomplete, setShowAutocomplete] = useState(false);
   const [matches, setMatches] = useState([]);
+  const [showMyBookings, setShowMyBookings] = useState(false);
 
   const handleHeroSearch = (val) => {
     setSearchValue(val);
@@ -80,17 +83,34 @@ export const Hero = () => {
       {/* Top Header Row */}
       <div className="absolute top-3 left-0 w-full px-10 z-20 flex items-center justify-between pointer-events-none">
         
-        {/* Logo */}
-        <div className="pointer-events-auto">
+        {/* Top Left: Logo & Admin Button */}
+        <div className="pointer-events-auto flex items-center gap-3">
           <AppLogo size="md" />
+          <a 
+            href="http://localhost:5000/admin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-full bg-[#0A192F] hover:bg-[#162C46] text-white font-bold text-[12px] flex items-center gap-1.5 border border-slate-200/40 shadow-xs transition-all cursor-pointer no-underline font-plus-jakarta"
+          >
+            <Shield className="w-3.5 h-3.5 text-[#FE2C1C]" /> Admin Panel
+          </a>
         </div>
 
 
         {/* Right Nav */}
-        <div className="flex items-center gap-4 pointer-events-auto">
+        <div className="flex items-center gap-3 pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setShowMyBookings(true)}
+            className="px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-navy font-bold text-[12px] flex items-center gap-1.5 border border-slate-200/80 shadow-2xs hover:shadow-xs transition-all cursor-pointer font-plus-jakarta"
+          >
+            <Ticket className="w-3.5 h-3.5 text-[#FE2C1C]" /> My Bookings
+          </button>
           <CurrencySelect />
         </div>
       </div>
+
+      <MyBookingsModal isOpen={showMyBookings} onClose={() => setShowMyBookings(false)} />
 
       {/* Background Cover Image */}
       <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Your Lounge — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ── Brand colors (exact match to frontend) ── */
+      --navy:          #0A192F;
+      --navy-mid:      #162C46;
+      --navy-light:    #1e3a5f;
+      --red:           #E61E38;
+      --red-bright:    #FE2C1C;
+      --red-hover:     #C8102E;
+      --red-soft:      #FDECEF;
+      --red-border:    rgba(230, 30, 56, 0.25);
+      --white:         #FFFFFF;
+      --bg:            #F8F9FB;
+      --bg2:           #F0F2F5;
+      --text:          #0A192F;
+      --text-muted:    #334155;
+      --text-light:    #64748b;
+      --border:        #e2e8f0;
+      --card-shadow:   0 4px 20px rgba(10, 25, 47, 0.08);
+      --card-shadow-h: 0 12px 32px rgba(10, 25, 47, 0.14);
+      --radius:        12px;
+
+      /* Status colors */
+      --pending:   #f59e0b;
+      --confirmed: #16a34a;
+      --cancelled: #dc2626;
+      --completed: #2563eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, p, span, div, button, input, select, textarea, label, th, td {
+      font-family: 'Quicksand', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       LOGIN
+    ══════════════════════════════════════════════════════ */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #F8F9FB 0%, #FDECEF 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #login-screen::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(230, 30, 56, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    #login-screen::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(10, 25, 47, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background: var(--white);
+      border: 1px solid rgba(230, 30, 56, 0.15);
+      border-radius: 20px;
+      padding: 52px 44px;
+      width: 400px;
+      box-shadow: 0 24px 64px rgba(10, 25, 47, 0.12), 0 0 0 1px rgba(230,30,56,0.08);
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .login-brand-logo {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .login-logo .logo-text { font-size: 17px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+    .login-logo .logo-sub  { font-size: 11px; color: var(--text-light); font-weight: 500; }
+
+    .login-card h1 { font-size: 24px; color: var(--navy); margin-bottom: 5px; }
+    .login-card > p { color: var(--text-muted); font-size: 14px; margin-bottom: 32px; font-weight: 500; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 13px; color: var(--text-muted);
+      margin-bottom: 7px; font-weight: 600;
+    }
+    .form-group input {
+      width: 100%; padding: 12px 15px; border-radius: 10px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      color: var(--text); font-size: 14px; font-weight: 500;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .form-group input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(230, 30, 56, 0.1);
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 20px; border-radius: 999px; border: none;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: 'Quicksand', sans-serif;
+    }
+    .btn-primary {
+      background: var(--red); color: #fff; width: 100%;
+      box-shadow: 0 8px 20px rgba(230, 30, 56, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--red-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(230, 30, 56, 0.35);
+    }
+    .btn-sm { padding: 7px 16px; font-size: 13px; border-radius: 8px; }
+    .btn-danger  { background: #fff0f0; color: var(--cancelled); border: 1.5px solid rgba(220,38,38,.2); }
+    .btn-success { background: #f0fdf4; color: var(--confirmed); border: 1.5px solid rgba(22,163,74,.2); }
+    .btn-warn    { background: #fffbeb; color: var(--pending);   border: 1.5px solid rgba(245,158,11,.2); }
+    .btn-outline { background: #fff; color: var(--text-muted); border: 1.5px solid var(--border); }
+    .btn-navy    { background: var(--navy); color: #fff; border: none; box-shadow: 0 4px 12px rgba(10,25,47,.2); }
+    .btn-danger:hover  { background: #fee2e2; }
+    .btn-success:hover { background: #dcfce7; }
+    .btn-warn:hover    { background: #fef3c7; }
+    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+    .btn-navy:hover    { background: var(--navy-mid); transform: translateY(-1px); }
+    .error-msg { color: var(--cancelled); font-size: 13px; margin-top: 12px; text-align: center; font-weight: 600; }
+
+    /* ══════════════════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════════════════ */
+    #app { display: none; min-height: 100vh; }
+
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 228px;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      box-shadow: 4px 0 24px rgba(10,25,47,.15);
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      justify-content: center;
+    }
+    .sidebar-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sidebar-brand-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+    .brand-sub { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+    .nav-section { padding: 16px 12px 8px; }
+    .nav-label   { font-size: 10px; color: rgba(255,255,255,.3); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 0 8px; margin-bottom: 4px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 11px;
+      padding: 11px 12px; border-radius: 9px; cursor: pointer;
+      font-size: 14px; color: rgba(255,255,255,.55); font-weight: 600;
+      transition: all .15s; user-select: none; margin-bottom: 2px;
+    }
+    .nav-item:hover  { color: rgba(255,255,255,.9); background: rgba(255,255,255,.07); }
+    .nav-item.active { color: #fff; background: var(--red); box-shadow: 0 4px 12px rgba(230,30,56,.35); }
+    .nav-item.active .nav-icon { opacity: 1; }
+    .nav-icon { font-size: 17px; flex-shrink: 0; }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 16px 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .admin-badge {
+      font-size: 12px; color: rgba(255,255,255,.45); font-weight: 600;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+    }
+    .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink:0; box-shadow: 0 0 6px #22c55e; }
+
+    .main { margin-left: 228px; padding: 32px 36px; min-height: 100vh; }
+
+    .page-header { margin-bottom: 28px; display: flex; align-items: flex-start; justify-content: space-between; }
+    .page-header-left h2 { font-size: 24px; color: var(--navy); }
+    .page-header-left p  { color: var(--text-light); font-size: 14px; margin-top: 4px; font-weight: 500; }
+    .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-light); margin-bottom: 6px; font-weight: 500; }
+    .breadcrumb span { color: var(--red); font-weight: 700; }
+
+    /* ══════════════════════════════════════════════════════
+       STATS CARDS
+    ══════════════════════════════════════════════════════ */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+      box-shadow: var(--card-shadow);
+      transition: all .2s; position: relative; overflow: hidden;
+    }
+    .stat-card:hover { box-shadow: var(--card-shadow-h); transform: translateY(-2px); }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .stat-card.s-red::before    { background: var(--red); }
+    .stat-card.s-navy::before   { background: var(--navy); }
+    .stat-card.s-green::before  { background: #16a34a; }
+    .stat-card.s-yellow::before { background: #f59e0b; }
+
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 14px; }
+    .stat-icon.red    { background: rgba(230,30,56,.1); }
+    .stat-icon.navy   { background: rgba(10,25,47,.08); }
+    .stat-icon.green  { background: rgba(22,163,74,.1); }
+    .stat-icon.yellow { background: rgba(245,158,11,.1); }
+
+    .stat-card .label { font-size: 12px; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
+    .stat-card .value { font-size: 30px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .stat-card .sub   { font-size: 12px; color: var(--text-light); margin-top: 5px; font-weight: 500; }
+
+    /* ══════════════════════════════════════════════════════
+       CARDS / TABLES
+    ══════════════════════════════════════════════════════ */
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--card-shadow); margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 18px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--white);
+    }
+    .card-header h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .card-header .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; font-size: 11px; color: var(--text-light);
+      text-transform: uppercase; letter-spacing: .7px; font-weight: 700;
+      padding: 13px 24px; border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    td { padding: 14px 24px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; font-weight: 500; color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(230, 30, 56, 0.02); }
+    .empty { text-align: center; padding: 44px; color: var(--text-light); font-size: 14px; font-weight: 600; }
+
+    /* ══════════════════════════════════════════════════════
+       BADGES
+    ══════════════════════════════════════════════════════ */
+    .badge {
+      display: inline-flex; align-items: center; padding: 4px 11px;
+      border-radius: 20px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .badge-pending    { background: rgba(245,158,11,.12); color: #b45309; border: 1px solid rgba(245,158,11,.25); }
+    .badge-confirmed  { background: rgba(22,163,74,.1);   color: #15803d; border: 1px solid rgba(22,163,74,.2); }
+    .badge-cancelled  { background: rgba(220,38,38,.1);   color: #b91c1c; border: 1px solid rgba(220,38,38,.2); }
+    .badge-completed  { background: rgba(37,99,235,.1);   color: #1d4ed8; border: 1px solid rgba(37,99,235,.2); }
+    .badge-active     { background: rgba(22,163,74,.1);   color: #15803d; border: 1px solid rgba(22,163,74,.2); }
+    .badge-inactive   { background: rgba(220,38,38,.1);   color: #b91c1c; border: 1px solid rgba(220,38,38,.2); }
+    .badge-domestic      { background: rgba(37,99,235,.1);  color: #1d4ed8; border: 1px solid rgba(37,99,235,.2); }
+    .badge-international { background: rgba(10,25,47,.08);  color: var(--navy); border: 1px solid rgba(10,25,47,.15); }
+
+    /* ══════════════════════════════════════════════════════
+       FILTERS
+    ══════════════════════════════════════════════════════ */
+    .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+    select, input[type="text"], input[type="date"], input[type="number"], textarea {
+      padding: 9px 13px; border-radius: 9px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      color: var(--text); font-size: 13px; font-weight: 600; outline: none;
+      font-family: 'Quicksand', sans-serif;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(230,30,56,.08);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       MODAL
+    ══════════════════════════════════════════════════════ */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10, 25, 47, 0.55); backdrop-filter: blur(6px);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; animation: fadeIn .2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal {
+      background: var(--white); border: 1px solid rgba(230,30,56,.15);
+      border-radius: 18px; width: 500px; max-height: 85vh;
+      overflow-y: auto; padding: 36px;
+      box-shadow: 0 32px 80px rgba(10,25,47,.2);
+      animation: slideUp .25s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+
+    .modal h3 { font-size: 19px; color: var(--navy); margin-bottom: 24px; }
+    .modal .form-group { margin-bottom: 18px; }
+    .modal label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; display: block; font-weight: 700; }
+    .modal input, .modal select, .modal textarea {
+      width: 100%; background: var(--bg); border: 1.5px solid var(--border);
+    }
+    .modal textarea { resize: vertical; min-height: 80px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .toggle { display: flex; align-items: center; gap: 10px; }
+    .toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--red); cursor: pointer; }
+    .modal-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    /* ══════════════════════════════════════════════════════
+       PAGINATION
+    ══════════════════════════════════════════════════════ */
+    .pagination {
+      display: flex; align-items: center; gap: 8px;
+      justify-content: flex-end; padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .page-info { color: var(--text-light); font-size: 13px; font-weight: 600; margin-right: 4px; }
+
+    /* ══════════════════════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════════════════════ */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 14px 20px; font-size: 14px; font-weight: 600;
+      opacity: 0; transform: translateY(12px);
+      transition: all .25s cubic-bezier(0.16,1,0.3,1);
+      z-index: 9999; pointer-events: none; max-width: 320px;
+      box-shadow: var(--card-shadow-h);
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: rgba(22,163,74,.4); color: #15803d; }
+    #toast.error   { border-color: rgba(220,38,38,.4); color: #b91c1c; }
+
+    /* ══════════════════════════════════════════════════════
+       STATUS BREAKDOWN ROW
+    ══════════════════════════════════════════════════════ */
+    .status-breakdown { display: flex; gap: 14px; flex-wrap: wrap; padding: 20px 24px; }
+    .status-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 12px; border: 1.5px solid var(--border);
+      background: var(--bg); transition: all .2s;
+    }
+    .status-chip:hover { border-color: var(--red); }
+    .status-chip .chip-label { font-size: 12px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .status-chip .chip-value { font-size: 20px; font-weight: 700; color: var(--navy); }
+
+    /* ══════════════════════════════════════════════════════
+       SPINNER
+    ══════════════════════════════════════════════════════ */
+    .spinner {
+      display: inline-block; width: 20px; height: 20px;
+      border: 2.5px solid var(--border); border-top-color: var(--red);
+      border-radius: 50%; animation: spin .6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ══════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px)  { .sidebar { display: none; } .main { margin-left: 0; padding: 20px 16px; } }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     LOGIN PAGE
+══════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="/admin/brand-logo.svg" alt="Get Your Lounge Logo" class="login-brand-logo" />
+    </div>
+    <h1>Welcome back</h1>
+    <p>Sign in to manage lounges and bookings</p>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="login-email" placeholder="admin@getyourlounge.com" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="••••••••••" />
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Sign In →</button>
+    <div class="error-msg" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo-wrap">
+        <img src="/admin/brand-logo.svg" alt="Get Your Lounge" class="sidebar-brand-logo" />
+        <div class="brand-sub" style="text-align:center;margin-top:4px">ADMIN PANEL</div>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
+        <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span> Dashboard
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Manage</div>
+      <div class="nav-item" onclick="showPage('lounges')" id="nav-lounges">
+        <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3H2v-3z"/><path d="M4 14v5"/><path d="M20 14v5"/><path d="M4 19h16"/></svg></span> Lounges
+      </div>
+      <div class="nav-item" onclick="showPage('bookings')" id="nav-bookings">
+        <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Bookings
+      </div>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="admin-badge">
+        <span class="dot"></span>
+        <span id="sidebar-email" style="color:rgba(255,255,255,.6)">admin</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="width:100%;border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.6);background:transparent;border-radius:9px" onclick="doLogout()">
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- ══ DASHBOARD ══════════════════════════════════════ -->
+    <div id="page-dashboard">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="breadcrumb">Admin <span>/ Dashboard</span></div>
+          <h2>Dashboard</h2>
+          <p>Live overview of your lounge operations</p>
+        </div>
+        <button class="btn btn-navy btn-sm" onclick="loadStats()">Refresh</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card s-red">
+          <div class="stat-icon red"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E61E38" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div>
+          <div class="label">Total Bookings</div>
+          <div class="value" id="stat-total">—</div>
+          <div class="sub" id="stat-total-sub"></div>
+        </div>
+        <div class="stat-card s-navy">
+          <div class="stat-icon navy"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A192F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="label">Revenue (USD)</div>
+          <div class="value" id="stat-revenue">—</div>
+          <div class="sub">Confirmed + Completed</div>
+        </div>
+        <div class="stat-card s-green">
+          <div class="stat-icon green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+          <div class="label">Active Lounges</div>
+          <div class="value" id="stat-lounges">—</div>
+          <div class="sub" id="stat-lounges-sub"></div>
+        </div>
+        <div class="stat-card s-yellow">
+          <div class="stat-icon yellow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+          <div class="label">Pending Review</div>
+          <div class="value" id="stat-pending">—</div>
+          <div class="sub">Awaiting confirmation</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><h3>Bookings by Status</h3></div>
+        <div class="status-breakdown" id="status-breakdown">
+          <div class="empty"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Recent Bookings</h3>
+          <button class="btn btn-outline btn-sm" onclick="showPage('bookings')">View All</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Guest</th><th>Lounge</th><th>Visit Date</th><th>Total</th><th>Status</th>
+            </tr></thead>
+            <tbody id="recent-tbody"><tr><td colspan="5" class="empty"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ LOUNGES ═════════════════════════════════════════ -->
+    <div id="page-lounges" style="display:none">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="breadcrumb">Admin <span>/ Lounges</span></div>
+          <h2>Lounges</h2>
+          <p>Manage listings, prices & availability</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>All Lounges</h3>
+          <div class="controls">
+            <input type="text" id="lounge-search" placeholder="Search name, city, code..." oninput="debounceLoadLounges()" style="width:230px" />
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Lounge</th><th>Airport</th><th>City</th><th>Type</th>
+              <th>Price</th><th>Capacity</th><th>Status</th><th>Bookings</th><th>Action</th>
+            </tr></thead>
+            <tbody id="lounges-tbody"><tr><td colspan="9" class="empty"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="lounges-pagination"></div>
+      </div>
+    </div>
+
+    <!-- ══ BOOKINGS ════════════════════════════════════════ -->
+    <div id="page-bookings" style="display:none">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="breadcrumb">Admin <span>/ Bookings</span></div>
+          <h2>Bookings</h2>
+          <p>View & manage all customer bookings</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>All Bookings</h3>
+          <div class="controls filter-bar">
+            <select id="booking-status-filter" onchange="loadBookings(1)">
+              <option value="">All Statuses</option>
+              <option value="PENDING">Pending</option>
+              <option value="CONFIRMED">Confirmed</option>
+              <option value="CANCELLED">Cancelled</option>
+              <option value="COMPLETED">Completed</option>
+            </select>
+            <input type="date" id="booking-from" onchange="loadBookings(1)" title="From date" />
+            <input type="date" id="booking-to"   onchange="loadBookings(1)" title="To date" />
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Ref Code</th><th>Guest</th><th>Lounge</th><th>Visit Date</th>
+              <th>Guests</th><th>Total</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="bookings-tbody"><tr><td colspan="8" class="empty"><span class="spinner"></span></td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="bookings-pagination"></div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ══════════════════════════════════════════════════════
+     EDIT LOUNGE MODAL
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="lounge-modal">
+  <div class="modal">
+    <h3>Edit Lounge</h3>
+    <input type="hidden" id="edit-lounge-id" />
+    <div class="form-group">
+      <label>Lounge Name</label>
+      <input type="text" id="edit-lounge-name" />
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="form-group">
+        <label>Price (USD)</label>
+        <input type="number" id="edit-lounge-price" step="0.01" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Capacity</label>
+        <input type="number" id="edit-lounge-capacity" min="1" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="edit-lounge-desc"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Amenities <span style="color:var(--text-light);font-size:12px;font-weight:500">(comma-separated)</span></label>
+      <input type="text" id="edit-lounge-amenities" placeholder="Wi-Fi, Food, Drinks, Shower…" />
+    </div>
+    <div class="modal-divider"></div>
+    <div class="form-group">
+      <div class="toggle">
+        <input type="checkbox" id="edit-lounge-active" />
+        <label for="edit-lounge-active" style="margin-bottom:0;cursor:pointer">Active — visible to customers</label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('lounge-modal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" style="width:auto;padding:9px 24px" onclick="saveLounge()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────────
+const BASE = '';
+let TOKEN = localStorage.getItem('gyl_admin_token') || '';
+let currentPage = 'dashboard';
+let loungesPage = 1, bookingsPage = 1;
+let debounceTimer;
+
+// ── Bootstrap ─────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  if (TOKEN) showApp();
+});
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl    = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!email || !password) { errEl.textContent = 'Email and password are required.'; return; }
+  try {
+    const res  = await fetch(`${BASE}/api/admin/login`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) { errEl.textContent = data.message || 'Login failed'; return; }
+    TOKEN = data.token;
+    localStorage.setItem('gyl_admin_token', TOKEN);
+    document.getElementById('sidebar-email').textContent = data.email;
+    showApp();
+  } catch (e) {
+    errEl.textContent = 'Network error — is the server running?';
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
+});
+
+function doLogout() {
+  TOKEN = '';
+  localStorage.removeItem('gyl_admin_token');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  try {
+    const payload = JSON.parse(atob(TOKEN.split('.')[1]));
+    document.getElementById('sidebar-email').textContent = payload.email || 'admin';
+  } catch(_) {}
+  showPage('dashboard');
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function showPage(page) {
+  ['dashboard', 'lounges', 'bookings'].forEach(p => {
+    document.getElementById(`page-${p}`).style.display   = p === page ? 'block' : 'none';
+    document.getElementById(`nav-${p}`).classList.toggle('active', p === page);
+  });
+  currentPage = page;
+  if (page === 'dashboard') loadStats();
+  if (page === 'lounges')   loadLounges(1);
+  if (page === 'bookings')  loadBookings(1);
+}
+
+// ── API helper ────────────────────────────────────────────────────────────────
+async function api(method, path, body) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TOKEN}` },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res  = await fetch(`${BASE}${path}`, opts);
+  const data = await res.json();
+  if (res.status === 401) { doLogout(); return null; }
+  if (!res.ok) throw new Error(data.message || 'Request failed');
+  return data;
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 3500);
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────────
+async function loadStats() {
+  try {
+    const d = await api('GET', '/api/admin/stats');
+    if (!d) return;
+
+    document.getElementById('stat-total').textContent    = d.bookings.total.toLocaleString();
+    document.getElementById('stat-revenue').textContent  = '$' + d.revenue.total.toLocaleString();
+    document.getElementById('stat-lounges').textContent  = d.lounges.active.toLocaleString();
+    document.getElementById('stat-lounges-sub').textContent = `of ${d.lounges.total} total`;
+    document.getElementById('stat-pending').textContent  = d.bookings.byStatus.PENDING;
+
+    const bs = d.bookings.byStatus;
+    document.getElementById('status-breakdown').innerHTML = `
+      <div class="status-chip">
+        <div><div class="chip-label">Pending</div><div class="chip-value" style="color:#b45309">${bs.PENDING}</div></div>
+      </div>
+      <div class="status-chip">
+        <div><div class="chip-label">Confirmed</div><div class="chip-value" style="color:#15803d">${bs.CONFIRMED}</div></div>
+      </div>
+      <div class="status-chip">
+        <div><div class="chip-label">Completed</div><div class="chip-value" style="color:#1d4ed8">${bs.COMPLETED}</div></div>
+      </div>
+      <div class="status-chip">
+        <div><div class="chip-label">Cancelled</div><div class="chip-value" style="color:#b91c1c">${bs.CANCELLED}</div></div>
+      </div>
+    `;
+
+    const tbody = document.getElementById('recent-tbody');
+    if (!d.recentBookings.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">No bookings yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = d.recentBookings.map(b => `
+      <tr>
+        <td>
+          <div style="font-weight:700">${b.user?.name || '—'}</div>
+          <div style="font-size:12px;color:var(--text-light)">${b.user?.email || ''}</div>
+        </td>
+        <td>${b.lounge?.name || '—'} <span style="color:var(--text-light);font-size:12px">(${b.lounge?.airportCode || ''})</span></td>
+        <td>${fmtDate(b.visitDate)}</td>
+        <td style="font-weight:700">$${b.totalPrice}</td>
+        <td><span class="badge badge-${b.status.toLowerCase()}">${b.status}</span></td>
+      </tr>`).join('');
+  } catch (e) {
+    toast('Failed to load stats: ' + e.message, 'error');
+  }
+}
+
+// ── LOUNGES ───────────────────────────────────────────────────────────────────
+function debounceLoadLounges() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => loadLounges(1), 350);
+}
+
+async function loadLounges(page = 1) {
+  loungesPage = page;
+  const search = document.getElementById('lounge-search')?.value.trim() || '';
+  const qs = new URLSearchParams({ page, limit: 15, ...(search && { search }) });
+  document.getElementById('lounges-tbody').innerHTML =
+    '<tr><td colspan="9" class="empty"><span class="spinner"></span></td></tr>';
+  try {
+    const d = await api('GET', `/api/admin/lounges?${qs}`);
+    if (!d) return;
+    const tbody = document.getElementById('lounges-tbody');
+    if (!d.data.length) {
+      tbody.innerHTML = '<tr><td colspan="9" class="empty">No lounges found</td></tr>';
+    } else {
+      tbody.innerHTML = d.data.map(l => `
+        <tr>
+          <td>
+            <div style="font-weight:700;color:var(--navy)">${l.name}</div>
+            <div style="font-size:11px;color:var(--text-light)">${l.legacyId || ''}</div>
+          </td>
+          <td style="font-weight:700">${l.airportCode}</td>
+          <td>${l.city}, <span style="color:var(--text-light)">${l.country}</span></td>
+          <td><span class="badge badge-${l.type.toLowerCase()}">${l.type}</span></td>
+          <td style="font-weight:700">$${l.price}</td>
+          <td>${l.capacity}</td>
+          <td><span class="badge badge-${l.isActive ? 'active' : 'inactive'}">${l.isActive ? 'Active' : 'Inactive'}</span></td>
+          <td>${l._count?.bookings ?? 0}</td>
+          <td><button class="btn btn-outline btn-sm" onclick='openEditLounge(${JSON.stringify(l)})'>Edit</button></td>
+        </tr>`).join('');
+    }
+    renderPagination('lounges-pagination', d.meta, loadLounges);
+  } catch (e) {
+    toast('Failed to load lounges: ' + e.message, 'error');
+  }
+}
+
+function openEditLounge(l) {
+  document.getElementById('edit-lounge-id').value        = l.id;
+  document.getElementById('edit-lounge-name').value      = l.name;
+  document.getElementById('edit-lounge-price').value     = l.price;
+  document.getElementById('edit-lounge-capacity').value  = l.capacity;
+  document.getElementById('edit-lounge-desc').value      = l.description || '';
+  document.getElementById('edit-lounge-amenities').value = (l.amenities || []).join(', ');
+  document.getElementById('edit-lounge-active').checked  = l.isActive;
+  openModal('lounge-modal');
+}
+
+async function saveLounge() {
+  const id       = document.getElementById('edit-lounge-id').value;
+  const name     = document.getElementById('edit-lounge-name').value.trim();
+  const price    = parseFloat(document.getElementById('edit-lounge-price').value);
+  const capacity = parseInt(document.getElementById('edit-lounge-capacity').value);
+  const desc     = document.getElementById('edit-lounge-desc').value.trim();
+  const amenRaw  = document.getElementById('edit-lounge-amenities').value;
+  const isActive = document.getElementById('edit-lounge-active').checked;
+  const amenities = amenRaw.split(',').map(s => s.trim()).filter(Boolean);
+  try {
+    await api('PATCH', `/api/admin/lounges/${id}`, { name, price, capacity, description: desc, amenities, isActive });
+    toast('Lounge updated successfully');
+    closeModal('lounge-modal');
+    loadLounges(loungesPage);
+  } catch (e) {
+    toast('Update failed: ' + e.message, 'error');
+  }
+}
+
+// ── BOOKINGS ──────────────────────────────────────────────────────────────────
+async function loadBookings(page = 1) {
+  bookingsPage = page;
+  const status = document.getElementById('booking-status-filter')?.value || '';
+  const from   = document.getElementById('booking-from')?.value || '';
+  const to     = document.getElementById('booking-to')?.value || '';
+  const qs     = new URLSearchParams({ page, limit: 15, ...(status && { status }), ...(from && { from }), ...(to && { to }) });
+  document.getElementById('bookings-tbody').innerHTML =
+    '<tr><td colspan="8" class="empty"><span class="spinner"></span></td></tr>';
+  try {
+    const d = await api('GET', `/api/admin/bookings?${qs}`);
+    if (!d) return;
+    const tbody = document.getElementById('bookings-tbody');
+    if (!d.data.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty">No bookings found</td></tr>';
+    } else {
+      tbody.innerHTML = d.data.map(b => `
+        <tr>
+          <td style="font-family:monospace;font-size:12px;color:var(--text-light)">${b.confirmationCode?.slice(0,12)}...</td>
+          <td>
+            <div style="font-weight:700">${b.user?.name || '—'}</div>
+            <div style="font-size:12px;color:var(--text-light)">${b.user?.email || ''}</div>
+          </td>
+          <td>
+            <div style="font-weight:700">${b.lounge?.name || '—'}</div>
+            <div style="font-size:12px;color:var(--text-light)">${b.lounge?.airportCode || ''} - ${b.lounge?.city || ''}</div>
+          </td>
+          <td>${fmtDate(b.visitDate)}</td>
+          <td>${b.numberOfGuests}</td>
+          <td style="font-weight:700">$${b.totalPrice} <span style="color:var(--text-light);font-size:11px;font-weight:500">${b.currency}</span></td>
+          <td><span class="badge badge-${b.status.toLowerCase()}">${b.status}</span></td>
+          <td style="white-space:nowrap;display:flex;gap:6px;flex-wrap:wrap">
+            ${b.status === 'PENDING'   ? `<button class="btn btn-success btn-sm" onclick="changeStatus('${b.id}','CONFIRMED')">Confirm</button>` : ''}
+            ${b.status === 'CONFIRMED' ? `<button class="btn btn-warn btn-sm" onclick="changeStatus('${b.id}','COMPLETED')">Complete</button>` : ''}
+            ${['PENDING','CONFIRMED'].includes(b.status) ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${b.id}','CANCELLED')">Cancel</button>` : ''}
+          </td>
+        </tr>`).join('');
+    }
+    renderPagination('bookings-pagination', d.meta, loadBookings);
+  } catch (e) {
+    toast('Failed to load bookings: ' + e.message, 'error');
+  }
+}
+
+async function changeStatus(id, status) {
+  const labels = { CONFIRMED: 'confirm', CANCELLED: 'cancel', COMPLETED: 'mark as complete' };
+  if (!confirm(`Are you sure you want to ${labels[status] || status} this booking?`)) return;
+  try {
+    await api('PATCH', `/api/admin/bookings/${id}/status`, { status });
+    toast(`Booking ${labels[status] || status}d successfully`);
+    loadBookings(bookingsPage);
+    if (currentPage === 'dashboard') loadStats();
+  } catch (e) {
+    toast('Status update failed: ' + e.message, 'error');
+  }
+}
+
+// ── Pagination ────────────────────────────────────────────────────────────────
+function renderPagination(containerId, meta, loadFn) {
+  const el = document.getElementById(containerId);
+  if (!el || !meta || meta.totalPages <= 1) { if(el) el.innerHTML = ''; return; }
+  const { page, totalPages, total, limit } = meta;
+  const from = (page - 1) * limit + 1;
+  const to   = Math.min(page * limit, total);
+  el.innerHTML = `
+    <span class="page-info">${from}–${to} of ${total}</span>
+    <button class="btn btn-outline btn-sm" onclick="${loadFn.name}(${page-1})" ${page<=1?'disabled':''}>← Prev</button>
+    <button class="btn btn-outline btn-sm" onclick="${loadFn.name}(${page+1})" ${page>=totalPages?'disabled':''}>Next →</button>
+  `;
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ── Date formatter ────────────────────────────────────────────────────────────
+function fmtDate(d) {
+  return new Date(d).toLocaleDateString('en-US', { day:'numeric', month:'short', year:'numeric' });
+}
+</script>
+</body>
+</html>

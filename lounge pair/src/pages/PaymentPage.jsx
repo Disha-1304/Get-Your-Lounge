@@ -10,6 +10,8 @@ import loungesData from '../data/loungesData.json';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
 
+import { createBooking } from '../services/apiService';
+
 export const PaymentPage = () => {
   const { id } = useParams();
   const location = useLocation();
@@ -59,6 +61,8 @@ export const PaymentPage = () => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
+  const [createdBooking, setCreatedBooking] = useState(null);
+  const [bookingError, setBookingError] = useState('');
 
   // Calculation
   const basePriceUSD = lounge?.priceUSD || 40;
@@ -87,14 +91,35 @@ export const PaymentPage = () => {
     }
   };
 
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     if (e) e.preventDefault();
     setIsProcessing(true);
+    setBookingError('');
 
-    setTimeout(() => {
-      setIsProcessing(false);
+    try {
+      const bookingPayload = {
+        loungeId: lounge._dbId || lounge.id || lounge.outletId || 'clxyz123lounge',
+        visitDate: bookingData.visitDate || todayStr,
+        numberOfGuests: totalGuests,
+        flightNumber: bookingData.flightNumber || null,
+      };
+
+      const userDetails = {
+        email: bookingData.email || 'passenger@example.com',
+        name: bookingData.name || (bookingData.email ? bookingData.email.split('@')[0] : 'Passenger'),
+        phone: bookingData.fullPhone || bookingData.phone || '',
+      };
+
+      // Call real backend API
+      const result = await createBooking(bookingPayload, userDetails);
+      setCreatedBooking(result);
       setPaymentComplete(true);
-    }, 1800);
+    } catch (err) {
+      console.error('[PaymentPage] Booking creation error:', err);
+      setBookingError(err.message || 'Failed to complete booking. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -532,6 +557,12 @@ export const PaymentPage = () => {
 
         {/* 7. Primary Action Button */}
         <div>
+          {bookingError && (
+            <div className="mb-4 p-4 rounded-[14px] bg-rose-50 border border-rose-200 text-rose-700 text-[13px] font-semibold flex items-center gap-2">
+              <span className="font-bold">⚠️ Booking Error:</span> {bookingError}
+            </div>
+          )}
+
           <button
             type="button"
             onClick={handlePayment}
@@ -542,7 +573,7 @@ export const PaymentPage = () => {
             {isProcessing ? (
               <span className="flex items-center gap-2">
                 <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                Processing Payment Securely...
+                Processing Booking Securely...
               </span>
             ) : (
               <span>Pay {currentSymbol}{convertPrice(totalUSD)} Securely →</span>
@@ -565,15 +596,15 @@ export const PaymentPage = () => {
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
-            <h3 className="text-[26px] font-extrabold text-navy font-outfit mb-2">Payment Confirmed!</h3>
+            <h3 className="text-[26px] font-extrabold text-navy font-outfit mb-2">Booking Confirmed!</h3>
             <p className="text-slate-600 text-[14px] mb-6">
-              Your lounge access pass has been successfully issued. A copy has been emailed to <strong className="text-navy">{bookingData.email}</strong>.
+              Your lounge booking has been successfully saved in database. A confirmation email has been sent to <strong className="text-navy">{bookingData.email}</strong>.
             </p>
 
             <div className="bg-slate-50 p-5 rounded-[20px] border border-slate-200 text-left mb-6 flex flex-col gap-2 text-[13px]">
               <div className="flex justify-between">
-                <span className="text-slate-500 font-medium">Booking ID:</span>
-                <span className="font-extrabold text-navy font-mono">LP-2026-8941</span>
+                <span className="text-slate-500 font-medium">Confirmation Code:</span>
+                <span className="font-extrabold text-[#FE2C1C] font-mono">{createdBooking?.confirmationCode || 'LP-CONFIRMED'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500 font-medium">Lounge:</span>
