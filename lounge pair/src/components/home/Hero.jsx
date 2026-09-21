@@ -87,7 +87,7 @@ export const Hero = () => {
         <div className="pointer-events-auto flex items-center gap-3">
           <AppLogo size="md" />
           <a 
-            href={import.meta.env.VITE_ADMIN_URL || 'http://localhost:5000/admin/'}
+            href={import.meta.env.VITE_ADMIN_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '/admin/') : 'http://localhost:5000/admin/')}
             target="_blank"
             rel="noopener noreferrer"
             className="px-3 py-1.5 rounded-full bg-[#0A192F] hover:bg-[#162C46] text-white font-bold text-[12px] flex items-center gap-1.5 border border-slate-200/40 shadow-xs transition-all cursor-pointer no-underline font-plus-jakarta"
