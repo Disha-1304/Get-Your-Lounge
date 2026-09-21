@@ -7,7 +7,7 @@
 
 import { createParentAppJwt } from '../utils/jwtHelper';
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://lounge-backend-npok.onrender.com/api');
+const API_BASE = import.meta.env.DEV ? (import.meta.env.VITE_API_URL || 'http://localhost:5000/api') : 'https://lounge-backend-npok.onrender.com/api';
 
 /**
  * Fetch all active lounges from backend (with optional ?search= parameter)

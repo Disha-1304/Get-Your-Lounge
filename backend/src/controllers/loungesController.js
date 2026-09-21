@@ -20,7 +20,6 @@ const getAllLounges = async (req, res) => {
 
     const lounges = await prisma.lounge.findMany({
       where,
-      take:    50,
       orderBy: { name: 'asc' },
       select: {
         id:           true,
