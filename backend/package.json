@@ -25,11 +25,11 @@
     "express-rate-limit": "^8.7.0",
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
+    "prisma": "^5.22.0",
     "resend": "^6.28.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
-    "prisma": "^5.22.0"
+    "nodemon": "^3.1.14"
   },
   "allowScripts": {
     "@prisma/engines@5.22.0": true,
