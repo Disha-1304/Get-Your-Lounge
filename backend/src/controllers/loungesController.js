@@ -50,7 +50,7 @@ const getAllLounges = async (req, res) => {
     res.json(shaped);
   } catch (err) {
     console.error('getAllLounges error:', err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error', error: err.message, stack: err.stack });
   }
 };
 
