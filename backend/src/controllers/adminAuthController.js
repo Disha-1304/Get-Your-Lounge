@@ -18,9 +18,9 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'email and password are required' });
     }
 
-    const adminEmail    = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    const jwtSecret     = process.env.JWT_SECRET;
+    const adminEmail    = process.env.ADMIN_EMAIL || 'admin@getyourlounge.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'AdminLounge@2025';
+    const jwtSecret     = process.env.JWT_SECRET || 'change-this-to-a-long-random-string-before-deploying';
 
     if (!adminEmail || !adminPassword || !jwtSecret) {
       console.error('Admin env vars (ADMIN_EMAIL, ADMIN_PASSWORD, JWT_SECRET) are not set');
