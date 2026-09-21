@@ -6,6 +6,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
 import { matchesAmenity } from '../utils/amenityMatcher';
+import { fetchLounges } from '../services/apiService';
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,20 +53,22 @@ export const SearchPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchLounges = async () => {
+    const loadLounges = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/lounges`);
-        if (!res.ok) throw new Error('Failed to fetch lounges');
-        const data = await res.json();
-        setAllLounges(data);
+        const data = await fetchLounges();
+        if (data) {
+          setAllLounges(data);
+        } else {
+          throw new Error('Failed to fetch lounges');
+        }
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchLounges();
+    loadLounges();
   }, []);
 
   // Base results based only on search query & category tab

@@ -11,6 +11,8 @@ import { Footer } from '../components/home/Footer';
 import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
 
+import { fetchLoungeById } from '../services/apiService';
+
 export const LoungeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,20 +23,22 @@ export const LoungeDetailsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLounge = async () => {
+    const loadLounge = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/lounges/${id}`);
-        if (!res.ok) throw new Error('Lounge not found');
-        const data = await res.json();
-        setLounge(data);
+        const data = await fetchLoungeById(id);
+        if (data) {
+          setLounge(data);
+        } else {
+          throw new Error('Lounge not found');
+        }
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
-    fetchLounge();
+    loadLounge();
   }, [id]);
 
   if (loading || !lounge) {
