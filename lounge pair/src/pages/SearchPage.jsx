@@ -300,7 +300,8 @@ export const SearchPage = () => {
                       <div className="flex items-center gap-3 min-w-0 pr-2">
                         <img 
                           src={getCleanLoungeImage(l, idx)} 
-                          alt={l.city} 
+                          alt={l.outletName || l.name || l.city} 
+                          title={l.outletName || l.name || l.city} 
                           className="w-10 h-10 rounded-lg object-cover border border-slate-100 shrink-0 group-hover:scale-105 transition-transform" 
                         />
                         <div className="min-w-0">
@@ -572,7 +573,7 @@ export const SearchPage = () => {
                     className="w-full lg:w-[280px] h-[200px] shrink-0 rounded-[16px] overflow-hidden relative bg-slate-100 cursor-pointer group"
                     onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                   >
-                    <img src={getCleanLoungeImage(lounge, idx)} alt={lounge.city} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={getCleanLoungeImage(lounge, idx)} alt={lounge.outletName || lounge.name || lounge.city} title={lounge.outletName || lounge.name || lounge.city} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md py-1 px-3 rounded-full text-[12px] font-bold text-navy flex items-center gap-1.5 shadow-md">
                       <span className="text-amber-500">★</span> {lounge.rating} <span className="text-slate-400 font-normal">({lounge.reviewsCount || 850})</span>
                     </div>

@@ -221,8 +221,8 @@
       "priceINR": 849,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/ebfc33ce8c8f976c/1.jpg",
+      "heroImage": "/assets/missing_lounges/ebfc33ce8c8f976c/1.jpg",
       "description": "Exclusive 5-star airport lounge at Ayodhya Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -235,7 +235,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/ebfc33ce8c8f976c/1.jpg",
+        "/assets/missing_lounges/ebfc33ce8c8f976c/2.jpg",
+        "/assets/missing_lounges/ebfc33ce8c8f976c/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -661,8 +665,8 @@
       "priceINR": 2975,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/2fe854b04e493424/1.jpg",
+      "heroImage": "/assets/missing_lounges/2fe854b04e493424/1.jpg",
       "description": "Exclusive 5-star airport lounge at Cochin Airport (Terminal 3). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -675,7 +679,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/2fe854b04e493424/1.jpg",
+        "/assets/missing_lounges/2fe854b04e493424/2.jpg",
+        "/assets/missing_lounges/2fe854b04e493424/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -694,8 +702,8 @@
       "priceINR": 1955,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/af0216b07347cff1/1.jpg",
+      "heroImage": "/assets/missing_lounges/af0216b07347cff1/1.jpg",
       "description": "Exclusive 5-star airport lounge at Cochin Airport (Terminal 3). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -708,7 +716,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/af0216b07347cff1/1.jpg",
+        "/assets/missing_lounges/af0216b07347cff1/2.jpg",
+        "/assets/missing_lounges/af0216b07347cff1/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -727,8 +739,8 @@
       "priceINR": 890,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/fe6826d54c0cde72/1.jpg",
+      "heroImage": "/assets/missing_lounges/fe6826d54c0cde72/1.jpg",
       "description": "Exclusive 5-star airport lounge at Coimbatore Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -741,7 +753,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/fe6826d54c0cde72/1.jpg",
+        "/assets/missing_lounges/fe6826d54c0cde72/2.jpg",
+        "/assets/missing_lounges/fe6826d54c0cde72/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -797,8 +813,8 @@
       "priceINR": 674,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/149f982671f7afc6/1.jpg",
+      "heroImage": "/assets/missing_lounges/149f982671f7afc6/1.jpg",
       "description": "Exclusive 5-star airport lounge at Dibrugarh Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -811,7 +827,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/149f982671f7afc6/1.jpg",
+        "/assets/missing_lounges/149f982671f7afc6/2.jpg",
+        "/assets/missing_lounges/149f982671f7afc6/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -830,8 +850,8 @@
       "priceINR": 560,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/04e2177a07283d1a/1.jpg",
+      "heroImage": "/assets/missing_lounges/04e2177a07283d1a/1.jpg",
       "description": "Exclusive 5-star airport lounge at Durgapur Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -844,7 +864,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/04e2177a07283d1a/1.jpg",
+        "/assets/missing_lounges/04e2177a07283d1a/2.jpg",
+        "/assets/missing_lounges/04e2177a07283d1a/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -863,8 +887,8 @@
       "priceINR": 690,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/d7db6a21eebc86e8/1.jpg",
+      "heroImage": "/assets/missing_lounges/d7db6a21eebc86e8/1.jpg",
       "description": "Exclusive 5-star airport lounge at Gwalior Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -877,7 +901,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/d7db6a21eebc86e8/1.jpg",
+        "/assets/missing_lounges/d7db6a21eebc86e8/2.jpg",
+        "/assets/missing_lounges/d7db6a21eebc86e8/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1303,8 +1331,8 @@
       "priceINR": 630,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/58a8fa1e7ec10ba9/1.jpg",
+      "heroImage": "/assets/missing_lounges/58a8fa1e7ec10ba9/1.jpg",
       "description": "Exclusive 5-star airport lounge at Siliguri Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1317,7 +1345,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/58a8fa1e7ec10ba9/1.jpg",
+        "/assets/missing_lounges/58a8fa1e7ec10ba9/2.jpg",
+        "/assets/missing_lounges/58a8fa1e7ec10ba9/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1410,8 +1442,8 @@
       "priceINR": 553,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/4c89bc07a872524c/1.jpg",
+      "heroImage": "/assets/missing_lounges/4c89bc07a872524c/1.jpg",
       "description": "Exclusive 5-star airport lounge at Varanasi Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1424,7 +1456,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/4c89bc07a872524c/1.jpg",
+        "/assets/missing_lounges/4c89bc07a872524c/2.jpg",
+        "/assets/missing_lounges/4c89bc07a872524c/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1480,8 +1516,8 @@
       "priceINR": 2650,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/2de11b4d942809ef/1.jpg",
+      "heroImage": "/assets/missing_lounges/2de11b4d942809ef/1.jpg",
       "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 2). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1494,7 +1530,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/2de11b4d942809ef/1.jpg",
+        "/assets/missing_lounges/2de11b4d942809ef/2.jpg",
+        "/assets/missing_lounges/2de11b4d942809ef/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1513,8 +1553,8 @@
       "priceINR": 900,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/1242900bc95cb5b2/1.jpg",
+      "heroImage": "/assets/missing_lounges/1242900bc95cb5b2/1.jpg",
       "description": "Exclusive 5-star airport lounge at Bengaluru Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1527,7 +1567,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/1242900bc95cb5b2/1.jpg",
+        "/assets/missing_lounges/1242900bc95cb5b2/2.jpg",
+        "/assets/missing_lounges/1242900bc95cb5b2/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1620,8 +1664,8 @@
       "priceINR": 500,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/9a370028789f8ca8/1.jpg",
+      "heroImage": "/assets/missing_lounges/9a370028789f8ca8/1.jpg",
       "description": "Exclusive 5-star airport lounge at Deoghar Airport (Main Terminal). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1634,7 +1678,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/9a370028789f8ca8/1.jpg",
+        "/assets/missing_lounges/9a370028789f8ca8/2.jpg",
+        "/assets/missing_lounges/9a370028789f8ca8/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1690,8 +1738,8 @@
       "priceINR": 850,
       "status": "Available",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/missing_lounges/8481cd5c299c7d71/1.jpg",
+      "heroImage": "/assets/missing_lounges/8481cd5c299c7d71/1.jpg",
       "description": "Exclusive 5-star airport lounge at Bhubaneswar Airport (Terminal 1). Offers gourmet hot buffet spreads, plush recliner seating, high-speed Wi-Fi, and premium traveler amenities.",
       "amenities": [
         "Gourmet Hot Buffet",
@@ -1704,7 +1752,11 @@
       "isTrainLounge": false,
       "isIndianAirportLounge": true,
       "type": "Indian Airport Lounge",
-      "images": [],
+      "images": [
+        "/assets/missing_lounges/8481cd5c299c7d71/1.jpg",
+        "/assets/missing_lounges/8481cd5c299c7d71/2.jpg",
+        "/assets/missing_lounges/8481cd5c299c7d71/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1722,8 +1774,8 @@
       "priceUSD": 6.6,
       "status": "Non - Operational",
       "statusColor": "#ef4444",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "IRCTC Executive Lounge at Kalupur Railway Station Ahmedabad (Platform 1). Currently non-operational for maintenance.",
       "amenities": [
         "Hot Food Buffet",
@@ -1734,7 +1786,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1752,8 +1808,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/0285b896b506531a/1.jpg",
+      "heroImage": "/assets/railway_lounges/0285b896b506531a/1.jpg",
       "description": "Air-conditioned Refreshing Lounge at Asansol Junction Platform 5. Unlimited hot tea/coffee, snacks, recliner sofas, and clean washrooms.",
       "amenities": [
         "Hot Snacks & Beverages",
@@ -1764,7 +1820,9 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/0285b896b506531a/1.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1782,8 +1840,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/f43e4fa8daf337de/1.jpg",
+      "heroImage": "/assets/railway_lounges/f43e4fa8daf337de/1.jpg",
       "description": "Beverage Executive Lounge at Asansol Junction Platform 5. Fresh juices, artisanal coffee, gourmet teas, light snacks, and AC seating.",
       "amenities": [
         "Artisanal Beverage Counter",
@@ -1794,7 +1852,9 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/f43e4fa8daf337de/1.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1881,8 +1941,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/d1212c46249dca66/1.jpg",
+      "heroImage": "/assets/railway_lounges/d1212c46249dca66/1.jpg",
       "description": "Air-conditioned IRCTC station lounge at Old Delhi Platform 5. Unlimited hot snacks, tea/coffee, comfortable seating, and clean washrooms.",
       "amenities": [
         "Hot Snacks & Meals",
@@ -1893,7 +1953,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/d1212c46249dca66/1.jpg",
+        "/assets/railway_lounges/d1212c46249dca66/2.jpg",
+        "/assets/railway_lounges/d1212c46249dca66/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1945,8 +2009,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "Rajasthani royal heritage IRCTC lounge at Jaipur Platform 1. Hot Rajasthani thali & meal buffets, AC luxury sofas, and shower rooms.",
       "amenities": [
         "Rajasthani Thali Buffet",
@@ -1958,7 +2022,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -1976,8 +2044,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "5-star IRCTC executive lounge at Sealdah Station Platform 8. Hot Bengali & North Indian buffet spreads, quiet sofa pods, and shower suites.",
       "amenities": [
         "Bengali & North Indian Buffet",
@@ -1988,7 +2056,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -2006,8 +2078,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "IRCTC Executive Lounge at Madurai Platform 1. Hot South Indian buffet, filter coffee bar, AC recliner chairs, and clean showers.",
       "amenities": [
         "South Indian Buffet",
@@ -2018,7 +2090,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -2036,8 +2112,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "IRCTC Executive Lounge located at Platform 16, New Delhi Station. Air-conditioned quiet recliners, hot meals, shower facilities, and Wi-Fi.",
       "amenities": [
         "Hot Buffet Meals",
@@ -2049,7 +2125,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -2067,8 +2147,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "5-star air-conditioned IRCTC executive lounge at New Delhi Platform 1. Features 24/7 hot buffet spreads, private shower suites, recliner sofas, and high-speed Wi-Fi.",
       "amenities": [
         "Hot Buffet Meals",
@@ -2080,7 +2160,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     },
@@ -2098,8 +2182,8 @@
       "priceUSD": 6.6,
       "status": "Operational",
       "statusColor": "#10b981",
-      "image": "",
-      "heroImage": "",
+      "image": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+      "heroImage": "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
       "description": "Peaceful AC IRCTC executive sanctuary at Varanasi Cantt Platform 1. Freshly prepared pure veg hot buffets, recliner sofas, and shower stalls.",
       "amenities": [
         "Pure Veg Hot Buffet",
@@ -2110,7 +2194,11 @@
       "region": "Asia",
       "isTrainLounge": true,
       "type": "Executive Railway Lounge",
-      "images": [],
+      "images": [
+        "/assets/railway_lounges/e571fa2cd52e34be/1.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/2.jpg",
+        "/assets/railway_lounges/e571fa2cd52e34be/3.jpg"
+      ],
       "terminalImage": "",
       "virtualTour": []
     }

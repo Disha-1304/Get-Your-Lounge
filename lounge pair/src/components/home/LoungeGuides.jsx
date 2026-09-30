@@ -156,7 +156,8 @@ export const LoungeGuides = () => {
               >
                 <img
                   src={getCleanLoungeImage(lounge, idx)}
-                  alt={lounge.city}
+                  alt={lounge.outletName || lounge.name || lounge.city}
+                  title={lounge.outletName || lounge.name || lounge.city}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105"
                 />

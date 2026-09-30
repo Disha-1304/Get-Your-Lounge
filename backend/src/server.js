@@ -12,6 +12,8 @@ app.use(express.json());
 
 // ─── Admin static UI — served at /admin ──────────────────────────────────────
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
+// ─── Static Lounge Assets ───────────────────────────────────────────────────
+app.use('/assets', express.static(path.join(__dirname, '..', '..', 'lounge pair', 'public', 'assets')));
 
 // ─── Public API Routes ────────────────────────────────────────────────────────
 const loungesRoutes  = require('./routes/loungesRoutes');
