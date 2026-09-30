@@ -80,18 +80,18 @@ export const UserProfilePage = () => {
 
   return (
   return (
-    <div className="min-h-screen bg-[#F8FAFC] relative pb-12 overflow-hidden">
-      {/* Premium Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-[350px] bg-navy z-0">
-        <img src="/lounge-pair-final-image.jpg" alt="Background" className="w-full h-full object-cover opacity-30 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F8FAFC]"></div>
+    <div className="min-h-screen relative pb-12 overflow-hidden">
+      {/* Full-screen Blurred Background Image */}
+      <div className="fixed inset-0 z-0">
+        <img src="/lounge-pair-final-image.jpg" alt="Premium Lounge Background" className="w-full h-full object-cover blur-md scale-105 opacity-80" />
+        {/* Subtle dark overlay so the white cards pop beautifully */}
+        <div className="absolute inset-0 bg-[#0A192F]/20 mix-blend-multiply"></div>
       </div>
-      <div className="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] bg-accent-rose/20 rounded-full blur-[100px] z-0"></div>
       
       <div className="container-custom max-w-6xl mx-auto relative z-10 pt-28">
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-white/80 hover:text-white font-bold mb-8 transition-colors bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/20 w-fit"
+          className="flex items-center gap-2 text-white hover:text-white font-bold mb-8 transition-colors bg-navy/60 hover:bg-navy/80 px-4 py-2 rounded-full backdrop-blur-md border border-white/20 w-fit"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </button>
@@ -99,9 +99,8 @@ export const UserProfilePage = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Profile Sidebar */}
           <div className="w-full lg:w-1/3">
-            <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white relative overflow-hidden group">
-              {/* Decorative top gradient */}
-              <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-navy to-[#162C46] opacity-10 rounded-t-[2rem]"></div>
+            <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white relative overflow-hidden group">
+              {/* Clean white aesthetic - Removed the dark gradient top bar */}
               
               <div className="flex justify-between items-start mb-6 relative z-10">
                 <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-accent-rose to-orange-400 shadow-xl shadow-accent-rose/20">
@@ -177,13 +176,13 @@ export const UserProfilePage = () => {
 
           {/* Bookings Area */}
           <div className="w-full lg:w-2/3">
-            <h2 className="text-4xl font-extrabold text-navy mb-8 font-quicksand flex items-center gap-3">
+            <h2 className="text-4xl font-extrabold text-white mb-8 font-quicksand flex items-center gap-3 drop-shadow-md">
               Your Bookings
-              <span className="bg-accent-rose/10 text-accent-rose text-sm px-3 py-1 rounded-full">{bookings.length}</span>
+              <span className="bg-white/20 text-white backdrop-blur-md border border-white/30 text-sm px-3 py-1 rounded-full">{bookings.length}</span>
             </h2>
             
             {bookings.length === 0 ? (
-              <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] p-12 text-center border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+              <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] p-12 text-center border border-white shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                   <Calendar className="w-10 h-10 text-slate-300" />
                 </div>
@@ -199,9 +198,9 @@ export const UserProfilePage = () => {
             ) : (
               <div className="space-y-6">
                 {bookings.map((booking) => (
-                  <div key={booking.id} className="bg-white rounded-[2rem] border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all flex flex-col md:flex-row overflow-hidden group">
+                  <div key={booking.id} className="bg-white/90 backdrop-blur-xl rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.18)] transition-all flex flex-col md:flex-row overflow-hidden group">
                     {/* Ticket Stub (Left Side) */}
-                    <div className="md:w-[28%] flex-shrink-0 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-navy to-[#162C46] relative">
+                    <div className="md:w-[28%] flex-shrink-0 flex flex-col items-center justify-center p-6 bg-navy relative">
                       {/* Ticket Perforation edge */}
                       <div className="hidden md:block absolute right-0 top-0 bottom-0 w-4 overflow-hidden">
                         <div className="absolute right-[-8px] top-[-10px] bottom-[-10px] w-4 border-l-4 border-dotted border-white"></div>
