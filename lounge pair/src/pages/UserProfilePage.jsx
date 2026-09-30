@@ -79,7 +79,6 @@ export const UserProfilePage = () => {
   }
 
   return (
-  return (
     <div className="min-h-screen relative pb-12 overflow-hidden">
       {/* Full-screen Blurred Background Image */}
       <div className="fixed inset-0 z-0">
@@ -120,7 +119,9 @@ export const UserProfilePage = () => {
                 <div className="space-y-6 relative z-10">
                   <div>
                     <h2 className="text-3xl font-extrabold text-navy font-quicksand">{user?.name || 'Traveler'}</h2>
-                    <span className="inline-block px-3 py-1 bg-gradient-to-r from-amber-200 to-amber-400 text-amber-900 text-[11px] font-bold rounded-full mt-2 uppercase tracking-wider shadow-sm">Premium Member</span>
+                    <span className="inline-block px-3 py-1 bg-gradient-to-r from-amber-200 to-amber-400 text-amber-900 text-[11px] font-bold rounded-full mt-2 uppercase tracking-wider shadow-sm">
+                      Premium Member
+                    </span>
                   </div>
 
                   <div className="space-y-4 pt-6 border-t border-slate-100/60">
@@ -146,7 +147,7 @@ export const UserProfilePage = () => {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border-2 border-slate-100 rounded-xl focus:border-accent-rose focus:ring-4 focus:ring-accent-rose/10 outline-none transition-all font-bold text-navy text-[15px]"
+                      className="w-full px-4 py-3 bg-white border-2 border-slate-100 rounded-xl focus:border-accent-rose focus:ring-4 focus:ring-accent-rose/10 outline-none transition-all font-bold text-navy"
                     />
                   </div>
                   <div>
@@ -155,7 +156,7 @@ export const UserProfilePage = () => {
                       type="text"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border-2 border-slate-100 rounded-xl focus:border-accent-rose focus:ring-4 focus:ring-accent-rose/10 outline-none transition-all font-bold text-navy text-[15px]"
+                      className="w-full px-4 py-3 bg-white border-2 border-slate-100 rounded-xl focus:border-accent-rose focus:ring-4 focus:ring-accent-rose/10 outline-none transition-all font-bold text-navy"
                     />
                   </div>
                   <div className="flex gap-3 pt-4">
@@ -167,7 +168,7 @@ export const UserProfilePage = () => {
 
               <button
                 onClick={handleLogout}
-                className="w-full mt-8 flex items-center justify-center gap-2 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white py-3.5 rounded-xl font-bold transition-all relative z-10 group border border-red-100 hover:border-red-500"
+                className="w-full mt-8 flex items-center justify-center gap-2 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white py-3.5 rounded-xl font-bold transition-all relative z-10 group"
               >
                 <LogOut className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Log Out
               </button>
@@ -208,14 +209,14 @@ export const UserProfilePage = () => {
 
                       <p className="text-[10px] font-extrabold text-white/50 uppercase tracking-[2px] mb-4">Entrance Pass</p>
                       
-                      <div className="w-24 h-24 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center p-2 mb-4 group-hover:scale-105 transition-transform duration-300">
+                      <div className="w-24 h-24 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center p-2 mb-4 group-hover:scale-105 transition-transform">
                         <div className="w-full h-full border border-dashed border-white/30 rounded-xl flex items-center justify-center">
-                           <span className="text-white text-[11px] font-bold text-center px-1 uppercase tracking-widest">Show At Desk</span>
+                          <span className="text-white text-[11px] font-bold text-center px-1 uppercase tracking-widest">Show At Desk</span>
                         </div>
                       </div>
                       
                       <div className="bg-white/10 px-4 py-2 rounded-xl backdrop-blur-md">
-                         <p className="text-sm font-mono font-bold text-white tracking-wider">{booking.confirmationCode}</p>
+                        <p className="text-sm font-mono font-bold text-white tracking-wider">{booking.confirmationCode}</p>
                       </div>
                     </div>
                     
