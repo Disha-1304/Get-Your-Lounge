@@ -56,7 +56,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-white/15 pt-6 flex flex-wrap justify-between items-center gap-4 text-[13px] text-slate-300">
-          <div>Copyright 2026 Get My Lounge, Inc. All rights reserved.</div>
+          <div>Copyright 2026 Get Your Lounge, Inc. All rights reserved.</div>
           <div className="flex gap-6">
             <a href="#sitemap" className="text-inherit no-underline hover:text-white transition-colors">Sitemap</a>
           </div>

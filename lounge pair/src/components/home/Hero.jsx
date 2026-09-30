@@ -24,6 +24,19 @@ export const Hero = () => {
   const [showAutocomplete, setShowAutocomplete] = useState(false);
   const [matches, setMatches] = useState([]);
   const [showMyBookings, setShowMyBookings] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+
+  React.useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Error parsing user data', e);
+      }
+    }
+  }, []);
 
   const handleHeroSearch = (val) => {
     setSearchValue(val);
@@ -81,32 +94,82 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-[80vh] min-h-[550px] flex flex-col justify-center items-center px-6 pt-[100px] pb-10 overflow-hidden">
       {/* Top Header Row */}
-      <div className="absolute top-3 left-0 w-full px-10 z-20 flex items-center justify-between pointer-events-none">
+      <div className="absolute top-5 left-0 w-full px-6 md:px-12 z-20 flex items-center justify-between pointer-events-none">
         
-        {/* Top Left: Logo & Admin Button */}
-        <div className="pointer-events-auto flex items-center gap-3">
+        {/* Top Left: Logo */}
+        <div className="pointer-events-auto flex items-center">
           <AppLogo size="md" />
+        </div>
+
+        {/* Top Right: Actions */}
+        <div className="flex items-center gap-2.5 md:gap-3 pointer-events-auto flex-wrap justify-end">
+          
           <a 
             href={import.meta.env.DEV ? (import.meta.env.VITE_ADMIN_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '/admin/') : 'http://localhost:5000/admin/')) : 'https://lounge-backend-npok.onrender.com/admin/'}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 rounded-full bg-[#0A192F] hover:bg-[#162C46] text-white font-bold text-[12px] flex items-center gap-1.5 border border-slate-200/40 shadow-xs transition-all cursor-pointer no-underline font-plus-jakarta"
+            className="hidden lg:flex px-4 py-2 rounded-full bg-white/80 hover:bg-white backdrop-blur-md text-navy font-bold text-[13px] items-center gap-2 shadow-sm hover:shadow-md transition-all cursor-pointer no-underline font-plus-jakarta border border-white/50"
           >
-            <Shield className="w-3.5 h-3.5 text-[#FE2C1C]" /> Admin Panel
+            <Shield className="w-4 h-4 text-slate-500" /> Admin
           </a>
-        </div>
 
-
-        {/* Right Nav */}
-        <div className="flex items-center gap-3 pointer-events-auto">
-          <button
-            type="button"
-            onClick={() => setShowMyBookings(true)}
-            className="px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-navy font-bold text-[12px] flex items-center gap-1.5 border border-slate-200/80 shadow-2xs hover:shadow-xs transition-all cursor-pointer font-plus-jakarta"
-          >
-            <Ticket className="w-3.5 h-3.5 text-[#FE2C1C]" /> My Bookings
-          </button>
           <CurrencySelect />
+
+
+          
+          {user ? (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                className="w-10 h-10 rounded-full bg-accent-rose hover:bg-accent-rose-hover text-white font-extrabold flex items-center justify-center shadow-md hover:shadow-lg transition-all cursor-pointer border border-white/50 text-lg relative z-[60]"
+                title={user.name}
+              >
+                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </button>
+              
+              {showUserDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-[60] animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
+                    <p className="text-[13px] font-bold text-navy truncate">{user.name}</p>
+                    <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
+                  </div>
+                  <div className="py-2">
+                    <button
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        setShowMyBookings(true);
+                      }}
+                      className="w-full text-left px-4 py-2 text-[13px] font-bold text-navy hover:bg-slate-50 hover:text-accent-rose transition-colors flex items-center gap-2 cursor-pointer"
+                    >
+                      <Ticket className="w-4 h-4" /> My Bookings
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        if (window.confirm('Do you want to logout?')) {
+                          localStorage.removeItem('token');
+                          localStorage.removeItem('user');
+                          setUser(null);
+                        }
+                      }}
+                      className="w-full text-left px-4 py-2 text-[13px] font-bold text-navy hover:bg-slate-50 hover:text-red-500 transition-colors flex items-center gap-2 cursor-pointer"
+                    >
+                      <User className="w-4 h-4" /> Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => navigate('/auth')}
+              className="px-6 py-2 rounded-full bg-navy hover:bg-[#162C46] text-white font-extrabold text-[13px] flex items-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer font-plus-jakarta border border-navy/50"
+            >
+              <User className="w-4 h-4" /> Login
+            </button>
+          )}
         </div>
       </div>
 

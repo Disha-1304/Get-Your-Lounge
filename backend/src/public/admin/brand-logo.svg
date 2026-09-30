@@ -6,7 +6,7 @@
 
   <!-- Top Arc Text -->
   <text font-family="'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif" font-size="28" font-weight="900" fill="#FE2C1C" letter-spacing="5">
-    <textPath href="#topArcOrange" startOffset="50%" text-anchor="middle">GET MY LOUNGE</textPath>
+    <textPath href="#topArcOrange" startOffset="50%" text-anchor="middle">GET YOUR LOUNGE</textPath>
   </text>
 
   <!-- Bottom Arc Text -->

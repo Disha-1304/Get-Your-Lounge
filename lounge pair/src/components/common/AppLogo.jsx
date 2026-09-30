@@ -22,13 +22,13 @@ export const AppLogo = ({ className = '', size = 'md', isDark = false, useOrange
       <div className={`${sizeMap} shrink-0 group-hover:scale-105 transition-transform flex items-center justify-center`}>
         <img 
           src={logoSrc} 
-          alt="Get My Lounge Logo" 
+          alt="Get Your Lounge Logo" 
           className="w-full h-full object-contain filter drop-shadow-xs" 
         />
       </div>
       <div className="flex flex-col leading-none">
         <div className={`font-outfit ${fontMap} font-extrabold tracking-wide uppercase`}>
-          <span className={isDark ? 'text-white' : 'text-navy'}>GET MY </span>
+          <span className={isDark ? 'text-white' : 'text-navy'}>GET YOUR </span>
           <span className="text-[#FE2C1C]">LOUNGE</span>
         </div>
       </div>

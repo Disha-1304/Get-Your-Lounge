@@ -17,10 +17,12 @@ app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 const loungesRoutes  = require('./routes/loungesRoutes');
 const usersRoutes    = require('./routes/usersRoutes');
 const bookingsRoutes = require('./routes/bookingsRoutes');
+const authRoutes     = require('./routes/authRoutes');
 
 app.use('/api/lounges',  loungesRoutes);
 app.use('/api/users',    usersRoutes);
 app.use('/api/bookings', bookingsRoutes);
+app.use('/api/auth',     authRoutes);
 
 // ─── Admin API Routes ─────────────────────────────────────────────────────────
 // All admin routes (except /login) are JWT-protected inside adminRoutes.js
