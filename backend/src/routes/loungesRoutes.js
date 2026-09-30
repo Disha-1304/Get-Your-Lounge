@@ -14,6 +14,7 @@ const {
   getLoungeById,
   createLounge,
   updateLounge,
+  addReview,
 } = require('../controllers/loungesController');
 
 // Apply rate limiter to all lounge endpoints
@@ -22,6 +23,7 @@ router.use(apiLimiter);
 // Public browsing endpoints
 router.get('/',    getAllLounges);    // GET  /api/lounges
 router.get('/:id', getLoungeById);   // GET  /api/lounges/:id
+router.post('/:id/reviews', addReview); // POST /api/lounges/:id/reviews
 
 // Admin management endpoints (protected by adminAuth)
 router.post('/',     adminAuth, createLoungeValidation, validate, createLounge);   // POST /api/lounges

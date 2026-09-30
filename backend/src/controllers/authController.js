@@ -2,6 +2,8 @@ const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const prisma = require('../config/prisma');
 
+const JWT_SECRET = process.env.JWT_SHARED_SECRET || process.env.JWT_SECRET || 'parent_app_jwt_secret_dev_key';
+
 const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
@@ -30,7 +32,7 @@ const googleLogin = async (req, res) => {
     // Issue our own JWT token for subsequent API calls
     const jwtToken = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.JWT_SECRET || 'fallback-secret',
+      JWT_SECRET,
       { expiresIn: '7d' }
     );
 

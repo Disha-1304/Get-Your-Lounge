@@ -138,11 +138,11 @@ export const Hero = () => {
                     <button
                       onClick={() => {
                         setShowUserDropdown(false);
-                        setShowMyBookings(true);
+                        navigate('/profile');
                       }}
                       className="w-full text-left px-4 py-2 text-[13px] font-bold text-navy hover:bg-slate-50 hover:text-accent-rose transition-colors flex items-center gap-2 cursor-pointer"
                     >
-                      <Ticket className="w-4 h-4" /> My Bookings
+                      <User className="w-4 h-4" /> Profile & Bookings
                     </button>
                     <button
                       onClick={() => {

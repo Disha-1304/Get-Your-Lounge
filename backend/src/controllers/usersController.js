@@ -69,4 +69,29 @@ const getUserBookings = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUserBookings };
+// ─── PUT /api/users/:userId ────────────────────────────────────────────────────
+const updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, phone } = req.body;
+
+    if (req.user && req.user.id !== userId) {
+      const targetUser = await prisma.user.findUnique({ where: { id: userId } });
+      if (!targetUser || targetUser.email !== req.user.email) {
+        return res.status(403).json({ message: 'Forbidden: You can only update your own profile.' });
+      }
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { name, phone },
+    });
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error('updateUser error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = { createUser, getUserBookings, updateUser };

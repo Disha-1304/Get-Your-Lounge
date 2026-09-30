@@ -66,6 +66,12 @@ const getLoungeById = async (req, res) => {
           { legacyId: id },
         ],
       },
+      include: {
+        reviews: {
+          include: { user: { select: { name: true } } },
+          orderBy: { createdAt: 'desc' }
+        }
+      }
     });
 
     if (!lounge) {
@@ -158,6 +164,50 @@ const updateLounge = async (req, res) => {
   }
 };
 
+// ─── POST /api/lounges/:id/reviews ─────────────────────────────────────────────
+const addReview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rating, comment, userId } = req.body;
+    
+    if (!userId || !rating) {
+      return res.status(400).json({ message: 'User ID and rating are required' });
+    }
+
+    const existing = await prisma.lounge.findFirst({
+      where: { OR: [{ id }, { legacyId: id }] },
+    });
+
+    if (!existing) {
+      return res.status(404).json({ message: 'Lounge not found' });
+    }
+
+    const review = await prisma.review.create({
+      data: {
+        loungeId: existing.id,
+        userId,
+        rating: Number(rating),
+        comment,
+      },
+      include: {
+        user: { select: { name: true } }
+      }
+    });
+    
+    const allReviews = await prisma.review.findMany({ where: { loungeId: existing.id } });
+    const avg = allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+    await prisma.lounge.update({
+      where: { id: existing.id },
+      data: { rating: avg, reviewsCount: allReviews.length }
+    });
+
+    res.status(201).json(review);
+  } catch (err) {
+    console.error('addReview error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 function parseJsonArray(val) {
   if (Array.isArray(val)) return val;
   if (typeof val === 'string') {
@@ -195,7 +245,8 @@ function shapeLoungeResponse(lounge) {
     reviewsCount: lounge.reviewsCount,
     region:       lounge.region,
     airportName:  lounge.airportName,
+    reviews:      lounge.reviews || [],
   };
 }
 
-module.exports = { getAllLounges, getLoungeById, createLounge, updateLounge };
+module.exports = { getAllLounges, getLoungeById, createLounge, updateLounge, addReview };

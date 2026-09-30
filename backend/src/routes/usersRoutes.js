@@ -6,7 +6,7 @@ const { apiLimiter }          = require('../middleware/rateLimiter');
 const validate               = require('../middleware/validate');
 const { createUserValidation } = require('../middleware/validators');
 
-const { createUser, getUserBookings } = require('../controllers/usersController');
+const { createUser, getUserBookings, updateUser } = require('../controllers/usersController');
 
 // Apply rate limiter to all user endpoints
 router.use(apiLimiter);
@@ -16,5 +16,8 @@ router.post('/', createUserValidation, validate, createUser);
 
 // GET /api/users/:userId/bookings (Protected by identity handoff JWT)
 router.get('/:userId/bookings', authenticateUser, getUserBookings);
+
+// PUT /api/users/:userId (Protected by JWT)
+router.put('/:userId', authenticateUser, updateUser);
 
 module.exports = router;

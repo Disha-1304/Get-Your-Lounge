@@ -14,8 +14,8 @@ export const AuthPage = () => {
       console.log('Google login success!', tokenResponse);
       setIsLoading(true);
       try {
-        // Send the Google access token to the backend for verification
-        const res = await fetch('http://localhost:5000/api/auth/google', {
+        const API_BASE = import.meta.env.DEV ? (import.meta.env.VITE_API_URL || 'http://localhost:5000/api') : 'https://lounge-backend-npok.onrender.com/api';
+        const res = await fetch(`${API_BASE}/auth/google`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token: tokenResponse.access_token })

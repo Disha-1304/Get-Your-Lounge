@@ -21,6 +21,9 @@ export const LoungeDetailsPage = () => {
 
   const [lounge, setLounge] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   useEffect(() => {
     const loadLounge = async () => {
@@ -64,6 +67,34 @@ export const LoungeDetailsPage = () => {
     { icon: Zap, name: 'Charging Stations', desc: 'Universal power outlets & USB ports' },
     { icon: Clock, name: 'Air Conditioning', desc: 'Climate controlled relaxation area' },
   ];
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert('Please login to submit a review');
+      return;
+    }
+    setSubmittingReview(true);
+    try {
+      const res = await fetch(`${import.meta.env.DEV ? (import.meta.env.VITE_API_URL || 'http://localhost:5000/api') : 'https://lounge-backend-npok.onrender.com/api'}/lounges/${lounge.id || lounge.outletId}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ ...reviewForm, userId: user.id })
+      });
+      if (res.ok) {
+        const newReview = await res.json();
+        setLounge(prev => ({ ...prev, reviews: [newReview, ...(prev.reviews || [])], reviewsCount: (prev.reviewsCount || 0) + 1 }));
+        setReviewForm({ rating: 5, comment: '' });
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F4F7F9] font-plus-jakarta flex flex-col overflow-x-hidden max-w-full">
@@ -263,24 +294,62 @@ export const LoungeDetailsPage = () => {
               {/* Guest Review Cards */}
               <div className="flex flex-col gap-4">
                 <div className="font-bold text-[15px] text-navy mb-1">Recent Verified Reviews</div>
-                {[
-                  { name: "Rahul Sharma", date: "Verified Pass Holder • 2 days ago", rating: 5, comment: "Outstanding food spread and private recliners! Shower room was spotless and check-in with the digital pass was seamless." },
-                  { name: "Ananya Roy", date: "Verified Pass Holder • 5 days ago", rating: 5, comment: "Very quiet ambiance, great espresso coffee bar and high speed Wi-Fi for work before my flight. Highly recommended." },
-                  { name: "David Miller", date: "Verified Pass Holder • 1 week ago", rating: 5, comment: "Exceeded my expectations. Staff was attentive, food was fresh and hot, hassle-free lounge access." }
-                ].map((rev, idx) => (
+                {lounge.reviews && lounge.reviews.length > 0 ? lounge.reviews.map((rev, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-150 text-left">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <div className="font-bold text-[14px] text-navy">{rev.name}</div>
-                        <div className="text-[11px] text-slate-400 font-medium">{rev.date}</div>
+                        <div className="font-bold text-[14px] text-navy">{rev.user?.name || 'Anonymous User'}</div>
+                        <div className="text-[11px] text-slate-400 font-medium">
+                          {new Date(rev.createdAt).toLocaleDateString()}
+                        </div>
                       </div>
                       <div className="flex items-center text-amber-400 text-[12px]">
-                        {'★'.repeat(rev.rating)}
+                        {'★'.repeat(rev.rating)}{'☆'.repeat(5 - rev.rating)}
                       </div>
                     </div>
-                    <p className="text-[13px] text-slate-600 leading-relaxed font-medium">"{rev.comment}"</p>
+                    {rev.comment && <p className="text-[13px] text-slate-600 leading-relaxed font-medium">"{rev.comment}"</p>}
                   </div>
-                ))}
+                )) : (
+                  <p className="text-sm text-slate-500">No reviews yet. Be the first to review!</p>
+                )}
+                
+                {/* Review Form */}
+                {user ? (
+                  <form onSubmit={handleReviewSubmit} className="mt-6 p-4 rounded-xl border border-slate-200 bg-white">
+                    <h4 className="font-bold text-[15px] text-navy mb-3">Leave a Review</h4>
+                    <div className="mb-3">
+                      <label className="block text-xs font-bold text-slate-500 mb-1">Rating</label>
+                      <select 
+                        value={reviewForm.rating} 
+                        onChange={e => setReviewForm({...reviewForm, rating: Number(e.target.value)})}
+                        className="w-full md:w-auto px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none"
+                      >
+                        {[5,4,3,2,1].map(num => <option key={num} value={num}>{num} Stars</option>)}
+                      </select>
+                    </div>
+                    <div className="mb-3">
+                      <label className="block text-xs font-bold text-slate-500 mb-1">Comment (Optional)</label>
+                      <textarea 
+                        value={reviewForm.comment}
+                        onChange={e => setReviewForm({...reviewForm, comment: e.target.value})}
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none min-h-[80px]"
+                        placeholder="Share your experience..."
+                      ></textarea>
+                    </div>
+                    <button 
+                      type="submit" 
+                      disabled={submittingReview}
+                      className="bg-navy text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors"
+                    >
+                      {submittingReview ? 'Submitting...' : 'Submit Review'}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="mt-6 p-4 rounded-xl border border-slate-200 bg-slate-50 text-center">
+                    <p className="text-sm font-medium text-slate-600 mb-2">Login to leave a review</p>
+                    <button onClick={() => navigate('/auth')} className="text-accent-rose font-bold text-sm hover:underline">Go to Login</button>
+                  </div>
+                )}
               </div>
             </div>
 
