@@ -12,6 +12,10 @@ import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
 
 import { fetchLoungeById } from '../services/apiService';
+import loungesData from '../data/loungesData.json';
+import globalLounges from '../data/globalLoungesData.json';
+
+const allLocalLounges = [...(loungesData.LOUNGE_GUIDES || []), ...globalLounges];
 
 export const LoungeDetailsPage = () => {
   const { id } = useParams();
@@ -32,14 +36,27 @@ export const LoungeDetailsPage = () => {
         const data = await fetchLoungeById(id);
         if (data) {
           setLounge(data);
-        } else {
-          throw new Error('Lounge not found');
+          return;
         }
       } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+        console.warn('API fetch failed, falling back to local dataset:', err);
       }
+
+      // Fallback lookup from all 1077 local lounges
+      const cleanId = String(id).replace(/^lounge-/, '');
+      const found = allLocalLounges.find(l => 
+        String(l.id) === String(id) || 
+        String(l.outletId) === String(id) || 
+        String(l.legacyId) === String(id) ||
+        String(l.id).replace(/^lounge-/, '') === cleanId ||
+        String(l.outletId || '').replace(/^lounge-/, '') === cleanId
+      );
+      if (found) {
+        setLounge(found);
+      } else {
+        setLounge(null);
+      }
+      setLoading(false);
     };
     loadLounge();
   }, [id]);

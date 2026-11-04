@@ -26,7 +26,7 @@ export const LoungeGuides = () => {
 
   // Combine featured lounges with a subset of global lounges and shuffle them
   const [shuffledLounges] = useState(() => {
-    const combined = [...loungesData.LOUNGE_GUIDES, ...globalLounges.slice(0, 150)];
+    const combined = [...loungesData.LOUNGE_GUIDES, ...globalLounges];
     return combined.sort(() => Math.random() - 0.5);
   });
 

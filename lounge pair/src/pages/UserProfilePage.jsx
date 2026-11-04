@@ -26,7 +26,7 @@ export const UserProfilePage = () => {
         const res = await fetch(`${API_BASE}/users/${storedUser.id}/bookings`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        
+
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
@@ -86,7 +86,7 @@ export const UserProfilePage = () => {
         {/* Subtle dark overlay so the white cards pop beautifully */}
         <div className="absolute inset-0 bg-[#0A192F]/20 mix-blend-multiply"></div>
       </div>
-      
+
       <div className="container-custom max-w-6xl mx-auto relative z-10 pt-28">
         <button
           onClick={() => navigate('/')}
@@ -100,7 +100,7 @@ export const UserProfilePage = () => {
           <div className="w-full lg:w-1/3">
             <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white relative overflow-hidden group">
               {/* Clean white aesthetic - Removed the dark gradient top bar */}
-              
+
               <div className="flex justify-between items-start mb-6 relative z-10">
                 <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-accent-rose to-orange-400 shadow-xl shadow-accent-rose/20">
                   <div className="w-full h-full bg-white rounded-full flex items-center justify-center text-3xl font-extrabold text-navy border-4 border-white">
@@ -123,7 +123,7 @@ export const UserProfilePage = () => {
                       <span className="w-5 h-5 bg-gradient-to-tr from-amber-200 to-amber-500 rounded-full flex items-center justify-center text-slate-900 shadow-inner group-hover:scale-110 transition-transform">
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
                       </span>
-                      Link Priority Pass
+                      Priority Pass
                     </button>
                   </div>
 
@@ -184,7 +184,7 @@ export const UserProfilePage = () => {
               Your Bookings
               <span className="bg-white/20 text-white backdrop-blur-md border border-white/30 text-sm px-3 py-1 rounded-full">{bookings.length}</span>
             </h2>
-            
+
             {bookings.length === 0 ? (
               <div className="bg-white/90 backdrop-blur-xl rounded-[2rem] p-12 text-center border border-white shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
@@ -211,26 +211,25 @@ export const UserProfilePage = () => {
                       </div>
 
                       <p className="text-[10px] font-extrabold text-white/50 uppercase tracking-[2px] mb-4">Entrance Pass</p>
-                      
+
                       <div className="w-24 h-24 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center p-2 mb-4 group-hover:scale-105 transition-transform">
                         <div className="w-full h-full border border-dashed border-white/30 rounded-xl flex items-center justify-center">
                           <span className="text-white text-[11px] font-bold text-center px-1 uppercase tracking-widest">Show At Desk</span>
                         </div>
                       </div>
-                      
+
                       <div className="bg-white/10 px-4 py-2 rounded-xl backdrop-blur-md">
                         <p className="text-sm font-mono font-bold text-white tracking-wider">{booking.confirmationCode}</p>
                       </div>
                     </div>
-                    
+
                     {/* Booking Details (Right Side) */}
                     <div className="md:w-[72%] p-8 flex flex-col justify-between bg-white relative">
                       {/* Status Badge */}
                       <div className="absolute top-8 right-8">
-                        <span className={`px-4 py-1.5 text-[11px] font-extrabold rounded-full uppercase tracking-wider shadow-sm ${
-                          booking.status === 'CONFIRMED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 
-                          booking.status === 'CANCELLED' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
-                        }`}>
+                        <span className={`px-4 py-1.5 text-[11px] font-extrabold rounded-full uppercase tracking-wider shadow-sm ${booking.status === 'CONFIRMED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' :
+                            booking.status === 'CANCELLED' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
+                          }`}>
                           {booking.status}
                         </span>
                       </div>
@@ -244,7 +243,7 @@ export const UserProfilePage = () => {
                           {booking.lounge?.airportCode} - {booking.lounge?.city}
                         </div>
                       </div>
-                      
+
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-slate-100">
                         <div>
                           <p className="text-[11px] text-slate-400 font-extrabold uppercase tracking-wider mb-1">Date</p>

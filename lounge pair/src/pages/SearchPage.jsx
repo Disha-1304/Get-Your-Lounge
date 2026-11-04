@@ -7,6 +7,10 @@ import { getCleanLoungeImage } from '../utils/loungeImageHelper';
 import { AppLogo } from '../components/common/AppLogo';
 import { matchesAmenity } from '../utils/amenityMatcher';
 import { fetchLounges } from '../services/apiService';
+import loungesData from '../data/loungesData.json';
+import globalLounges from '../data/globalLoungesData.json';
+
+const initialBundledLounges = [...(loungesData.LOUNGE_GUIDES || []), ...globalLounges];
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,27 +52,27 @@ export const SearchPage = () => {
     }
   }, [filterParam, query]);
 
-  const [allLounges, setAllLounges] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allLounges, setAllLounges] = useState(initialBundledLounges);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
     const loadLounges = async () => {
       try {
-        setLoading(true);
         const data = await fetchLounges();
-        if (data) {
+        if (isMounted && data && Array.isArray(data) && data.length > 0) {
           setAllLounges(data);
-        } else {
-          throw new Error('Failed to fetch lounges');
+          setError(null);
         }
       } catch (err) {
-        setError(err.message);
+        console.warn('API fetch warning, using bundled lounges:', err.message);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     loadLounges();
+    return () => { isMounted = false; };
   }, []);
 
   // Base results based only on search query & category tab

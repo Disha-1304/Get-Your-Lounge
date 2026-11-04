@@ -1,12 +1,64 @@
 const prisma = require('../config/prisma');
+const fs = require('fs');
+const path = require('path');
+
+let cachedFallbackLounges = null;
+function getFallbackLounges() {
+  if (cachedFallbackLounges) return cachedFallbackLounges;
+  try {
+    const dataDir = path.join(__dirname, '..', 'data');
+    const globalRaw = JSON.parse(fs.readFileSync(path.join(dataDir, 'globalLoungesData.json'), 'utf8'));
+    const localRaw = JSON.parse(fs.readFileSync(path.join(dataDir, 'loungesData.json'), 'utf8'));
+    const combined = [
+      ...(localRaw.LOUNGE_GUIDES || []),
+      ...(Array.isArray(globalRaw) ? globalRaw : [])
+    ];
+    cachedFallbackLounges = combined.map(l => {
+      const terminalStr = Array.isArray(l.terminals) ? l.terminals[0] || '' : (l.terminal || '');
+      const legacyId = String(l.id || l.outletId || '').replace(/^lounge-/, '');
+      const imgList = Array.isArray(l.images) && l.images.length > 0 ? l.images : (l.image ? [l.image] : []);
+      return {
+        id: l.id || legacyId,
+        legacyId,
+        _dbId: l.id || legacyId,
+        outletName: l.outletName || l.name || 'Unnamed Lounge',
+        name: l.name || l.outletName || 'Unnamed Lounge',
+        description: l.description || null,
+        airportCode: l.airportCode || '',
+        city: l.city || 'Unknown',
+        country: l.country || 'Unknown',
+        terminal: terminalStr || null,
+        terminals: Array.isArray(l.terminals) ? l.terminals : (terminalStr ? [terminalStr] : []),
+        type: l.type || (terminalStr.toLowerCase().includes('domestic') ? 'DOMESTIC' : 'INTERNATIONAL'),
+        amenities: Array.isArray(l.amenities) ? l.amenities : [],
+        images: imgList,
+        image: l.image || imgList[0] || null,
+        heroImage: l.heroImage || l.image || imgList[0] || null,
+        price: typeof l.priceUSD === 'number' ? l.priceUSD : (typeof l.price === 'number' ? l.price : 45),
+        priceUSD: typeof l.priceUSD === 'number' ? l.priceUSD : (typeof l.price === 'number' ? l.price : 45),
+        currency: l.currency || 'USD',
+        capacity: l.capacity || 50,
+        isActive: l.isActive !== false,
+        rating: typeof l.rating === 'number' ? l.rating : 4.5,
+        reviewsCount: typeof l.reviewsCount === 'number' ? l.reviewsCount : 120,
+        region: l.region || null,
+        airportName: l.airportName || null,
+        reviews: [],
+      };
+    });
+    return cachedFallbackLounges;
+  } catch (err) {
+    console.error('Failed to load fallback lounges from JSON:', err);
+    return [];
+  }
+}
 
 // ─── GET /api/lounges ────────────────────────────────────────────────────────
 // Optional ?search= filters by city, airportCode, or name (case-insensitive)
-// Without search, returns first 50 active lounges
 const getAllLounges = async (req, res) => {
-  try {
-    const { search } = req.query;
+  const { search } = req.query;
 
+  try {
     const where = { isActive: true };
 
     if (search) {
@@ -44,21 +96,40 @@ const getAllLounges = async (req, res) => {
       },
     });
 
-    // Shape response to match old JSON format so frontend doesn't break
-    const shaped = lounges.map(shapeLoungeResponse);
-    res.json(shaped);
+    if (lounges && lounges.length > 0) {
+      const shaped = lounges.map(shapeLoungeResponse);
+      return res.json(shaped);
+    }
   } catch (err) {
-    console.error('getAllLounges error:', err);
-    res.status(500).json({ message: 'Internal server error', error: err.message, stack: err.stack });
+    console.warn('getAllLounges database error, serving fallback dataset:', err.message);
+  }
+
+  // Fallback to local 1077 lounges if database is offline or empty
+  try {
+    let fallbacks = getFallbackLounges();
+    if (search) {
+      const q = search.trim().toLowerCase();
+      fallbacks = fallbacks.filter(l => 
+        (l.city || '').toLowerCase().includes(q) ||
+        (l.airportCode || '').toLowerCase().includes(q) ||
+        (l.name || '').toLowerCase().includes(q) ||
+        (l.outletName || '').toLowerCase().includes(q) ||
+        (l.country || '').toLowerCase().includes(q)
+      );
+    }
+    return res.json(fallbacks);
+  } catch (fallbackErr) {
+    console.error('Fallback error:', fallbackErr);
+    res.status(500).json({ message: 'Internal server error', error: fallbackErr.message });
   }
 };
 
 // ─── GET /api/lounges/:id ────────────────────────────────────────────────────
 // Accepts either Prisma cuid (id) or the original JSON id (legacyId)
 const getLoungeById = async (req, res) => {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
+  try {
     const lounge = await prisma.lounge.findFirst({
       where: {
         OR: [
@@ -74,15 +145,29 @@ const getLoungeById = async (req, res) => {
       }
     });
 
-    if (!lounge) {
-      return res.status(404).json({ message: 'Lounge not found' });
+    if (lounge) {
+      return res.json(shapeLoungeResponse(lounge));
     }
-
-    res.json(shapeLoungeResponse(lounge));
   } catch (err) {
-    console.error('getLoungeById error:', err);
-    res.status(500).json({ message: 'Internal server error' });
+    console.warn('getLoungeById database error, searching fallback dataset:', err.message);
   }
+
+  // Fallback lookup from JSON
+  const fallbacks = getFallbackLounges();
+  const cleanId = String(id).replace(/^lounge-/, '');
+  const found = fallbacks.find(l => 
+    String(l.id) === String(id) || 
+    String(l.legacyId) === String(id) || 
+    String(l.legacyId) === cleanId || 
+    String(l.id).replace(/^lounge-/, '') === cleanId ||
+    String(l.outletId || '').replace(/^lounge-/, '') === cleanId
+  );
+
+  if (found) {
+    return res.json(found);
+  }
+
+  return res.status(404).json({ message: 'Lounge not found' });
 };
 
 // ─── POST /api/lounges ───────────────────────────────────────────────────────
