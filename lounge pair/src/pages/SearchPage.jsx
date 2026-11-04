@@ -628,7 +628,7 @@ export const SearchPage = () => {
                           View Details
                         </button>
                         <button
-                          onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
+                          onClick={() => navigate(`/book/${lounge.id || lounge.outletId}`)}
                           className="bg-accent-rose hover:bg-[#C8102E] text-white py-3 px-6 rounded-full font-bold text-[14px] flex items-center gap-2 transition-all cursor-pointer shadow-md"
                         >
                           Book Access <ArrowRight className="w-4 h-4" />

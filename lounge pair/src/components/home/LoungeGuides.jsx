@@ -220,7 +220,7 @@ export const LoungeGuides = () => {
                   </button>
                   <button
                     className="bg-accent-rose text-white border border-accent-rose py-2.5 px-4 rounded-full font-bold text-[13px] cursor-pointer inline-flex items-center justify-center gap-1.5 shadow-md hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-[#C8102E] transition-all"
-                    onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
+                    onClick={() => navigate(`/book/${lounge.id || lounge.outletId}`)}
                   >
                     {currentSymbol}{convertPrice(lounge.priceUSD)} Pass <span>→</span>
                   </button>
