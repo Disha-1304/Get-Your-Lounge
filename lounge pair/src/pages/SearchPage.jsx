@@ -117,7 +117,7 @@ export const SearchPage = () => {
   const filterOptions = useMemo(() => {
     const termTypes = new Set();
     const amenities = new Set();
-    
+
     baseResults.forEach(l => {
       // Determine Terminal Type based on terminals string + description
       let termType = 'International';
@@ -128,7 +128,7 @@ export const SearchPage = () => {
         termType = 'Domestic';
       }
       termTypes.add(termType);
-      
+
       // Collect amenities
       if (l.amenities) {
         l.amenities.forEach(a => amenities.add(a));
@@ -155,7 +155,7 @@ export const SearchPage = () => {
 
       // Guest Rating Filter
       if (minRating > 0 && (l.rating || 0) < minRating) return false;
-      
+
       // Terminal Classification
       let termType = 'International';
       if (l.isTrainLounge || (l.type || '').toLowerCase().includes('railway') || (l.city || '').toLowerCase().includes('railway')) {
@@ -167,9 +167,9 @@ export const SearchPage = () => {
         if (termStr.includes('domestic') && termStr.includes('international')) termType = 'Domestic-International';
         else if (termStr.includes('domestic')) termType = 'Domestic';
       }
-      
+
       if (selectedTerminalTypes.length > 0 && !selectedTerminalTypes.includes(termType)) return false;
-      
+
       // Amenities Filter
       if (selectedAmenities.length > 0) {
         const hasAll = selectedAmenities.every(a => matchesAmenity(l, a));
@@ -181,7 +181,7 @@ export const SearchPage = () => {
         const text = `${l.description || ''} ${Array.isArray(l.amenities) ? l.amenities.join(' ') : ''} ${l.openingHours || ''}`.toLowerCase();
         if (!(text.includes('24x7') || text.includes('24 hours') || text.includes('24/7') || text.includes('24 hrs'))) return false;
       }
-      
+
       return true;
     });
 
@@ -191,7 +191,7 @@ export const SearchPage = () => {
       if (sortBy === 'price-high-low') return (b.priceUSD || 0) - (a.priceUSD || 0);
       if (sortBy === 'top-rated') return (b.rating || 0) - (a.rating || 0);
       if (sortBy === 'name-asc') return (a.outletName || a.city || '').localeCompare(b.outletName || b.city || '');
-      
+
       // relevance (default): score based on search query match
       if (sortBy === 'relevance' && query) {
         const q = query.toLowerCase().trim();
@@ -201,7 +201,7 @@ export const SearchPage = () => {
           const code = (l.airportCode || '').toLowerCase();
           const airport = (l.airportName || '').toLowerCase();
           const country = (l.country || '').toLowerCase();
-          
+
           if (name === q) return 100;
           if (city === q) return 90;
           if (code === q) return 80;
@@ -213,8 +213,8 @@ export const SearchPage = () => {
         };
         return getScore(b) - getScore(a);
       }
-      
-      return 0; 
+
+      return 0;
     });
 
   }, [baseResults, localBudgetInput, minRating, selectedTerminalTypes, selectedAmenities, is24x7Open, sortBy, query, convertPrice]);
@@ -225,13 +225,13 @@ export const SearchPage = () => {
   };
 
   const handleTerminalChange = (t) => {
-    setSelectedTerminalTypes(prev => 
+    setSelectedTerminalTypes(prev =>
       prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]
     );
   };
 
   const handleAmenityChange = (a) => {
-    setSelectedAmenities(prev => 
+    setSelectedAmenities(prev =>
       prev.includes(a) ? prev.filter(x => x !== a) : [...prev, a]
     );
   };
@@ -251,7 +251,7 @@ export const SearchPage = () => {
   const headerMatches = useMemo(() => {
     if (!searchInput || !searchInput.trim()) return [];
     const q = searchInput.toLowerCase().trim();
-    return allLounges.filter(l => 
+    return allLounges.filter(l =>
       (l.outletName || '').toLowerCase().includes(q) ||
       (l.city || '').toLowerCase().includes(q) ||
       (l.airportCode || '').toLowerCase().includes(q)
@@ -264,7 +264,7 @@ export const SearchPage = () => {
       <header className="sticky top-0 z-50 bg-navy border-b border-accent-rose/30 shadow-xl">
         <div className="max-w-[1440px] mx-auto px-6 h-[68px] flex items-center justify-between gap-5">
           <AppLogo size="sm" isDark={true} />
-          
+
           <form onSubmit={handleSearchSubmit} className="flex-1 max-w-[600px] relative">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-accent-rose z-10" />
@@ -283,7 +283,7 @@ export const SearchPage = () => {
 
               {/* Live Autocomplete Dropdown */}
               {showAutocomplete && headerMatches.length > 0 && (
-                <div 
+                <div
                   className="absolute top-[calc(100%+8px)] left-0 right-0 bg-white rounded-2xl shadow-2xl border border-accent-rose/20 max-h-[360px] overflow-y-auto z-[100] text-left divide-y divide-slate-100"
                   onMouseDown={(e) => e.preventDefault()}
                 >
@@ -302,11 +302,11 @@ export const SearchPage = () => {
                       }}
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">
-                        <img 
-                          src={getCleanLoungeImage(l, idx)} 
-                          alt={l.outletName || l.name || l.city} 
-                          title={l.outletName || l.name || l.city} 
-                          className="w-10 h-10 rounded-lg object-cover border border-slate-100 shrink-0 group-hover:scale-105 transition-transform" 
+                        <img
+                          src={getCleanLoungeImage(l, idx)}
+                          alt={l.outletName || l.name || l.city}
+                          title={l.outletName || l.name || l.city}
+                          className="w-10 h-10 rounded-lg object-cover border border-slate-100 shrink-0 group-hover:scale-105 transition-transform"
                         />
                         <div className="min-w-0">
                           <div className="font-extrabold text-[14px] text-navy truncate group-hover:text-accent-rose transition-colors">
@@ -337,7 +337,7 @@ export const SearchPage = () => {
 
       {/* Main Content */}
       <main className="max-w-[1440px] mx-auto px-6 py-8 w-full flex flex-col lg:flex-row gap-8 flex-1">
-        
+
         {/* Sidebar */}
         <aside className="w-full lg:w-[320px] shrink-0">
           <div className="bg-white rounded-[24px] border border-slate-200 shadow-[0_12px_36px_rgba(10,25,47,0.06)] p-6 sticky top-[100px]">
@@ -354,7 +354,7 @@ export const SearchPage = () => {
             <div className="mb-8">
               <div className="font-bold text-[14px] text-navy mb-4">Sort By</div>
               <div className="relative">
-                <select 
+                <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="w-full appearance-none bg-slate-50 border border-slate-200 text-navy text-[14px] font-semibold py-3 px-4 rounded-xl outline-none cursor-pointer hover:border-slate-300 focus:border-accent-rose transition-colors"
@@ -381,7 +381,7 @@ export const SearchPage = () => {
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
                   {currentSymbol}
                 </div>
-                <input 
+                <input
                   type="number"
                   min="0"
                   value={localBudgetInput}
@@ -405,9 +405,9 @@ export const SearchPage = () => {
                   { val: 1, label: "1 ★ & above" }
                 ].map(r => (
                   <label key={r.val} className="flex items-center gap-3 cursor-pointer group">
-                    <input 
-                      type="radio" 
-                      name="rating" 
+                    <input
+                      type="radio"
+                      name="rating"
                       checked={minRating === r.val}
                       onChange={() => setMinRating(r.val)}
                       className="hidden"
@@ -427,7 +427,7 @@ export const SearchPage = () => {
               <div className="flex flex-col gap-3">
                 {['Shower', 'Wi-Fi', 'Bar', 'Food', 'AC', 'TV', 'Spa', 'Flight Info'].map(amenity => (
                   <label key={amenity} className="flex items-center gap-3 cursor-pointer group">
-                    <input 
+                    <input
                       type="checkbox"
                       checked={selectedAmenities.includes(amenity)}
                       onChange={() => handleAmenityChange(amenity)}
@@ -445,7 +445,7 @@ export const SearchPage = () => {
             {/* 24x7 Open */}
             <div className="mb-8">
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input 
+                <input
                   type="checkbox"
                   checked={is24x7Open}
                   onChange={() => setIs24x7Open(!is24x7Open)}
@@ -467,9 +467,9 @@ export const SearchPage = () => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-[24px] font-outfit font-extrabold text-navy">
               {categoryFilter === 'International' ? 'International Lounges' :
-               categoryFilter === 'IndiaAirports' ? 'Domestic Lounges' :
-               categoryFilter === 'RailwayLounges' ? 'Rail Lounges' :
-               query ? `Results for "${query}"` : 'All Lounges'} 
+                categoryFilter === 'IndiaAirports' ? 'Domestic Lounges' :
+                  categoryFilter === 'RailwayLounges' ? 'Rail Lounges' :
+                    query ? `Results for "${query}"` : 'All Lounges'}
               <span className="text-slate-400 text-[18px] ml-2 font-medium">({filteredResults.length})</span>
             </h2>
           </div>
@@ -493,11 +493,10 @@ export const SearchPage = () => {
                     setSearchParams(query ? { q: query, filter: tab.value } : { filter: tab.value });
                   }
                 }}
-                className={`py-2 px-5 rounded-full text-[13px] font-bold transition-all cursor-pointer ${
-                  categoryFilter === tab.value
+                className={`py-2 px-5 rounded-full text-[13px] font-bold transition-all cursor-pointer ${categoryFilter === tab.value
                     ? 'bg-navy text-white shadow-xs'
                     : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>
@@ -508,36 +507,36 @@ export const SearchPage = () => {
           {(localBudgetInput !== '' || minRating > 0 || selectedAmenities.length > 0 || is24x7Open) && (
             <div className="flex flex-wrap items-center gap-2 mb-6 p-3 rounded-2xl bg-slate-100/70 border border-slate-200/80">
               <span className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mr-1">Active Filters:</span>
-              
+
               {localBudgetInput !== '' && (
                 <span className="px-3 py-1 rounded-full bg-white text-navy font-bold text-[12px] border border-slate-200 shadow-2xs flex items-center gap-1.5">
                   Max: {currentSymbol}{localBudgetInput}
-                  <button onClick={() => setLocalBudgetInput('')} className="hover:text-accent-rose"><X className="w-3 h-3"/></button>
+                  <button onClick={() => setLocalBudgetInput('')} className="hover:text-accent-rose"><X className="w-3 h-3" /></button>
                 </span>
               )}
 
               {minRating > 0 && (
                 <span className="px-3 py-1 rounded-full bg-white text-navy font-bold text-[12px] border border-slate-200 shadow-2xs flex items-center gap-1.5">
                   Rating: {minRating}★+
-                  <button onClick={() => setMinRating(0)} className="hover:text-accent-rose"><X className="w-3 h-3"/></button>
+                  <button onClick={() => setMinRating(0)} className="hover:text-accent-rose"><X className="w-3 h-3" /></button>
                 </span>
               )}
 
               {selectedAmenities.map(a => (
                 <span key={a} className="px-3 py-1 rounded-full bg-[#FE2C1C]/10 text-[#FE2C1C] font-bold text-[12px] border border-[#FE2C1C]/20 shadow-2xs flex items-center gap-1.5">
                   {a}
-                  <button onClick={() => handleAmenityChange(a)} className="hover:text-navy"><X className="w-3 h-3"/></button>
+                  <button onClick={() => handleAmenityChange(a)} className="hover:text-navy"><X className="w-3 h-3" /></button>
                 </span>
               ))}
 
               {is24x7Open && (
                 <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[12px] border border-emerald-200 shadow-2xs flex items-center gap-1.5">
                   24x7 Open
-                  <button onClick={() => setIs24x7Open(false)} className="hover:text-rose-600"><X className="w-3 h-3"/></button>
+                  <button onClick={() => setIs24x7Open(false)} className="hover:text-rose-600"><X className="w-3 h-3" /></button>
                 </span>
               )}
 
-              <button 
+              <button
                 onClick={clearAllFilters}
                 className="ml-auto text-[12px] font-bold text-slate-500 hover:text-accent-rose underline cursor-pointer"
               >
@@ -572,8 +571,8 @@ export const SearchPage = () => {
             ) : (
               filteredResults.map((lounge, idx) => (
                 <div key={lounge.id} className="bg-white rounded-[24px] border border-slate-150 shadow-sm p-4 lg:p-6 flex flex-col lg:flex-row gap-6 transition-all hover:shadow-[0_12px_36px_rgba(10,25,47,0.08)] hover:-translate-y-1">
-                  
-                  <div 
+
+                  <div
                     className="w-full lg:w-[280px] h-[200px] shrink-0 rounded-[16px] overflow-hidden relative bg-slate-100 cursor-pointer group"
                     onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                   >
@@ -594,7 +593,7 @@ export const SearchPage = () => {
                         <MapPin className="w-3.5 h-3.5 text-accent-rose" />
                         {lounge.city}, {lounge.country} • {lounge.airportCode}
                       </div>
-                      <h3 
+                      <h3
                         className="text-[22px] font-extrabold text-navy mb-2 leading-tight cursor-pointer hover:text-accent-rose transition-colors"
                         onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                       >
@@ -603,7 +602,7 @@ export const SearchPage = () => {
                       <p className="text-[14px] text-slate-600 line-clamp-2 mb-4 leading-relaxed">
                         {lounge.description || 'Premium airport lounge offering exclusive amenities and comfort for global travelers.'}
                       </p>
-                      
+
                       <div className="flex flex-wrap gap-2 mb-4">
                         {(lounge.terminals || []).map((t, i) => (
                           <span key={i} className="bg-slate-50 border border-slate-200 text-slate-600 py-1 px-2.5 rounded-[8px] text-[12px] font-semibold">
@@ -620,15 +619,15 @@ export const SearchPage = () => {
                           {currentSymbol}{convertPrice(lounge.priceUSD)}
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-3">
-                        <button 
+                        <button
                           onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                           className="bg-slate-100 hover:bg-slate-200 text-navy py-3 px-5 rounded-full font-bold text-[14px] transition-colors cursor-pointer"
                         >
                           View Details
                         </button>
-                        <button 
+                        <button
                           onClick={() => navigate(`/lounge/${lounge.id || lounge.outletId}`)}
                           className="bg-accent-rose hover:bg-[#C8102E] text-white py-3 px-6 rounded-full font-bold text-[14px] flex items-center gap-2 transition-all cursor-pointer shadow-md"
                         >

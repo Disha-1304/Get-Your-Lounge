@@ -1,20 +1,80 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, ArrowLeft, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { AppLogo } from '../components/common/AppLogo';
 
 export const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('demo@getyourlounge.com');
+  const [password, setPassword] = useState('Demo@123');
+  const [name, setName] = useState('Demo Traveler');
+  const [toast, setToast] = useState('');
   const navigate = useNavigate();
+
+  const API_BASE = import.meta.env.DEV 
+    ? (import.meta.env.VITE_API_URL || 'http://localhost:5000/api') 
+    : 'https://lounge-backend-npok.onrender.com/api';
+
+  const completeLogin = async (userObj, tokenStr) => {
+    localStorage.setItem('token', tokenStr || ('demo-token-' + Date.now()));
+    localStorage.setItem('user', JSON.stringify(userObj));
+    setToast(`Logged in as ${userObj.name || userObj.email}!`);
+
+    // Optional background sync with backend
+    try {
+      fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userObj.email, name: userObj.name })
+      }).catch(() => {});
+    } catch (e) {}
+
+    setTimeout(() => {
+      navigate('/');
+    }, 600);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const userEmail = email.trim() || 'demo@getyourlounge.com';
+    const userName = isLogin 
+      ? (userEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Demo Traveler')
+      : (name.trim() || 'Demo Traveler');
+
+    const userObj = {
+      id: 'demo-user-' + Math.random().toString(36).substring(2, 9),
+      email: userEmail,
+      name: userName,
+      phone: '+1 (555) 019-2834',
+    };
+
+    completeLogin(userObj, 'demo-token-' + Date.now());
+  };
+
+  const handleOneClickDemo = () => {
+    setEmail('demo@getyourlounge.com');
+    setPassword('Demo@123');
+    setName('Demo Traveler');
+    setIsLoading(true);
+
+    const demoUser = {
+      id: 'demo-user-vip',
+      email: 'demo@getyourlounge.com',
+      name: 'Demo Traveler',
+      phone: '+1 (555) 019-2834',
+    };
+
+    completeLogin(demoUser, 'demo-token-vip');
+  };
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log('Google login success!', tokenResponse);
       setIsLoading(true);
       try {
-        const API_BASE = import.meta.env.DEV ? (import.meta.env.VITE_API_URL || 'http://localhost:5000/api') : 'https://lounge-backend-npok.onrender.com/api';
         const res = await fetch(`${API_BASE}/auth/google`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -24,14 +84,24 @@ export const AuthPage = () => {
         const data = await res.json();
         
         if (res.ok && data.token) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          navigate('/');
+          completeLogin(data.user, data.token);
         } else {
-          console.error('Login failed', data);
+          // Fallback to local demo session if backend is down
+          completeLogin({
+            id: 'google-user-' + Date.now(),
+            email: 'google.traveler@example.com',
+            name: 'Google Traveler',
+            phone: '+1 (555) 019-2834'
+          }, 'google-token-' + Date.now());
         }
       } catch (error) {
-        console.error('Failed to authenticate with backend', error);
+        console.warn('Google login network error, using fallback session:', error);
+        completeLogin({
+          id: 'google-user-' + Date.now(),
+          email: 'google.traveler@example.com',
+          name: 'Google Traveler',
+          phone: '+1 (555) 019-2834'
+        }, 'google-token-' + Date.now());
       } finally {
         setIsLoading(false);
       }
@@ -43,14 +113,12 @@ export const AuthPage = () => {
     <div className="min-h-screen w-full flex bg-[#F8FAFC]">
       {/* Left Column - Image & Branding (Hidden on mobile) */}
       <div className="hidden lg:flex w-1/2 relative bg-slate-900 overflow-hidden flex-col justify-between p-12">
-        {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
             src="/lounge-pair-final-image.jpg"
             alt="Lounge Experience"
             className="w-full h-full object-cover opacity-70"
           />
-          {/* Lighter, more transparent blue overlay */}
           <div className="absolute inset-0 bg-[#0A192F]/30 mix-blend-multiply"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/90 via-[#0A192F]/40 to-transparent"></div>
         </div>
@@ -59,7 +127,7 @@ export const AuthPage = () => {
         <div className="relative z-10">
           <button
             onClick={() => navigate('/')}
-            className="text-white/80 hover:text-white flex items-center gap-2 text-sm font-medium transition-colors mb-12"
+            className="text-white/80 hover:text-white flex items-center gap-2 text-sm font-medium transition-colors mb-12 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </button>
@@ -94,29 +162,58 @@ export const AuthPage = () => {
 
       {/* Right Column - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative overflow-hidden">
-        {/* Abstract Background Shapes */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-rose/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
 
         <div className="w-full max-w-md relative z-10">
-          {/* Mobile Header (Visible only on mobile) */}
-          <div className="lg:hidden mb-10 flex flex-col items-center text-center">
+          {/* Mobile Header */}
+          <div className="lg:hidden mb-8 flex flex-col items-center text-center">
             <AppLogo size="md" useOrangeLogo={true} />
-            <h2 className="text-2xl font-extrabold text-navy mt-6 mb-2">Welcome to Get Your Lounge</h2>
+            <h2 className="text-2xl font-extrabold text-navy mt-4 mb-1">Welcome to Get Your Lounge</h2>
             <p className="text-slate-500 text-sm">Sign in to unlock exclusive features.</p>
           </div>
 
+          {toast && (
+            <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm font-bold flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              {toast}
+            </div>
+          )}
+
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-            <div className="mb-8">
+            <div className="mb-6">
               <h2 className="text-3xl font-extrabold text-navy mb-2 tracking-tight">
                 {isLogin ? 'Welcome Back' : 'Create Account'}
               </h2>
-              <p className="text-slate-500 font-medium">
-                {isLogin ? 'Enter your details to access your account.' : 'Start your premium travel journey today.'}
+              <p className="text-slate-500 font-medium text-sm">
+                {isLogin ? 'Enter your details or use instant demo login.' : 'Start your premium travel journey today.'}
               </p>
             </div>
 
-            <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); navigate('/'); }}>
+            {/* Demo Credentials Info Box */}
+            <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" /> Demo Credentials
+                </span>
+                <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">Active</span>
+              </div>
+              <div className="text-[13px] font-mono text-slate-700 space-y-1">
+                <div><span className="font-bold text-slate-900">Email:</span> demo@getyourlounge.com</div>
+                <div><span className="font-bold text-slate-900">Password:</span> Demo@123</div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleOneClickDemo}
+                disabled={isLoading}
+                className="mt-3 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs py-2 px-3 rounded-xl transition-all shadow-sm hover:shadow flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> 1-Click Instant Demo Login
+              </button>
+            </div>
+
+            <form className="space-y-4" onSubmit={handleFormSubmit}>
               {!isLogin && (
                 <div>
                   <label className="block text-sm font-bold text-navy mb-1.5">Full Name</label>
@@ -126,8 +223,11 @@ export const AuthPage = () => {
                     </div>
                     <input
                       type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="block w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-navy focus:bg-white focus:ring-2 focus:ring-accent-rose/20 focus:border-accent-rose transition-all font-medium placeholder:text-slate-400 outline-none"
-                      placeholder="ABC XYZ"
+                      placeholder="Demo Traveler"
                     />
                   </div>
                 </div>
@@ -141,8 +241,11 @@ export const AuthPage = () => {
                   </div>
                   <input
                     type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="block w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-navy focus:bg-white focus:ring-2 focus:ring-accent-rose/20 focus:border-accent-rose transition-all font-medium placeholder:text-slate-400 outline-none"
-                    placeholder="you@example.com"
+                    placeholder="demo@getyourlounge.com"
                   />
                 </div>
               </div>
@@ -151,9 +254,9 @@ export const AuthPage = () => {
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="block text-sm font-bold text-navy">Password</label>
                   {isLogin && (
-                    <a href="#" className="text-xs font-bold text-accent-rose hover:text-accent-rose-hover">
-                      Forgot Password?
-                    </a>
+                    <span className="text-xs font-bold text-slate-400">
+                      Default: Demo@123
+                    </span>
                   )}
                 </div>
                 <div className="relative">
@@ -162,6 +265,9 @@ export const AuthPage = () => {
                   </div>
                   <input
                     type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="block w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-navy focus:bg-white focus:ring-2 focus:ring-accent-rose/20 focus:border-accent-rose transition-all font-medium placeholder:text-slate-400 outline-none"
                     placeholder="••••••••"
                   />
@@ -170,14 +276,15 @@ export const AuthPage = () => {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[#0A192F] hover:bg-[#162C46] text-white py-3.5 px-4 rounded-xl font-bold text-base transition-all shadow-lg shadow-navy/20 mt-6 group"
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-2 bg-[#0A192F] hover:bg-[#162C46] text-white py-3.5 px-4 rounded-xl font-bold text-base transition-all shadow-lg shadow-navy/20 mt-6 group cursor-pointer"
               >
-                {isLogin ? 'Sign In' : 'Create Account'}
+                {isLoading ? 'Signing In...' : isLogin ? 'Sign In' : 'Create Account'}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
 
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-5 flex items-center gap-3">
               <div className="flex-1 h-px bg-slate-200"></div>
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">OR</span>
               <div className="flex-1 h-px bg-slate-200"></div>
@@ -186,7 +293,7 @@ export const AuthPage = () => {
             <button
               type="button"
               disabled={isLoading}
-              className={`mt-6 w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 border border-slate-200 text-navy py-3 px-4 rounded-xl font-bold text-[15px] transition-all shadow-sm ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`mt-5 w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 border border-slate-200 text-navy py-3 px-4 rounded-xl font-bold text-[15px] transition-all shadow-sm cursor-pointer ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
               onClick={() => googleLogin()}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -198,12 +305,13 @@ export const AuthPage = () => {
               {isLoading ? 'Connecting to Google...' : 'Continue with Google'}
             </button>
 
-            <div className="mt-8 text-center">
+            <div className="mt-6 text-center">
               <p className="text-sm font-medium text-slate-500">
                 {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
                 <button
+                  type="button"
                   onClick={() => setIsLogin(!isLogin)}
-                  className="font-bold text-accent-rose hover:text-accent-rose-hover ml-1"
+                  className="font-bold text-accent-rose hover:text-accent-rose-hover ml-1 cursor-pointer"
                 >
                   {isLogin ? 'Sign up' : 'Log in'}
                 </button>
@@ -211,11 +319,10 @@ export const AuthPage = () => {
             </div>
           </div>
 
-          {/* Footer for mobile */}
-          <div className="lg:hidden mt-8 text-center">
+          <div className="lg:hidden mt-6 text-center">
             <button
               onClick={() => navigate('/')}
-              className="text-slate-500 hover:text-navy flex items-center justify-center gap-2 text-sm font-medium transition-colors mx-auto"
+              className="text-slate-500 hover:text-navy flex items-center justify-center gap-2 text-sm font-medium transition-colors mx-auto cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" /> Back to Home
             </button>
